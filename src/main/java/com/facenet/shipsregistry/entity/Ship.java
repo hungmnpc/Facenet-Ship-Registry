@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author: hungdinh
@@ -44,4 +45,7 @@ public class Ship {
     @Column(name = "date_of_build")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateOfBuild;
+
+    @OneToMany(mappedBy = "ship", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private List<GeneralParticulars> generalParticularsList;
 }

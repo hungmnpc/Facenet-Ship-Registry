@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author: hungdinh
@@ -36,4 +37,7 @@ public class Certificate {
     @Column(name = "valid_end_date")
     @Temporal(TemporalType.DATE)
     private Date validEndDate;
+
+    @OneToMany(mappedBy = "certificate", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private List<GeneralParticulars> generalParticularsList;
 }

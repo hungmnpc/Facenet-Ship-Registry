@@ -21,10 +21,15 @@ public class ShipController {
 
     @Autowired
     private GeneralParticularsService generalParticularsService;
+
+    /**
+     *
+     * @param requestBody
+     * @return
+     */
     @PostMapping("")
     public ResponseEntity<ShipDTO> createNewShip(@RequestBody ShipInfoRequestBody requestBody) {
         ShipDTO shipDTO = generalParticularsService.saveNewShip(requestBody);
-
         return shipDTO != null ? ResponseEntity.ok(shipDTO) : ResponseEntity.badRequest().build();
     }
 }
