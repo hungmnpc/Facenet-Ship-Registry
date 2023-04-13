@@ -21,4 +21,17 @@ public class GeneralParticulars {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "ship_id")
+    private Ship ship;
+
+    @Column(name = "report_number", length = 100)
+    private String reportNo;
+
+    @Column(name = "surveyor_info", length = 100)
+    private String surveyorInfo;
+
+    @ManyToOne
+    @JoinColumn(name = "certificate_id")
+    private Certificate certificate;
 }
