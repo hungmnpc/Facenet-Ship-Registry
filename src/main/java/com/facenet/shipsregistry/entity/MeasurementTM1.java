@@ -2,6 +2,7 @@ package com.facenet.shipsregistry.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.engine.internal.Cascade;
 
 /**
  * @author: CongTu
@@ -15,8 +16,8 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class MeasurementTM1 {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,13 +27,16 @@ public class MeasurementTM1 {
 
     @Column(name = "no_or_letter")
     private String noOrLetter;
+
     @ManyToOne
     @JoinColumn(name = "form_TM1_id")
-    private Long formTM1Id;
+    private FormTM1 formTM1;
 
-    @Column(name = "forward_reading_measurement_detail_id")
-    private Long forwardReadingMeasurementDetailId;
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "forward_reading_measurement_detail_id")
+    private DetailMeasurement forwardReadingMeasurementDetail;
 
-    @Column(name = "after_reading_measurement_detail_id")
-    private Long afterReadingMeasurementDetailId;
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "after_reading_measurement_detail_id")
+    private DetailMeasurement afterReadingMeasurementDetail;
 }
