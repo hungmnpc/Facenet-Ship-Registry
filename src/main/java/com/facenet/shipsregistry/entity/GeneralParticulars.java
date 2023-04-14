@@ -3,6 +3,8 @@ package com.facenet.shipsregistry.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 /**
  * @author: hungdinh
  * Date created: 11/04/2023
@@ -34,4 +36,7 @@ public class GeneralParticulars {
     @ManyToOne
     @JoinColumn(name = "certificate_id")
     private Certificate certificate;
+
+    @OneToMany(mappedBy = "generalParticulars", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private List<ReportIndex> reportIndexList;
 }

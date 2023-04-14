@@ -3,6 +3,7 @@ package com.facenet.shipsregistry.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -27,16 +28,16 @@ public class Certificate {
     @Column(name = "certificate_organization")
     private String certificateOrganization;
 
-    @Column(name = "certificate_no", length = 16)
+    @Column(name = "certificate_no", length = 16, unique = true)
     private String certificateNo;
 
     @Column(name = "valid_start_date")
     @Temporal(TemporalType.DATE)
-    private Date validStartDate;
+    private LocalDate validStartDate;
 
     @Column(name = "valid_end_date")
     @Temporal(TemporalType.DATE)
-    private Date validEndDate;
+    private LocalDate validEndDate;
 
     @OneToMany(mappedBy = "certificate", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<GeneralParticulars> generalParticularsList;

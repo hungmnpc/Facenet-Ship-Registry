@@ -21,7 +21,7 @@ public class GeneralParticularRequestBody {
 
     private String surveyorInfo;
 
-    private Long certificateId;
+    private String certificateNo;
 
     /**
      *
