@@ -1,4 +1,4 @@
-package com.facenet.shipsregistry.modal;
+package com.facenet.shipsregistry.request;
 
 import com.facenet.shipsregistry.entity.GeneralParticulars;
 import jakarta.persistence.*;
@@ -18,9 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class CertificateDTO {
-
-    private Long id;
+public class CertificateRequestBody {
 
     private String certificateOrganization;
 

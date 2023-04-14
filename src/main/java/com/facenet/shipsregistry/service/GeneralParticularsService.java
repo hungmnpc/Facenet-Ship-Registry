@@ -1,6 +1,10 @@
 package com.facenet.shipsregistry.service;
 
+import com.facenet.shipsregistry.modal.CertificateDTO;
+import com.facenet.shipsregistry.modal.GeneralParticularsDTO;
 import com.facenet.shipsregistry.modal.ShipDTO;
+import com.facenet.shipsregistry.request.CertificateRequestBody;
+import com.facenet.shipsregistry.request.GeneralParticularRequestBody;
 import com.facenet.shipsregistry.request.ShipInfoRequestBody;
 
 /**
@@ -15,4 +19,20 @@ public interface GeneralParticularsService {
      * @return
      */
     public ShipDTO saveNewShip(ShipInfoRequestBody requestBody);
+
+    /**
+     *
+     * @param requestBody
+     * @return
+     */
+    public GeneralParticularsDTO saveNewGeneralParticulars(
+            GeneralParticularRequestBody requestBody
+    );
+
+    /**
+     *
+     * @param requestBody
+     * @return
+     */
+    public CertificateDTO saveNewCertificate(CertificateRequestBody requestBody);
 }

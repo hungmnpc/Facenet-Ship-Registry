@@ -1,6 +1,10 @@
 package com.facenet.shipsregistry.utils;
 
+import com.facenet.shipsregistry.entity.Certificate;
+import com.facenet.shipsregistry.entity.GeneralParticulars;
 import com.facenet.shipsregistry.entity.Ship;
+import com.facenet.shipsregistry.modal.CertificateDTO;
+import com.facenet.shipsregistry.modal.GeneralParticularsDTO;
 import com.facenet.shipsregistry.modal.ShipDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +21,38 @@ public class MapperUtils {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    /**
+     *
+     * @param ship
+     * @return
+     */
     public ShipDTO shipMapper(Ship ship) {
         return modelMapper.map(ship, ShipDTO.class);
     }
+
+    /**
+     *
+     * @param certificate
+     * @return
+     */
+    public CertificateDTO certificateMapper(Certificate certificate) {
+        return modelMapper.map(certificate, CertificateDTO.class);
+    }
+
+    /**
+     *
+     * @param generalParticulars
+     * @return
+     */
+    public GeneralParticularsDTO generalParticularsMapper(GeneralParticulars generalParticulars) {
+        GeneralParticularsDTO generalParticularsDTO =
+                modelMapper.map(generalParticulars, GeneralParticularsDTO.class);
+        generalParticularsDTO.setShipInfo(shipMapper(generalParticulars.getShip()));
+        generalParticularsDTO.setCertificateDTO(certificateMapper(generalParticulars.getCertificate()));
+        return generalParticularsDTO;
+    }
+
+
 
 }

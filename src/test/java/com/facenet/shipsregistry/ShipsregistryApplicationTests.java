@@ -3,19 +3,34 @@ package com.facenet.shipsregistry;
 import com.facenet.shipsregistry.entity.Certificate;
 import com.facenet.shipsregistry.entity.GeneralParticulars;
 import com.facenet.shipsregistry.entity.Ship;
+import com.facenet.shipsregistry.modal.CertificateDTO;
 import com.facenet.shipsregistry.modal.ShipDTO;
+import com.facenet.shipsregistry.repository.ShipRepository;
+import com.facenet.shipsregistry.request.ShipInfoRequestBody;
+import com.facenet.shipsregistry.service.GeneralParticularsService;
+import com.facenet.shipsregistry.utils.MapperUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.xmlunit.util.Mapper;
 
 import java.util.Date;
+import java.util.Objects;
 
 @SpringBootTest
+@Slf4j
 class ShipsregistryApplicationTests {
 
 	@Autowired
-	private ModelMapper modelMapper;
+	private MapperUtils mapperUtils;
+
+	@Autowired
+	private GeneralParticularsService generalParticularsService;
+
+	@Autowired
+	private ShipRepository shipRepository;
 
 	@Test
 	void contextLoads() {
@@ -25,14 +40,13 @@ class ShipsregistryApplicationTests {
 	void testMapping() {
 		Ship ship = new Ship(1l, "Test", "73746", "dfbdsjfs", "Hai Phong",
 				20000, 40000, new Date(2022, 01, 20), null);
+		ShipInfoRequestBody requestBody = new ShipInfoRequestBody("dfmsa", "dfndf", "dfndfn",
+				"nam dinh", 20000, 30000, new Date(2022, 01, 01));
+		ShipDTO shipDTO = generalParticularsService.saveNewShip(requestBody);
 
-		Certificate certificate = new Certificate(1l, "USA", "8273dgfd", new Date(2020, 01, 01),
-				new Date(2023, 01, 01), null);
+		Ship shipSaved = shipRepository.findById(shipDTO.getShip_id()).orElse(null);
 
-		GeneralParticulars generalParticulars = new GeneralParticulars(1l, ship, "43y4u323i",
-				"Dinh Quoc Hung", certificate);
-
-		ShipDTO shipDTO =  modelMapper.map(ship, ShipDTO.class);
+		assert Objects.requireNonNull(shipSaved).getShip_id() != null;
 
 	}
 
