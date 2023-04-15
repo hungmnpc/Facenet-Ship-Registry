@@ -41,19 +41,22 @@ public interface GeneralParticularsService {
     /**
      *
      * @param imoNumber
+     * @param name
+     * @param absIdentification
      * @return
      */
-    public ShipDTO findShipByImoNumber(String imoNumber);
+    public List<ShipDTO> searchShip(String imoNumber, String name, String absIdentification);
+
+    /**
+     *
+     * @param certificateNo
+     * @return
+     */
+    public List<CertificateDTO> searchCertificate(String certificateNo, String certificateOrganization);
 
     /**
      *
      * @return
      */
-    public List<ShipDTO> findAllShip();
-
-    /**\
-     *
-     * @return
-     */
-    public List<ShipDTO> search(String imoNumber, String name);
+    public List<CertificateDTO> getAllCertificate();
 }
