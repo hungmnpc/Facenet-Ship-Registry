@@ -8,9 +8,7 @@ import com.facenet.shipsregistry.modal.GeneralParticularsDTO;
 import com.facenet.shipsregistry.modal.ShipDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.ModelMap;
 
 /**
  * @author: hungdinh
@@ -52,7 +50,4 @@ public class MapperUtils {
         generalParticularsDTO.setCertificateDTO(certificateMapper(generalParticulars.getCertificate()));
         return generalParticularsDTO;
     }
-
-
-
 }
