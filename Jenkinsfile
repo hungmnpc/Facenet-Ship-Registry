@@ -21,6 +21,6 @@ node {
     //     archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
     // }
     stage('run') {
-        bat "./mvnw"
+        bat "./mvnw spring-boot:run"
     }
 }
