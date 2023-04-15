@@ -28,6 +28,7 @@ public class MapperUtils {
      * @return
      */
     public ShipDTO shipMapper(Ship ship) {
+        System.out.println(ship.getDateOfBuild());
         return modelMapper.map(ship, ShipDTO.class);
     }
 

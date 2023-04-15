@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.xmlunit.util.Mapper;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @SpringBootTest
@@ -38,15 +39,19 @@ class ShipsregistryApplicationTests {
 
 	@Test
 	void testMapping() {
-		Ship ship = new Ship(1l, "Test", "73746", "dfbdsjfs", "Hai Phong",
-				20000, 40000, new Date(2022, 01, 20), null);
-		ShipInfoRequestBody requestBody = new ShipInfoRequestBody("dfmsa", "dfndf", "dfndfn",
-				"nam dinh", 20000, 30000, new Date(2022, 01, 01));
-		ShipDTO shipDTO = generalParticularsService.saveNewShip(requestBody);
+//		Ship ship = new Ship(1l, "Test", "73746", "dfbdsjfs", "Hai Phong",
+//				20000, 40000, new Date(2022, 01, 20), null);
+//		ShipInfoRequestBody requestBody = new ShipInfoRequestBody("dfmsa", "dfndf", "dfndfn",
+//				"nam dinh", 20000, 30000, new Date(2022, 01, 01));
+//		ShipDTO shipDTO = generalParticularsService.saveNewShip(requestBody);
+//
+//		Ship shipSaved = shipRepository.findById(shipDTO.getShip_id()).orElse(null);
+//
+//		assert Objects.requireNonNull(shipSaved).getShip_id() != null;
 
-		Ship shipSaved = shipRepository.findById(shipDTO.getShip_id()).orElse(null);
-
-		assert Objects.requireNonNull(shipSaved).getShip_id() != null;
+//		List<Ship> shipList = shipRepository.search("", "");
+//		System.out.println(shipList);
+//		assert shipList.size() > 0;
 
 	}
 

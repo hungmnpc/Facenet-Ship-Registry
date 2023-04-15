@@ -45,6 +45,7 @@ public class ShipsregistryApplication {
 							"22-5280779-A",
 							LocalDate.parse("2004-01-01"),
 							LocalDate.parse("2005-01-01")));
+
 			generalParticularsService.saveNewGeneralParticulars(new GeneralParticularRequestBody(new ShipInfoRequestBody(
 					"M/T \"TM HAI HA 568\"",
 					"9274082",
@@ -52,7 +53,21 @@ public class ShipsregistryApplication {
 					"HAI PHONG",
 					25400,
 					40058,
-					new Date(2004, 01, 01)
+					LocalDate.parse("2015-01-01")
+			),
+					"VMC.UTM.22.093/5400433",
+					"MANOP SRISUNGVAL",
+					"22-5280779-A"
+			) );
+
+			generalParticularsService.saveNewGeneralParticulars(new GeneralParticularRequestBody(new ShipInfoRequestBody(
+					"M/T \"TM HAI HA 569\"",
+					"9274083",
+					"041319421	",
+					"HAI PHONG",
+					25400,
+					40058,
+					LocalDate.parse("2015-01-01")
 			),
 					"VMC.UTM.22.093/5400433",
 					"MANOP SRISUNGVAL",

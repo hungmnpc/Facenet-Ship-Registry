@@ -13,12 +13,16 @@ import com.facenet.shipsregistry.request.CertificateRequestBody;
 import com.facenet.shipsregistry.request.GeneralParticularRequestBody;
 import com.facenet.shipsregistry.request.ShipInfoRequestBody;
 import com.facenet.shipsregistry.utils.MapperUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author: hungdinh
@@ -27,6 +31,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@Slf4j
 public class GeneralParticularsServiceImpl implements GeneralParticularsService{
 
     @Autowired
@@ -104,5 +109,54 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
             return mapperUtils.certificateMapper(certificateSaved);
         }
         return null;
+    }
+
+    /**
+     * @param imoNumber
+     * @return
+     */
+    @Override
+    public ShipDTO findShipByImoNumber(String imoNumber) {
+        try {
+            Optional<Ship> shipOptional = shipRepository.findShipByImoNumber(imoNumber);
+            return shipOptional.map(ship -> mapperUtils.shipMapper(ship)).orElse(null);
+        } catch (Exception exception) {
+            log.debug(exception.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public List<ShipDTO> findAllShip() {
+        try {
+            List<Ship> shipList = shipRepository.findAll();
+            return shipList.stream()
+                    .map(ship -> mapperUtils.shipMapper(ship)).toList();
+        } catch (Exception exception) {
+            log.debug(exception.getMessage());
+            return new ArrayList<ShipDTO>();
+        }
+    }
+
+    /**
+     * \
+     *
+     * @param imoNumber
+     * @param name
+     * @return
+     */
+    @Override
+    public List<ShipDTO> search(String imoNumber, String name) {
+        try {
+            List<Ship> shipList = shipRepository.search(imoNumber, name);
+            return shipList.stream().map(ship -> mapperUtils.shipMapper(ship)).collect(Collectors.toList());
+        } catch (Exception exception) {
+            log.debug(exception.getMessage());
+            return new ArrayList<ShipDTO>();
+        }
     }
 }
