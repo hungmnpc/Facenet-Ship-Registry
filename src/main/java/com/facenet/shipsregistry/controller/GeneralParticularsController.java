@@ -32,5 +32,4 @@ public class GeneralParticularsController {
             ) {
         return ResponseEntity.ok().build();
     }
-
 }

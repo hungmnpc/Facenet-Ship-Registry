@@ -39,4 +39,7 @@ public class GeneralParticulars {
 
     @OneToMany(mappedBy = "generalParticulars", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<ReportIndex> reportIndexList;
+
+    @Column(name = "lock", nullable = false)
+    private Boolean lock = false;
 }
