@@ -112,37 +112,6 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
     }
 
     /**
-     * @param imoNumber
-     * @return
-     */
-    @Override
-    public ShipDTO findShipByImoNumber(String imoNumber) {
-        try {
-            Optional<Ship> shipOptional = shipRepository.findShipByImoNumber(imoNumber);
-            return shipOptional.map(ship -> mapperUtils.shipMapper(ship)).orElse(null);
-        } catch (Exception exception) {
-            log.debug(exception.getMessage());
-            return null;
-        }
-    }
-
-    /**
-     *
-     * @return
-     */
-    @Override
-    public List<ShipDTO> findAllShip() {
-        try {
-            List<Ship> shipList = shipRepository.findAll();
-            return shipList.stream()
-                    .map(ship -> mapperUtils.shipMapper(ship)).toList();
-        } catch (Exception exception) {
-            log.debug(exception.getMessage());
-            return new ArrayList<ShipDTO>();
-        }
-    }
-
-    /**
      *
      * @param imoNumber
      * @param name
@@ -150,13 +119,46 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
      * @return
      */
     @Override
-    public List<ShipDTO> search(String imoNumber, String name, String absIdentification) {
+    public List<ShipDTO> searchShip(String imoNumber, String name, String absIdentification) {
         try {
             List<Ship> shipList = shipRepository.search(imoNumber, name, absIdentification);
             return shipList.stream().map(ship -> mapperUtils.shipMapper(ship)).collect(Collectors.toList());
         } catch (Exception exception) {
             log.debug(exception.getMessage());
             return new ArrayList<ShipDTO>();
+        }
+    }
+
+    /**
+     * @param certificateNo
+     * @return
+     */
+    @Override
+    public List<CertificateDTO> searchCertificate(String certificateNo, String certificateOrganization) {
+        List<Certificate> certificateList = certificateRepository.search(certificateNo, certificateOrganization);
+        try {
+            return certificateList.stream()
+                    .map(certificate -> mapperUtils.certificateMapper(certificate))
+                    .collect(Collectors.toList());
+        } catch (Exception exception) {
+            log.debug(exception.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public List<CertificateDTO> getAllCertificate() {
+        List<Certificate> certificateList = certificateRepository.findAll();
+        try {
+            return certificateList.stream()
+                    .map(certificate -> mapperUtils.certificateMapper(certificate))
+                    .collect(Collectors.toList());
+        } catch (Exception exception) {
+            log.debug(exception.getMessage());
+            return new ArrayList<>();
         }
     }
 }

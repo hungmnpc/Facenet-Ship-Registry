@@ -42,7 +42,7 @@ public class ShipController {
             @RequestParam(name = "abs_identification", defaultValue = "") String absIdentification
     ) {
         try {
-            List<ShipDTO> shipDTOList = generalParticularsService.search(imoNumber, name, absIdentification);
+            List<ShipDTO> shipDTOList = generalParticularsService.searchShip(imoNumber, name, absIdentification);
             return ResponseEntity.ok(shipDTOList);
         } catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());

@@ -14,7 +14,8 @@ import lombok.Setter;
 public class FrameNumberDTO {
 
     private Long id;
-    private String name;
-    private FormTM7 formTM7;
 
+    private String name;
+
+    private FormTM7 formTM7;
 }

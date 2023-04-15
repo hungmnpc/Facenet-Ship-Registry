@@ -20,11 +20,18 @@ import java.util.Date;
 public class FormTM5DTO {
 
     private Long id;
+
     private String description;
+
     private String name;
+
     private String locationOfStructure;
+
     private String tankHolDescription;
+
     private String frameNo;
+
     private Integer deadweight;
+
     private Date dateOfBuild;
 }
