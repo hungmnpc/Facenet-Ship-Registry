@@ -9,7 +9,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FormTM7DTO {
+
     private Long id;
+
     private String name;
+
     private String description;
-    }
+}

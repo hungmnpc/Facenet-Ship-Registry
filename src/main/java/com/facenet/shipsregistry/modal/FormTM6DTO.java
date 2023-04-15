@@ -9,10 +9,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FormTM6DTO {
+
     private Long id;
+
     private String name;
+
     private String description;
+
     private String structuralMembers;
+
     private String locationOfStructure;
 
 }
