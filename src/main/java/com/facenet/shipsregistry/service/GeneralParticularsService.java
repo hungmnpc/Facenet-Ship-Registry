@@ -55,5 +55,5 @@ public interface GeneralParticularsService {
      *
      * @return
      */
-    public List<ShipDTO> search(String imoNumber, String name);
+    public List<ShipDTO> search(String imoNumber, String name, String absIdentification);
 }

@@ -150,9 +150,9 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
      * @return
      */
     @Override
-    public List<ShipDTO> search(String imoNumber, String name) {
+    public List<ShipDTO> search(String imoNumber, String name, String absIdentification) {
         try {
-            List<Ship> shipList = shipRepository.search(imoNumber, name);
+            List<Ship> shipList = shipRepository.search(imoNumber, name, absIdentification);
             return shipList.stream().map(ship -> mapperUtils.shipMapper(ship)).collect(Collectors.toList());
         } catch (Exception exception) {
             log.debug(exception.getMessage());

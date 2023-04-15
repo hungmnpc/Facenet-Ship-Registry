@@ -30,10 +30,6 @@ public class ShipsregistryApplication {
 	}
 
 	public static void main(String[] args) throws ParseException {
-		String source = "01-01-2004";
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-		Date date = formatter.parse(source);
-		System.out.println(date);
 		SpringApplication.run(ShipsregistryApplication.class, args);
 	}
 
