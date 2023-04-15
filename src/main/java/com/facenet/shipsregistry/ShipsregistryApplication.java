@@ -11,11 +11,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 
 @SpringBootApplication
 public class ShipsregistryApplication {
@@ -59,7 +56,7 @@ public class ShipsregistryApplication {
 			generalParticularsService.saveNewGeneralParticulars(new GeneralParticularRequestBody(new ShipInfoRequestBody(
 					"M/T \"TM HAI HA 569\"",
 					"9274083",
-					"041319421	",
+					"041319421",
 					"HAI PHONG",
 					25400,
 					40058,

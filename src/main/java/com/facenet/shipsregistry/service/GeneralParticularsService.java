@@ -51,8 +51,11 @@ public interface GeneralParticularsService {
      */
     public List<ShipDTO> findAllShip();
 
-    /**\
+    /**
      *
+     * @param imoNumber
+     * @param name
+     * @param absIdentification
      * @return
      */
     public List<ShipDTO> search(String imoNumber, String name, String absIdentification);

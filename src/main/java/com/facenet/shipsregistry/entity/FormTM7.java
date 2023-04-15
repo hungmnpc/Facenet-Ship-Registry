@@ -13,14 +13,17 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FormTM7 {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "description")
     private String description;
+
     @Column(name = "name")
     private String name;
+
     @OneToMany(mappedBy = "formTM7", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<FrameNumber> frameNumber;
-
 }
