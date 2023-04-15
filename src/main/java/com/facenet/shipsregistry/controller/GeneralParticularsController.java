@@ -18,7 +18,7 @@ public class GeneralParticularsController {
      */
     @GetMapping("")
     public ResponseEntity<?> getAllGeneralParticulars() {
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Hello");
     }
 
     /**
@@ -30,6 +30,8 @@ public class GeneralParticularsController {
     public ResponseEntity<?> createNewGeneralParticulars(
             @RequestBody GeneralParticularRequestBody requestBody
             ) {
+
+
         return ResponseEntity.ok().build();
     }
 }
