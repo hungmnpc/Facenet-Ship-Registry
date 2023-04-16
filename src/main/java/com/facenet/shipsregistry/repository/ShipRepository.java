@@ -21,9 +21,9 @@ public interface ShipRepository extends JpaRepository<Ship, Long> {
     List<Ship> findShipsByName(String shipName);
 
     @Query(value = "select s from Ship s " +
-            "where s.imoNumber like %:i% " +
-            "and  upper(s.name) like upper(concat('%', :n, '%') )" +
-            "and s.absIdentification like %:a%")
+            "where s.imoNumber like :i% " +
+            "and  upper(s.name) like upper(concat(:n, '%') )" +
+            "and s.absIdentification like :a%")
     List<Ship> search(@Param("i") String imoNumber, @Param("n") String name,
                       @Param("a") String absIdentification);
 }

@@ -161,4 +161,16 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
             return new ArrayList<>();
         }
     }
+
+    /**
+     * @return
+     */
+    @Override
+    public List<GeneralParticularsDTO> getAllGeneralParticulars() {
+        List<GeneralParticulars> generalParticularsList =
+                generalParticularsRepository.findAll();
+        return generalParticularsList.stream()
+                .map(generalParticulars -> mapperUtils.generalParticularsMapper(generalParticulars))
+                .collect(Collectors.toList());
+    }
 }
