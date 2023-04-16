@@ -19,8 +19,8 @@ public interface CertificateRepository extends JpaRepository<Certificate, Long> 
 
     public Optional<Certificate> findCertificateByCertificateNo(String certificateNo);
 
-    @Query("select c from Certificate c where upper(c.certificateNo) like upper(concat('%' , :cn, '%') ) " +
-            "and upper(c.certificateOrganization) like upper(concat('%' , :co, '%') ) ")
+    @Query("select c from Certificate c where upper(c.certificateNo) like upper(concat(:cn, '%') ) " +
+            "and upper(c.certificateOrganization) like upper(concat(:co, '%') ) ")
     public List<Certificate> search(@Param("cn") String certificateNo,
                                     @Param("co") String certificateOrganization);
 }

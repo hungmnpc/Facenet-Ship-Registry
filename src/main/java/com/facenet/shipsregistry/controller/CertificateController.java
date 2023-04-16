@@ -1,13 +1,12 @@
 package com.facenet.shipsregistry.controller;
 
 import com.facenet.shipsregistry.modal.CertificateDTO;
+import com.facenet.shipsregistry.request.CertificateRequestBody;
 import com.facenet.shipsregistry.service.GeneralParticularsService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/certificates")
+@Slf4j
 public class CertificateController {
 
     @Autowired
@@ -34,6 +34,23 @@ public class CertificateController {
             List<CertificateDTO> certificateDTOList =
                     generalParticularsService.searchCertificate(certificateNo, certificateOrganization);
             return ResponseEntity.ok(certificateDTOList);
+        }
+    }
+
+    @PostMapping("")
+    public ResponseEntity<CertificateDTO> saveNewCertificate(
+            @RequestBody CertificateRequestBody requestBody
+            ) {
+        try {
+            CertificateDTO certificateDTO = generalParticularsService.saveNewCertificate(requestBody);
+            if (certificateDTO.getId() > 0) {
+                return ResponseEntity.ok(certificateDTO);
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (Exception exception) {
+            log.debug(exception.getMessage());
+            return ResponseEntity.badRequest().build();
         }
     }
 }
