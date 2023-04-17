@@ -1,10 +1,7 @@
 package com.facenet.shipsregistry;
 
-import com.facenet.shipsregistry.entity.Certificate;
-import com.facenet.shipsregistry.entity.GeneralParticulars;
-import com.facenet.shipsregistry.entity.Ship;
-import com.facenet.shipsregistry.modal.CertificateDTO;
-import com.facenet.shipsregistry.modal.ShipDTO;
+import com.facenet.shipsregistry.entity.*;
+import com.facenet.shipsregistry.modal.*;
 import com.facenet.shipsregistry.repository.ShipRepository;
 import com.facenet.shipsregistry.request.ShipInfoRequestBody;
 import com.facenet.shipsregistry.service.GeneralParticularsService;
