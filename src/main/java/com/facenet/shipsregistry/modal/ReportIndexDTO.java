@@ -27,5 +27,7 @@ public class ReportIndexDTO {
 
     private String item;
 
+    private String reportNo;
+
     private List<FormDTO> formList;
 }
