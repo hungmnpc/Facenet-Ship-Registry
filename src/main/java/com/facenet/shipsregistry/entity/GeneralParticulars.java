@@ -49,6 +49,9 @@ public class GeneralParticulars {
     @Temporal(TemporalType.DATE)
     private LocalDate lastDateOfMeasurement;
 
+    @Column(name = "name_of_operator")
+    private String nameOfOperator;
+
     @OneToMany(mappedBy = "generalParticulars", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<ReportIndex> reportIndexList;
 

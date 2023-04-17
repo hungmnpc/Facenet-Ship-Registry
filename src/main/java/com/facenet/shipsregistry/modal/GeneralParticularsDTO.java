@@ -38,4 +38,6 @@ public class GeneralParticularsDTO {
     private LocalDate firstDateOfMeasurement;
 
     private LocalDate lastDateOfMeasurement;
+
+    private String nameOfOperator;
 }

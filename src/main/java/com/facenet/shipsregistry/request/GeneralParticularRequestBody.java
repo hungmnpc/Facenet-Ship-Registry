@@ -35,6 +35,8 @@ public class GeneralParticularRequestBody {
 
     private LocalDate lastDateOfMeasurement;
 
+    private String nameOfOperator;
+
     /**
      *
      * @return
