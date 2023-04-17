@@ -25,6 +25,5 @@ public class FormTM5DTO {
     private String locationOfStructure;
     private String tankHolDescription;
     private String frameNo;
-    private Integer deadweight;
-    private Date dateOfBuild;
+
 }
