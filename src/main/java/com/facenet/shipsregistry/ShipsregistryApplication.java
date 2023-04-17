@@ -64,7 +64,8 @@ public class ShipsregistryApplication {
 					"DM5E DA-501(Serri DM5EG2210350); OLYMPUS 27MG (Serri 150239211)",
 					"NOSCO SHIPYARD - QUANG NINH - VIET NAM",
 					LocalDate.parse("2022-08-07"),
-					LocalDate.parse("2022-08-31")
+					LocalDate.parse("2022-08-31"),
+					"NGUYEN VAN LUYEN"
 			) );
 			try {
 				generalParticularsService.saveNewGeneralParticulars(new GeneralParticularRequestBody(new ShipInfoRequestBody(
@@ -83,7 +84,8 @@ public class ShipsregistryApplication {
 						"DM5E DA-501(Serri DM5EG2210350); OLYMPUS 27MG (Serri 150239211)",
 						"NOSCO SHIPYARD - QUANG NINH - VIET NAM",
 						LocalDate.parse("2022-08-07"),
-						LocalDate.parse("2022-08-31")
+						LocalDate.parse("2022-08-31"),
+						"NGUYEN VAN LUYEN"
 				) );
 			} catch (Exception exception) {
 				log.debug(exception.getMessage());

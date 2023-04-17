@@ -79,7 +79,8 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
                         requestBody.getSurveyorInfo(), certificate,
                         requestBody.getPlaceOfMeasurement(),
                         requestBody.getFirstDateOfMeasurement(),
-                        requestBody.getLastDateOfMeasurement(),null, false,
+                        requestBody.getLastDateOfMeasurement(),
+                        requestBody.getNameOfOperator(), null, false,
                         requestBody.getMeasurementEquipmentInfo()
                         );
         if (ship.isPresent()) {
