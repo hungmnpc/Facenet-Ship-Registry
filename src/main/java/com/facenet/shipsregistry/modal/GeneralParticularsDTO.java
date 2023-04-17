@@ -1,9 +1,14 @@
 package com.facenet.shipsregistry.modal;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDate;
 
 /**
  * @author: hungdinh
@@ -27,4 +32,10 @@ public class GeneralParticularsDTO {
     private String surveyorInfo;
 
     private String measurementEquipmentInfo;
+
+    private String placeOfMeasurement;
+
+    private LocalDate firstDateOfMeasurement;
+
+    private LocalDate lastDateOfMeasurement;
 }

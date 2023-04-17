@@ -76,8 +76,12 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
                         requestBody.getCertificateNo()).orElse(null);
         GeneralParticulars generalParticulars =
                 new GeneralParticulars(null, null, requestBody.getReportNo(),
-                        requestBody.getSurveyorInfo(), certificate, null, false,
-                        requestBody.getMeasurementEquipmentInfo());
+                        requestBody.getSurveyorInfo(), certificate,
+                        requestBody.getPlaceOfMeasurement(),
+                        requestBody.getFirstDateOfMeasurement(),
+                        requestBody.getLastDateOfMeasurement(),null, false,
+                        requestBody.getMeasurementEquipmentInfo()
+                        );
         if (ship.isPresent()) {
             generalParticulars.setShip(ship.get());
         } else {

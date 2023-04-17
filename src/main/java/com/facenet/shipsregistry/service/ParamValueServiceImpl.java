@@ -4,6 +4,7 @@ import com.facenet.shipsregistry.entity.ParamType;
 import com.facenet.shipsregistry.entity.ParamValue;
 import com.facenet.shipsregistry.modal.ParamValueDTO;
 import com.facenet.shipsregistry.repository.ParamValueRepository;
+import com.facenet.shipsregistry.request.ParamValueRequestBody;
 import com.facenet.shipsregistry.utils.MapperUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,8 @@ public class ParamValueServiceImpl implements ParamValueService{
     MapperUtils mapperUtils;
 
     /**
-     * @param paramType
+     *
+     * @param type
      * @return
      */
     @Override
@@ -44,12 +46,15 @@ public class ParamValueServiceImpl implements ParamValueService{
     }
 
     /**
-     * @param paramValue
+     *
+     * @param requestBody
      * @return
      */
     @Override
-    public ParamValueDTO saveNewParamValue(ParamValue paramValue) {
-        ParamValue paramValueSaved = paramValueRepository.save(paramValue);
+    public ParamValueDTO saveNewParamValue(ParamValueRequestBody requestBody) {
+        ParamValue paramValueSaved = paramValueRepository.save(
+                new ParamValue(null, requestBody.getParam(), requestBody.getValue(),
+                        ParamType.of(requestBody.getType())));
         if (paramValueSaved.getId() > 0) {
             return mapperUtils.paramValueMapper(paramValueSaved);
         } else {

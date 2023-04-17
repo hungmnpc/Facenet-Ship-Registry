@@ -1,13 +1,15 @@
 package com.facenet.shipsregistry.controller;
 
+import com.facenet.shipsregistry.entity.ParamValue;
+import com.facenet.shipsregistry.modal.ParamValueDTO;
 import com.facenet.shipsregistry.service.ParamValueService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.parameters.P;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author: hungdinh
@@ -25,6 +27,13 @@ public class ParamValueController {
     public ResponseEntity<?> getParamValue(
             @RequestParam(name = "type", defaultValue = "0") Integer type
     ) {
-        return ResponseEntity.ok(type);
+        try {
+            List<ParamValueDTO> paramValueDTOList =
+                    paramValueService.getParamValueByType(type);
+            return ResponseEntity.ok(paramValueDTOList);
+        } catch (Exception exception) {
+            log.debug(exception.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
