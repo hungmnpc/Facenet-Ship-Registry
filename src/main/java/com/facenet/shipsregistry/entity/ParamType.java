@@ -6,7 +6,6 @@ import lombok.ToString;
 import java.util.stream.Stream;
 
 @Getter
-@ToString
 public enum ParamType {
 
     NONE(0), COMPANY_NAME(1), SURVEYOR(2), MEASUREMENT_EQUIPMENT(3), OPERATOR_NAME(4),
@@ -33,6 +32,7 @@ public enum ParamType {
         return of(paramType.getType());
     }
 
+    @Override
     public String toString() {
         switch (paramType) {
             case 1:

@@ -5,6 +5,7 @@ import com.facenet.shipsregistry.entity.ParamValue;
 import com.facenet.shipsregistry.modal.ParamValueDTO;
 import com.facenet.shipsregistry.request.CertificateRequestBody;
 import com.facenet.shipsregistry.request.GeneralParticularRequestBody;
+import com.facenet.shipsregistry.request.ParamValueRequestBody;
 import com.facenet.shipsregistry.request.ShipInfoRequestBody;
 import com.facenet.shipsregistry.service.GeneralParticularsService;
 import com.facenet.shipsregistry.service.ParamValueService;
@@ -60,7 +61,10 @@ public class ShipsregistryApplication {
 					"VMC.UTM.22.093/5400433",
 					"MANOP SRISUNGVAL",
 					"22-5280779-A",
-					"DM5E DA-501(Serri DM5EG2210350); OLYMPUS 27MG (Serri 150239211)"
+					"DM5E DA-501(Serri DM5EG2210350); OLYMPUS 27MG (Serri 150239211)",
+					"NOSCO SHIPYARD - QUANG NINH - VIET NAM",
+					LocalDate.parse("2022-08-07"),
+					LocalDate.parse("2022-08-31")
 			) );
 			try {
 				generalParticularsService.saveNewGeneralParticulars(new GeneralParticularRequestBody(new ShipInfoRequestBody(
@@ -76,17 +80,23 @@ public class ShipsregistryApplication {
 						"VMC.UTM.22.093/5400434",
 						"MANOP SRISUNGVAL",
 						"22-5280779-A",
-						"DM5E DA-501(Serri DM5EG2210350); OLYMPUS 27MG (Serri 150239211)"
+						"DM5E DA-501(Serri DM5EG2210350); OLYMPUS 27MG (Serri 150239211)",
+						"NOSCO SHIPYARD - QUANG NINH - VIET NAM",
+						LocalDate.parse("2022-08-07"),
+						LocalDate.parse("2022-08-31")
 				) );
 			} catch (Exception exception) {
 				log.debug(exception.getMessage());
 			}
 
 			ParamValueDTO paramValueDTO = paramValueService.saveNewParamValue(
-					new ParamValue(null, "DM5E DA-501", "DM5EG2210350", ParamType.MEASUREMENT_EQUIPMENT)
+					new ParamValueRequestBody("DM5E DA-501", "DM5EG2210350", 3)
 			);
 			ParamValueDTO paramValueDTO2 = paramValueService.saveNewParamValue(
-					new ParamValue(null, "OLYMPUS 27MG", "150239211	", ParamType.MEASUREMENT_EQUIPMENT)
+					new ParamValueRequestBody("OLYMPUS 27MG", "150239211",3)
+			);
+			ParamValueDTO paramValueDTO3 = paramValueService.saveNewParamValue(
+					new ParamValueRequestBody("Surveyor", "MANOP SRISUNGVAL",2)
 			);
 
 		};

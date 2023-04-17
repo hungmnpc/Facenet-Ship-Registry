@@ -3,6 +3,7 @@ package com.facenet.shipsregistry.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -36,6 +37,17 @@ public class GeneralParticulars {
     @ManyToOne
     @JoinColumn(name = "certificate_id")
     private Certificate certificate;
+
+    @Column(name = "place_of_measurement")
+    private String placeOfMeasurement;
+
+    @Column(name = "first_date_of_measurement")
+    @Temporal(TemporalType.DATE)
+    private LocalDate firstDateOfMeasurement;
+
+    @Column(name = "last_date_of_measurement")
+    @Temporal(TemporalType.DATE)
+    private LocalDate lastDateOfMeasurement;
 
     @OneToMany(mappedBy = "generalParticulars", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<ReportIndex> reportIndexList;
