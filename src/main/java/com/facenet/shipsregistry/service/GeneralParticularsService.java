@@ -59,4 +59,10 @@ public interface GeneralParticularsService {
      * @return
      */
     public List<CertificateDTO> getAllCertificate();
+
+    /**
+     *
+     * @return
+     */
+    public List<GeneralParticularsDTO> getAllGeneralParticulars();
 }

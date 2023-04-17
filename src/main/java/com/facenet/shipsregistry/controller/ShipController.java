@@ -31,8 +31,13 @@ public class ShipController {
      */
     @PostMapping("")
     public ResponseEntity<ShipDTO> createNewShip(@RequestBody ShipInfoRequestBody requestBody) {
-        ShipDTO shipDTO = generalParticularsService.saveNewShip(requestBody);
-        return shipDTO != null ? ResponseEntity.ok(shipDTO) : ResponseEntity.badRequest().build();
+        try {
+            ShipDTO shipDTO = generalParticularsService.saveNewShip(requestBody);
+            return shipDTO != null ? ResponseEntity.ok(shipDTO) : ResponseEntity.badRequest().build();
+        } catch (Exception exception) {
+            log.debug(exception.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping("")

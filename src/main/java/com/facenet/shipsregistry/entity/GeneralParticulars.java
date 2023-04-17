@@ -27,7 +27,7 @@ public class GeneralParticulars {
     @JoinColumn(name = "ship_id")
     private Ship ship;
 
-    @Column(name = "report_number", length = 100)
+    @Column(name = "report_number", length = 100, unique = true)
     private String reportNo;
 
     @Column(name = "surveyor_info", length = 100)
@@ -42,4 +42,8 @@ public class GeneralParticulars {
 
     @Column(name = "lock", nullable = false)
     private Boolean lock = false;
+
+    @Column(name = "measurement_equipment_info")
+    @Lob
+    private String measurementEquipmentInfo;
 }

@@ -25,4 +25,6 @@ public class GeneralParticularsDTO {
     private String reportNo;
 
     private String surveyorInfo;
+
+    private String measurementEquipmentInfo;
 }

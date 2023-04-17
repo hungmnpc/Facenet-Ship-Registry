@@ -76,7 +76,8 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
                         requestBody.getCertificateNo()).orElse(null);
         GeneralParticulars generalParticulars =
                 new GeneralParticulars(null, null, requestBody.getReportNo(),
-                        requestBody.getSurveyorInfo(), certificate, null, false);
+                        requestBody.getSurveyorInfo(), certificate, null, false,
+                        requestBody.getMeasurementEquipmentInfo());
         if (ship.isPresent()) {
             generalParticulars.setShip(ship.get());
         } else {
@@ -160,5 +161,17 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
             log.debug(exception.getMessage());
             return new ArrayList<>();
         }
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public List<GeneralParticularsDTO> getAllGeneralParticulars() {
+        List<GeneralParticulars> generalParticularsList =
+                generalParticularsRepository.findAll();
+        return generalParticularsList.stream()
+                .map(generalParticulars -> mapperUtils.generalParticularsMapper(generalParticulars))
+                .collect(Collectors.toList());
     }
 }

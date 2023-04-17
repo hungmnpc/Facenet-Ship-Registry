@@ -8,4 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Date created: 11/04/2023
  */
 public interface GeneralParticularsRepository extends JpaRepository<GeneralParticulars, Long> {
+
+
 }
