@@ -29,4 +29,6 @@ public class ShipInfoRequestBody {
     private Integer deadweight;
 
     private LocalDate dateOfBuild;
+
+    private String classificationSociety;
 }
