@@ -1,9 +1,13 @@
 package com.facenet.shipsregistry;
 
+import com.facenet.shipsregistry.entity.ParamType;
+import com.facenet.shipsregistry.entity.ParamValue;
+import com.facenet.shipsregistry.modal.ParamValueDTO;
 import com.facenet.shipsregistry.request.CertificateRequestBody;
 import com.facenet.shipsregistry.request.GeneralParticularRequestBody;
 import com.facenet.shipsregistry.request.ShipInfoRequestBody;
 import com.facenet.shipsregistry.service.GeneralParticularsService;
+import com.facenet.shipsregistry.service.ParamValueService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
@@ -35,7 +39,7 @@ public class ShipsregistryApplication {
 	}
 
 	@Bean
-	CommandLineRunner run(GeneralParticularsService generalParticularsService) {
+	CommandLineRunner run(GeneralParticularsService generalParticularsService, ParamValueService paramValueService) {
 		return args -> {
 			generalParticularsService.saveNewCertificate(
 					new CertificateRequestBody("AMERICAN BUREAU OF SHIPPING",
@@ -50,7 +54,8 @@ public class ShipsregistryApplication {
 					"HAI PHONG",
 					25400,
 					40058,
-					LocalDate.parse("2015-01-01")
+					LocalDate.parse("2015-01-01"),
+					"AMERICAN BUREAU OF SHIPPING"
 			),
 					"VMC.UTM.22.093/5400433",
 					"MANOP SRISUNGVAL",
@@ -65,7 +70,8 @@ public class ShipsregistryApplication {
 						"HAI PHONG",
 						25400,
 						40058,
-						LocalDate.parse("2015-01-01")
+						LocalDate.parse("2015-01-01"),
+						"AMERICAN BUREAU OF SHIPPING"
 				),
 						"VMC.UTM.22.093/5400434",
 						"MANOP SRISUNGVAL",
@@ -75,6 +81,13 @@ public class ShipsregistryApplication {
 			} catch (Exception exception) {
 				log.debug(exception.getMessage());
 			}
+
+			ParamValueDTO paramValueDTO = paramValueService.saveNewParamValue(
+					new ParamValue(null, "DM5E DA-501", "DM5EG2210350", ParamType.MEASUREMENT_EQUIPMENT)
+			);
+			ParamValueDTO paramValueDTO2 = paramValueService.saveNewParamValue(
+					new ParamValue(null, "OLYMPUS 27MG", "150239211	", ParamType.MEASUREMENT_EQUIPMENT)
+			);
 
 		};
 	}

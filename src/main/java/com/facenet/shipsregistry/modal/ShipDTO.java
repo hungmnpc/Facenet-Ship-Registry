@@ -35,4 +35,6 @@ public class ShipDTO {
     private Integer deadweight;
 
     private LocalDate dateOfBuild;
+
+    private String classificationSociety;
 }

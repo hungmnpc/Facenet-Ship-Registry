@@ -47,6 +47,9 @@ public class Ship {
     @Temporal(TemporalType.DATE)
     private LocalDate dateOfBuild;
 
+    @Column(name = "classification_society")
+    private String classificationSociety;
+
     @OneToMany(mappedBy = "ship", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<GeneralParticulars> generalParticularsList;
 }

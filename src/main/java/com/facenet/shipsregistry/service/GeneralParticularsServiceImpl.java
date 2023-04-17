@@ -55,7 +55,7 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
         Ship ship = new Ship(null, requestBody.getName(), requestBody.getImoNumber(),
                 requestBody.getAbsIdentification(), requestBody.getPostOfRegistry(),
                 requestBody.getGrossTons(), requestBody.getDeadweight(),
-                requestBody.getDateOfBuild(), null);
+                requestBody.getDateOfBuild(), requestBody.getClassificationSociety(), null);
 
         Ship shipSave = shipRepository.save(ship);
         if (shipSave.getShip_id() > 0) {
