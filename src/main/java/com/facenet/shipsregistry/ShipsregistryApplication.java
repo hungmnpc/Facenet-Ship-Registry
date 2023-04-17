@@ -54,7 +54,8 @@ public class ShipsregistryApplication {
 			),
 					"VMC.UTM.22.093/5400433",
 					"MANOP SRISUNGVAL",
-					"22-5280779-A"
+					"22-5280779-A",
+					"DM5E DA-501(Serri DM5EG2210350); OLYMPUS 27MG (Serri 150239211)"
 			) );
 			try {
 				generalParticularsService.saveNewGeneralParticulars(new GeneralParticularRequestBody(new ShipInfoRequestBody(
@@ -68,7 +69,8 @@ public class ShipsregistryApplication {
 				),
 						"VMC.UTM.22.093/5400434",
 						"MANOP SRISUNGVAL",
-						"22-5280779-A"
+						"22-5280779-A",
+						"DM5E DA-501(Serri DM5EG2210350); OLYMPUS 27MG (Serri 150239211)"
 				) );
 			} catch (Exception exception) {
 				log.debug(exception.getMessage());

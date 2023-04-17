@@ -23,6 +23,8 @@ public class GeneralParticularRequestBody {
 
     private String certificateNo;
 
+    private String measurementEquipmentInfo;
+
     /**
      *
      * @return

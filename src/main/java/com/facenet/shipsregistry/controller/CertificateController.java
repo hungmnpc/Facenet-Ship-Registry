@@ -23,6 +23,12 @@ public class CertificateController {
     @Autowired
     private GeneralParticularsService generalParticularsService;
 
+    /**
+     *
+     * @param certificateNo
+     * @param certificateOrganization
+     * @return
+     */
     @GetMapping("")
     public ResponseEntity<?> searchCertificates(
             @RequestParam(name = "certificateNo", defaultValue = "") String certificateNo,
@@ -37,6 +43,11 @@ public class CertificateController {
         }
     }
 
+    /**
+     *
+     * @param requestBody
+     * @return
+     */
     @PostMapping("")
     public ResponseEntity<CertificateDTO> saveNewCertificate(
             @RequestBody CertificateRequestBody requestBody

@@ -42,4 +42,8 @@ public class GeneralParticulars {
 
     @Column(name = "lock", nullable = false)
     private Boolean lock = false;
+
+    @Column(name = "measurement_equipment_info")
+    @Lob
+    private String measurementEquipmentInfo;
 }
