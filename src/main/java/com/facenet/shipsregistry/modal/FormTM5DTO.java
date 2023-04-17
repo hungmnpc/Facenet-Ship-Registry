@@ -1,12 +1,14 @@
 package com.facenet.shipsregistry.modal;
 
 
+import com.facenet.shipsregistry.entity.MeasurementTM5;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author: hungdinh
@@ -25,5 +27,5 @@ public class FormTM5DTO {
     private String locationOfStructure;
     private String tankHolDescription;
     private String frameNo;
-
+    private List<MeasurementTM5> measurementTM5List;
 }

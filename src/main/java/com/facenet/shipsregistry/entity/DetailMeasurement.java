@@ -45,4 +45,7 @@ public class DetailMeasurement {
     @OneToOne(mappedBy = "afterReadingMeasurementDetail",
             cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private MeasurementTM1 measurementTM1AfterList;
+    @OneToOne(mappedBy = "measurement_detail_id",
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private MeasurementTM5 measurementTM5;
 }
