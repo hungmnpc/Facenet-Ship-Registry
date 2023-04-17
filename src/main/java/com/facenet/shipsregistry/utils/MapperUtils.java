@@ -50,6 +50,7 @@ public class MapperUtils {
                 modelMapper.map(generalParticulars, GeneralParticularsDTO.class);
         generalParticularsDTO.setShipInfo(shipMapper(generalParticulars.getShip()));
         generalParticularsDTO.setCertificateDTO(certificateMapper(generalParticulars.getCertificate()));
+        generalParticularsDTO.setNameOfSurveyor(generalParticulars.getSurveyorInfo());
         return generalParticularsDTO;
     }
 
