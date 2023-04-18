@@ -22,6 +22,13 @@ import java.util.List;
 @Setter
 public class DetailMeasurement {
 
+    public DetailMeasurement(Double originalThickness, Double maxAlwbDim, Double gaugedP, Double gaugedS) {
+        this.originalThickness = originalThickness;
+        this.maxAlwbDim = maxAlwbDim;
+        this.gaugedP = gaugedP;
+        this.gaugedS = gaugedS;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
