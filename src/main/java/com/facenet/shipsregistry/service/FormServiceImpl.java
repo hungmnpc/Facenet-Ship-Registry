@@ -54,20 +54,16 @@ public class FormServiceImpl implements FormService{
                 requestBody.getMeasurementTM1List().stream()
                         .map(measurementTM1DTO -> {
                             DetailMeasurement detailMeasurementForward = new DetailMeasurement(
-                                    null, measurementTM1DTO.getForwardReadingMeasurementDetail().getOriginalThickness(),
+                                    measurementTM1DTO.getForwardReadingMeasurementDetail().getOriginalThickness(),
                                     measurementTM1DTO.getForwardReadingMeasurementDetail().getMaxAlwbDim(),
                                     measurementTM1DTO.getForwardReadingMeasurementDetail().getGaugedP(),
-                                    measurementTM1DTO.getForwardReadingMeasurementDetail().getGaugedS(),
-                                    null,
-                                    null
+                                    measurementTM1DTO.getForwardReadingMeasurementDetail().getGaugedS()
                             );
                             DetailMeasurement detailMeasurementAfter = new DetailMeasurement(
-                                    null, measurementTM1DTO.getAfterReadingMeasurementDetail().getOriginalThickness(),
+                                    measurementTM1DTO.getAfterReadingMeasurementDetail().getOriginalThickness(),
                                     measurementTM1DTO.getAfterReadingMeasurementDetail().getMaxAlwbDim(),
                                     measurementTM1DTO.getAfterReadingMeasurementDetail().getGaugedP(),
-                                    measurementTM1DTO.getAfterReadingMeasurementDetail().getGaugedS(),
-                                    null,
-                                    null
+                                    measurementTM1DTO.getAfterReadingMeasurementDetail().getGaugedS()
                             );
                              return new MeasurementTM1(null, measurementTM1DTO.getPlatePosition(),
                                     measurementTM1DTO.getNoOrLetter(), formTM1,
