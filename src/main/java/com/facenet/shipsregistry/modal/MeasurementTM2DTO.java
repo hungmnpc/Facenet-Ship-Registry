@@ -20,7 +20,5 @@ public class MeasurementTM2DTO {
 
     private String noOrLetter;
 
-    private FormTM2DTO formTM2DTO;
-
-    //Thieu detailmeasurementDTO
+    private DetailMeasurementDTO detailMeasurementDTO;
 }

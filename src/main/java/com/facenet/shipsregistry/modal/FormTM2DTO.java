@@ -16,7 +16,5 @@ public class FormTM2DTO {
 
     private Long id;
 
-    private String description;
-
     private String name;
 }
