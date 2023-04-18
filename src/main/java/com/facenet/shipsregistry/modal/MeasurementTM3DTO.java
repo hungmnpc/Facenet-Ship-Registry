@@ -20,5 +20,9 @@ public class MeasurementTM3DTO {
 
     private String noOrLetter;
 
-    private FormTM3DTO formTM3DTO;
+    private DetailMeasurementDTO firstTransverseSectionMeasurementDetail;
+
+    private DetailMeasurementDTO secondTransverseSectionMeasurementDetail;
+
+    private DetailMeasurementDTO thirdTransverseSectionMeasurementDetail;
 }
