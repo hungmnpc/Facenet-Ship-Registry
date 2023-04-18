@@ -2,6 +2,7 @@ package com.facenet.shipsregistry.utils;
 
 import com.facenet.shipsregistry.entity.*;
 import com.facenet.shipsregistry.modal.*;
+import com.facenet.shipsregistry.request.DetailMeasurementRequestBody;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -62,6 +63,11 @@ public class MapperUtils {
         return paramValueDTO;
     }
 
+    /**
+     *
+     * @param formTm1
+     * @return
+     */
     public FormTM1DTO formTM1Mapper(FormTM1 formTm1) {
         FormTM1DTO formTM1DTO = modelMapper.map(formTm1, FormTM1DTO.class);
         List<MeasurementTM1DTO> measurementTM1DTOList =
@@ -70,6 +76,41 @@ public class MapperUtils {
                         .toList();
         formTM1DTO.setMeasurementTM1DTOList(measurementTM1DTOList);
         return formTM1DTO;
+    }
+
+    /**
+     *
+     * @param formTM2
+     * @return
+     */
+    public FormTM2DTO formTM2Mapper(FormTM2 formTM2) {
+        FormTM2DTO formTM2DTO = modelMapper.map(formTM2, FormTM2DTO.class);
+        List<MeasurementTM2DTO> measurementTM2DTOList =
+                formTM2.getMeasurementTM2List().stream()
+                        .map(this::measurementTM2DTO)
+                        .toList();
+        formTM2DTO.setMeasurementTM2DTOList(measurementTM2DTOList);
+        return formTM2DTO;
+    }
+
+    public MeasurementTM2DTO measurementTM2DTO(MeasurementTM2 measurementTM2) {
+        MeasurementTM2DTO measurementTM2DTO = modelMapper.map(measurementTM2, MeasurementTM2DTO.class);
+        if (measurementTM2DTO.getFirstTransverseSectionMeasurementDetailTM2() != null) {
+            measurementTM2DTO.setFirstTransverseSectionMeasurementDetailTM2(
+                    detailMeasurementMapper(measurementTM2.getFirstTransverseSectionMeasurementDetailTM2())
+            );
+        }
+        if (measurementTM2DTO.getSecondTransverseSectionMeasurementDetailTM2() != null) {
+            measurementTM2DTO.setSecondTransverseSectionMeasurementDetailTM2(
+                    detailMeasurementMapper(measurementTM2.getSecondTransverseSectionMeasurementDetailTM2())
+            );
+        }
+        if (measurementTM2DTO.getThirdTransverseSectionMeasurementDetailTM2() != null) {
+            measurementTM2DTO.setThirdTransverseSectionMeasurementDetailTM2(
+                    detailMeasurementMapper(measurementTM2.getThirdTransverseSectionMeasurementDetailTM2())
+            );
+        }
+        return measurementTM2DTO;
     }
 
     /**
@@ -146,5 +187,11 @@ public class MapperUtils {
         List<FormDTO> formDTOList = new ArrayList<>(formTM1DTOList);
         reportIndexDTO.setFormList(formDTOList);
         return reportIndexDTO;
+    }
+
+
+    public DetailMeasurement mapperToDetailMeasurement(DetailMeasurementRequestBody requestBody) {
+        return new DetailMeasurement(requestBody.getOriginalThickness(),
+                requestBody.getMaxAlwbDim(), requestBody.getGaugedP(), requestBody.getGaugedS());
     }
 }

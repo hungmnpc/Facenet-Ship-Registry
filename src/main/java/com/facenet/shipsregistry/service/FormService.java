@@ -6,6 +6,7 @@ import com.facenet.shipsregistry.modal.FormTM3DTO;
 import com.facenet.shipsregistry.modal.ReportIndexDTO;
 import com.facenet.shipsregistry.request.FormTM1RequestBody;
 import com.facenet.shipsregistry.request.FormTM3RequestBody;
+import com.facenet.shipsregistry.request.FormTM2RequestBody;
 import com.facenet.shipsregistry.request.ReportIndexRequestBody;
 
 import java.util.List;
@@ -65,4 +66,11 @@ public interface FormService {
      * @return
      */
     public ReportIndexDTO getReportIndexByID(Long id);
+
+    /**
+     *
+     * @param requestBody
+     * @return
+     */
+    public FormDTO saveNewFormTM2 (FormTM2RequestBody requestBody, Long id);
 }

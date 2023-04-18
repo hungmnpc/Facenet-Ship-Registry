@@ -1,6 +1,5 @@
 package com.facenet.shipsregistry.request;
 
-import com.facenet.shipsregistry.modal.DetailMeasurementDTO;
 import lombok.*;
 
 /**
