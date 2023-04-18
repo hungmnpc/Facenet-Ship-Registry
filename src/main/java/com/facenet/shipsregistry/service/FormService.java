@@ -23,8 +23,29 @@ public interface FormService {
 
     /**
      *
+     * @param id
+     * @return
+     */
+    public List<FormDTO> findAllFormInReportIndex(Long id);
+
+    /**
+     *
      * @param requestBody
      * @return
      */
     public ReportIndexDTO saveNewReportIndex(ReportIndexRequestBody requestBody, Long id);
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public FormTM1DTO getFormTM1ByID(Long id);
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public ReportIndexDTO getReportIndexByID(Long id);
 }

@@ -2,6 +2,7 @@ package com.facenet.shipsregistry.service;
 
 import com.facenet.shipsregistry.entity.*;
 import com.facenet.shipsregistry.modal.FormDTO;
+import com.facenet.shipsregistry.modal.FormTM1DTO;
 import com.facenet.shipsregistry.modal.ReportIndexDTO;
 import com.facenet.shipsregistry.repository.FormTM1Repository;
 import com.facenet.shipsregistry.repository.GeneralParticularsRepository;
@@ -87,6 +88,16 @@ public class FormServiceImpl implements FormService{
     }
 
     /**
+     * @param id
+     * @return
+     */
+    @Override
+    public FormTM1DTO getFormTM1ByID(Long id) {
+        Optional<FormTM1> formTM1 = formTM1Repository.findById(id);
+        return formTM1.map(tm1 -> mapperUtils.formTM1Mapper(tm1)).orElse(null);
+    }
+
+    /**
      * @param requestBody
      * @return
      */
@@ -105,6 +116,26 @@ public class FormServiceImpl implements FormService{
         } catch (Exception exception) {
             log.debug(exception.getMessage());
         }
+        return null;
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    public ReportIndexDTO getReportIndexByID(Long id) {
+        Optional<ReportIndex> reportIndex = reportIndexRepository.findById(id);
+        return reportIndex.map(index -> mapperUtils.reportIndexMapper(index)).orElse(null);
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    public List<FormDTO> findAllFormInReportIndex(Long id) {
+//        List<FormTM1DTO> formTM1DTOList =
         return null;
     }
 }
