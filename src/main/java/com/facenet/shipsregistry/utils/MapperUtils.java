@@ -6,6 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -102,6 +103,14 @@ public class MapperUtils {
     public ReportIndexDTO reportIndexMapper(ReportIndex reportIndex) {
         ReportIndexDTO reportIndexDTO = modelMapper.map(reportIndex, ReportIndexDTO.class);
         reportIndexDTO.setReportNo(reportIndex.getGeneralParticulars().getReportNo());
+        List<FormTM1DTO> formTM1DTOList = new ArrayList<>();
+        if (reportIndex.getFormTM1List() != null) {
+             formTM1DTOList = reportIndex.getFormTM1List().stream()
+                    .map(this::formTM1Mapper)
+                    .toList();
+        }
+        List<FormDTO> formDTOList = new ArrayList<>(formTM1DTOList);
+        reportIndexDTO.setFormList(formDTOList);
         return reportIndexDTO;
     }
 }

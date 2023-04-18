@@ -2,11 +2,13 @@ package com.facenet.shipsregistry.controller;
 
 import com.facenet.shipsregistry.modal.FormDTO;
 import com.facenet.shipsregistry.modal.FormTM1DTO;
+import com.facenet.shipsregistry.modal.ReportIndexDTO;
 import com.facenet.shipsregistry.request.FormTM1RequestBody;
 import com.facenet.shipsregistry.service.FormService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,7 +47,21 @@ public class FormController {
             log.debug(exception.getMessage());
             return ResponseEntity.internalServerError().build();
         }
+    }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getAllFormFromReportIndex(@PathVariable Long id) {
+        try {
+            ReportIndexDTO reportIndexDTO = formService.getReportIndexByID(id);
+            if (reportIndexDTO != null) {
+                return ResponseEntity.ok(reportIndexDTO);
+            } else {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            }
+        } catch (Exception exception) {
+            log.debug(exception.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @PostMapping("/tm2")
