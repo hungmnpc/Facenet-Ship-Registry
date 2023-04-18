@@ -1,5 +1,9 @@
 package com.facenet.shipsregistry.modal;
 
+import com.facenet.shipsregistry.entity.DetailMeasurement;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import lombok.*;
 
 /**
@@ -20,7 +24,9 @@ public class MeasurementTM2DTO {
 
     private String noOrLetter;
 
-    private FormTM2DTO formTM2DTO;
+    private DetailMeasurementDTO firstTransverseSectionMeasurementDetailTM2;
 
-    //Thieu detailmeasurementDTO
+    private DetailMeasurementDTO secondTransverseSectionMeasurementDetailTM2;
+
+    private DetailMeasurementDTO thirdTransverseSectionMeasurementDetailTM2;
 }

@@ -42,16 +42,4 @@ public class MeasurementTM2 {
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "3rd_transverse_section_measurement_detail_id_TM2")
     private DetailMeasurement thirdTransverseSectionMeasurementDetailTM2;
-
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "1st_frame_no_TM2")
-    private DetailMeasurement firstFrameNoTM2;
-
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "2nd_frame_no_TM2")
-    private DetailMeasurement secondFrameNoTM2;
-
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "3rd_frame_no_TM2")
-    private DetailMeasurement thirdFrameNoTM2;
 }

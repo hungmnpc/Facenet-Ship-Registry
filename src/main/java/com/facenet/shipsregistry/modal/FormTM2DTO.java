@@ -2,6 +2,8 @@ package com.facenet.shipsregistry.modal;
 
 import lombok.*;
 
+import java.util.List;
+
 /**
  * @author: CongTu
  * Date created: 15/04/2023
@@ -12,11 +14,13 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class FormTM2DTO {
+public class FormTM2DTO implements FormDTO {
+
+    String type = "FORM TM2";
 
     private Long id;
 
-    private String description;
-
     private String name;
+
+    private List<MeasurementTM2DTO> measurementTM2DTOList;
 }

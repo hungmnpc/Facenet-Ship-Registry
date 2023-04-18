@@ -4,6 +4,7 @@ import com.facenet.shipsregistry.modal.FormDTO;
 import com.facenet.shipsregistry.modal.FormTM1DTO;
 import com.facenet.shipsregistry.modal.ReportIndexDTO;
 import com.facenet.shipsregistry.request.FormTM1RequestBody;
+import com.facenet.shipsregistry.request.FormTM2RequestBody;
 import com.facenet.shipsregistry.service.FormService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -49,6 +50,23 @@ public class FormController {
         }
     }
 
+    @PostMapping("/{id}/tm2s")
+    public ResponseEntity<?> saveNewFormTm2(HttpServletRequest request,
+                                            @PathVariable Long id,
+                                            @RequestBody FormTM2RequestBody requestBody) {
+        try {
+            FormDTO formTM2Saved = formService.saveNewFormTM2(requestBody, id);
+            if (formTM2Saved != null) {
+                return ResponseEntity.created(URI.create(request.getRequestURI())).body(formTM2Saved);
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (Exception exception) {
+            log.debug(exception.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getAllFormFromReportIndex(@PathVariable Long id) {
         try {
@@ -63,11 +81,4 @@ public class FormController {
             return ResponseEntity.internalServerError().build();
         }
     }
-
-    @PostMapping("/tm2")
-    public ResponseEntity<?> saveNewFormTm2(HttpServletRequest request) {
-        return ResponseEntity.created(URI.create(request.getRequestURI())).body("TM2");
-    }
-
-
 }

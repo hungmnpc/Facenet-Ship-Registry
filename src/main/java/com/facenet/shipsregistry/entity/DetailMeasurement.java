@@ -22,6 +22,13 @@ import java.util.List;
 @Setter
 public class DetailMeasurement {
 
+    public DetailMeasurement(Double originalThickness, Double maxAlwbDim, Double gaugedP, Double gaugedS) {
+        this.originalThickness = originalThickness;
+        this.maxAlwbDim = maxAlwbDim;
+        this.gaugedP = gaugedP;
+        this.gaugedS = gaugedS;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -45,6 +52,23 @@ public class DetailMeasurement {
     @OneToOne(mappedBy = "afterReadingMeasurementDetail",
             cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private MeasurementTM1 measurementTM1AfterList;
+
+    @OneToOne(mappedBy = "measurementDetail",
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private MeasurementTM5 measurementTM5;
+    @OneToOne(mappedBy = "measurementDetail",
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private MeasurementTM6 measurementTM6;
+    @OneToOne(mappedBy = "upperPart",
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private MeasurementTM7 measurementTM7UpperPart;
+    @OneToOne(mappedBy = "midPart",
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private MeasurementTM7 measurementTM7MidPart;
+    @OneToOne(mappedBy = "lowerPart",
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private MeasurementTM7 measurementTM7LowerPart;
+
 
 //    @OneToOne(mappedBy = "firstTransverseSectionMeasurementDetailTM2",
 //            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -97,4 +121,5 @@ public class DetailMeasurement {
 //    @OneToOne(mappedBy = "measurementDetailId",
 //            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 //    private StructuralMemberDetailsTM4 structuralMemberDetailsTM4;
+
 }
