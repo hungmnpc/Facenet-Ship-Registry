@@ -45,7 +45,19 @@ public class DetailMeasurement {
     @OneToOne(mappedBy = "afterReadingMeasurementDetail",
             cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private MeasurementTM1 measurementTM1AfterList;
-    @OneToOne(mappedBy = "measurement_detail_id",
+    @OneToOne(mappedBy = "measurementDetail",
             cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private MeasurementTM5 measurementTM5;
+    @OneToOne(mappedBy = "measurementDetail",
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private MeasurementTM6 measurementTM6;
+    @OneToOne(mappedBy = "upperPart",
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private MeasurementTM7 measurementTM7UpperPart;
+    @OneToOne(mappedBy = "midPart",
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private MeasurementTM7 measurementTM7MidPart;
+    @OneToOne(mappedBy = "lowerPart",
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private MeasurementTM7 measurementTM7LowerPart;
 }
