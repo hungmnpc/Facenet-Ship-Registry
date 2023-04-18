@@ -23,7 +23,7 @@ public class GeneralParticularRequestBody {
 
     private String reportNo;
 
-    private String nameOfSurveyor;
+    private String surveyorInfo;
 
     private String certificateNo;
 
