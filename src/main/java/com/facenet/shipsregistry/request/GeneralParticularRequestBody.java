@@ -2,7 +2,11 @@ package com.facenet.shipsregistry.request;
 
 import com.facenet.shipsregistry.entity.Ship;
 import jakarta.persistence.Column;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.*;
+
+import java.time.LocalDate;
 
 /**
  * @author: hungdinh
@@ -22,6 +26,16 @@ public class GeneralParticularRequestBody {
     private String surveyorInfo;
 
     private String certificateNo;
+
+    private String measurementEquipmentInfo;
+
+    private String placeOfMeasurement;
+
+    private LocalDate firstDateOfMeasurement;
+
+    private LocalDate lastDateOfMeasurement;
+
+    private String nameOfOperator;
 
     /**
      *

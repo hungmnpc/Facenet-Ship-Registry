@@ -22,10 +22,22 @@ import java.util.List;
 public class FormTM5DTO {
 
     private Long id;
+
     private String description;
+
     private String name;
+
     private String locationOfStructure;
+
     private String tankHolDescription;
+
     private String frameNo;
+
     private List<MeasurementTM5> measurementTM5List;
+
+
+    private Integer deadweight;
+
+    private Date dateOfBuild;
+
 }

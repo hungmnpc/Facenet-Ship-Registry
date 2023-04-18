@@ -13,10 +13,15 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FormTM6DTO {
+
     private Long id;
+
     private String name;
+
     private String description;
+
     private String structuralMembers;
+
     private String locationOfStructure;
     private List<StructuralDescriptionTM6> structuralDescriptionTM6List;
 }

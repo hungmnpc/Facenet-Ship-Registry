@@ -31,6 +31,7 @@ public class MeasurementTM7 {
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "mid_part_id")
     private DetailMeasurement midPart;
+    
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "lower_part_id")
     private DetailMeasurement lowerPart;

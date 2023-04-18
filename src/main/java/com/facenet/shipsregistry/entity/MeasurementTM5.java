@@ -24,6 +24,7 @@ public class MeasurementTM5 {
 
     @Column(name = "structural_component_type")
     private String structuralComponentType;
+
     @Column(name = "structural_component_no")
     private String structuralComponent;
 
@@ -34,5 +35,4 @@ public class MeasurementTM5 {
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "measurement_detail_id")
     private DetailMeasurement measurementDetail;
-
 }

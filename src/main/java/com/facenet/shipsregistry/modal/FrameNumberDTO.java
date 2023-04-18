@@ -20,4 +20,5 @@ public class FrameNumberDTO {
     private String name;
     private FormTM7 formTM7;
     private List<MeasurementTM7> measurementTM7List;
+
 }

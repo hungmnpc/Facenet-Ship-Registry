@@ -13,12 +13,16 @@ import com.facenet.shipsregistry.request.CertificateRequestBody;
 import com.facenet.shipsregistry.request.GeneralParticularRequestBody;
 import com.facenet.shipsregistry.request.ShipInfoRequestBody;
 import com.facenet.shipsregistry.utils.MapperUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author: hungdinh
@@ -27,6 +31,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@Slf4j
 public class GeneralParticularsServiceImpl implements GeneralParticularsService{
 
     @Autowired
@@ -50,7 +55,7 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
         Ship ship = new Ship(null, requestBody.getName(), requestBody.getImoNumber(),
                 requestBody.getAbsIdentification(), requestBody.getPostOfRegistry(),
                 requestBody.getGrossTons(), requestBody.getDeadweight(),
-                requestBody.getDateOfBuild(), null);
+                requestBody.getDateOfBuild(), requestBody.getClassificationSociety(), null);
 
         Ship shipSave = shipRepository.save(ship);
         if (shipSave.getShip_id() > 0) {
@@ -71,7 +76,13 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
                         requestBody.getCertificateNo()).orElse(null);
         GeneralParticulars generalParticulars =
                 new GeneralParticulars(null, null, requestBody.getReportNo(),
-                        requestBody.getSurveyorInfo(), certificate, null);
+                        requestBody.getSurveyorInfo(), certificate,
+                        requestBody.getPlaceOfMeasurement(),
+                        requestBody.getFirstDateOfMeasurement(),
+                        requestBody.getLastDateOfMeasurement(),
+                        requestBody.getNameOfOperator(), null, false,
+                        requestBody.getMeasurementEquipmentInfo()
+                        );
         if (ship.isPresent()) {
             generalParticulars.setShip(ship.get());
         } else {
@@ -104,5 +115,68 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
             return mapperUtils.certificateMapper(certificateSaved);
         }
         return null;
+    }
+
+    /**
+     *
+     * @param imoNumber
+     * @param name
+     * @param absIdentification
+     * @return
+     */
+    @Override
+    public List<ShipDTO> searchShip(String imoNumber, String name, String absIdentification) {
+        try {
+            List<Ship> shipList = shipRepository.search(imoNumber, name, absIdentification);
+            return shipList.stream().map(ship -> mapperUtils.shipMapper(ship)).collect(Collectors.toList());
+        } catch (Exception exception) {
+            log.debug(exception.getMessage());
+            return new ArrayList<ShipDTO>();
+        }
+    }
+
+    /**
+     * @param certificateNo
+     * @return
+     */
+    @Override
+    public List<CertificateDTO> searchCertificate(String certificateNo, String certificateOrganization) {
+        List<Certificate> certificateList = certificateRepository.search(certificateNo, certificateOrganization);
+        try {
+            return certificateList.stream()
+                    .map(certificate -> mapperUtils.certificateMapper(certificate))
+                    .collect(Collectors.toList());
+        } catch (Exception exception) {
+            log.debug(exception.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public List<CertificateDTO> getAllCertificate() {
+        List<Certificate> certificateList = certificateRepository.findAll();
+        try {
+            return certificateList.stream()
+                    .map(certificate -> mapperUtils.certificateMapper(certificate))
+                    .collect(Collectors.toList());
+        } catch (Exception exception) {
+            log.debug(exception.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public List<GeneralParticularsDTO> getAllGeneralParticulars() {
+        List<GeneralParticulars> generalParticularsList =
+                generalParticularsRepository.findAll();
+        return generalParticularsList.stream()
+                .map(generalParticulars -> mapperUtils.generalParticularsMapper(generalParticulars))
+                .collect(Collectors.toList());
     }
 }

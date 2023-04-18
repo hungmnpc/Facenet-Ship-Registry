@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -33,5 +34,7 @@ public class ShipDTO {
 
     private Integer deadweight;
 
-    private Date dateOfBuild;
+    private LocalDate dateOfBuild;
+
+    private String classificationSociety;
 }

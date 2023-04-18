@@ -13,8 +13,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FormTM7DTO {
+
     private Long id;
+
     private String name;
+
     private String description;
+
     private List<FrameNumber> frameNumber;
+
 }

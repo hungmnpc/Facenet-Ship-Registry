@@ -3,6 +3,7 @@ package com.facenet.shipsregistry.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -43,8 +44,11 @@ public class Ship {
     private Integer deadweight;
 
     @Column(name = "date_of_build")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateOfBuild;
+    @Temporal(TemporalType.DATE)
+    private LocalDate dateOfBuild;
+
+    @Column(name = "classification_society")
+    private String classificationSociety;
 
     @OneToMany(mappedBy = "ship", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<GeneralParticulars> generalParticularsList;

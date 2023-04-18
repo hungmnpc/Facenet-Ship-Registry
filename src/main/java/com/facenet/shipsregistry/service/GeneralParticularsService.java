@@ -7,6 +7,8 @@ import com.facenet.shipsregistry.request.CertificateRequestBody;
 import com.facenet.shipsregistry.request.GeneralParticularRequestBody;
 import com.facenet.shipsregistry.request.ShipInfoRequestBody;
 
+import java.util.List;
+
 /**
  * @author: hungdinh
  * Date created: 11/04/2023
@@ -35,4 +37,32 @@ public interface GeneralParticularsService {
      * @return
      */
     public CertificateDTO saveNewCertificate(CertificateRequestBody requestBody);
+
+    /**
+     *
+     * @param imoNumber
+     * @param name
+     * @param absIdentification
+     * @return
+     */
+    public List<ShipDTO> searchShip(String imoNumber, String name, String absIdentification);
+
+    /**
+     *
+     * @param certificateNo
+     * @return
+     */
+    public List<CertificateDTO> searchCertificate(String certificateNo, String certificateOrganization);
+
+    /**
+     *
+     * @return
+     */
+    public List<CertificateDTO> getAllCertificate();
+
+    /**
+     *
+     * @return
+     */
+    public List<GeneralParticularsDTO> getAllGeneralParticulars();
 }

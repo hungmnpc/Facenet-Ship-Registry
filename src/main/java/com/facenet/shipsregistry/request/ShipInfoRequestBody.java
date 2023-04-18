@@ -2,6 +2,7 @@ package com.facenet.shipsregistry.request;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -27,5 +28,7 @@ public class ShipInfoRequestBody {
 
     private Integer deadweight;
 
-    private Date dateOfBuild;
+    private LocalDate dateOfBuild;
+
+    private String classificationSociety;
 }
