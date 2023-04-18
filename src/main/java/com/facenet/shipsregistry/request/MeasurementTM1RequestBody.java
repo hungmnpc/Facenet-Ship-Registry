@@ -1,6 +1,5 @@
 package com.facenet.shipsregistry.request;
 
-import com.facenet.shipsregistry.modal.DetailMeasurementDTO;
 import lombok.*;
 
 /**
@@ -24,5 +23,3 @@ public class MeasurementTM1RequestBody {
     private DetailMeasurementRequestBody afterReadingMeasurementDetail;
 }
 
-public class MeasurementTM1RequestBody {
-}
