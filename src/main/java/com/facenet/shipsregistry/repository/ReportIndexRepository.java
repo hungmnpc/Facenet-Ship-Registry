@@ -1,6 +1,6 @@
 package com.facenet.shipsregistry.repository;
 
-import com.facenet.shipsregistry.entity.FormTM1;
+import com.facenet.shipsregistry.entity.ReportIndex;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface FormTM1Repository extends JpaRepository<FormTM1, Long> {
+public interface ReportIndexRepository extends JpaRepository<ReportIndex, Long> {
 }

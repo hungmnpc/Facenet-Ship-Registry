@@ -1,7 +1,5 @@
-package com.facenet.shipsregistry.modal;
+package com.facenet.shipsregistry.request;
 
-import com.facenet.shipsregistry.entity.MeasurementTM1;
-import jakarta.persistence.*;
 import lombok.*;
 
 /**
@@ -14,9 +12,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class DetailMeasurementDTO {
-
-    private Long id;
+public class DetailMeasurementRequestBody {
 
     private Double originalThickness;
 

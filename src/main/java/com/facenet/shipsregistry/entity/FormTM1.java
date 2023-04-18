@@ -17,16 +17,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FormTM1 {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "description")
-    @Lob
-    private String description;
-
-    @Column(name = "name")
-    private String name;
 
     @Column(name = "strake_position")
     private String strakePosition;
