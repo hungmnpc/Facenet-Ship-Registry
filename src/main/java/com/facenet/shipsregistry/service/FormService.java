@@ -2,8 +2,10 @@ package com.facenet.shipsregistry.service;
 
 import com.facenet.shipsregistry.modal.FormDTO;
 import com.facenet.shipsregistry.modal.FormTM1DTO;
+import com.facenet.shipsregistry.modal.FormTM3DTO;
 import com.facenet.shipsregistry.modal.ReportIndexDTO;
 import com.facenet.shipsregistry.request.FormTM1RequestBody;
+import com.facenet.shipsregistry.request.FormTM3RequestBody;
 import com.facenet.shipsregistry.request.FormTM2RequestBody;
 import com.facenet.shipsregistry.request.ReportIndexRequestBody;
 
@@ -21,6 +23,13 @@ public interface FormService {
      * @return
      */
     public FormDTO saveNewFormTM1(FormTM1RequestBody requestBody, Long reportIndex);
+
+    /**
+     *
+     * @param requestBody
+     * @return
+     */
+    public FormDTO saveNewFormTM3(FormTM3RequestBody requestBody, Long reportIndex);
 
     /**
      *
@@ -42,6 +51,14 @@ public interface FormService {
      * @return
      */
     public FormTM1DTO getFormTM1ByID(Long id);
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+
+    public FormTM3DTO getFormTM3ByID(Long id);
 
     /**
      *

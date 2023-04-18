@@ -133,6 +133,41 @@ public class MapperUtils {
         return measurementTM1DTO;
     }
 
+    public FormTM3DTO formTM3Mapper(FormTM3 formTm3) {
+        FormTM3DTO formTM3DTO = modelMapper.map(formTm3, FormTM3DTO.class);
+        List<MeasurementTM3DTO> measurementTM3DTOList =
+                formTm3.getMeasurementTM3List().stream()
+                        .map(this::measurementTM3Mapper)
+                        .toList();
+        formTM3DTO.setMeasurementTM3DTOList(measurementTM3DTOList);
+        return formTM3DTO;
+    }
+
+    /**
+     *
+     * @param measurementTM3
+     * @return
+     */
+    public MeasurementTM3DTO measurementTM3Mapper(MeasurementTM3 measurementTM3) {
+        MeasurementTM3DTO measurementTM3DTO = modelMapper.map(measurementTM3, MeasurementTM3DTO.class);
+        if (measurementTM3.getFirstTransverseSectionMeasurementDetailTM3() != null) {
+            measurementTM3DTO.setFirstTransverseSectionMeasurementDetail(
+                    detailMeasurementMapper(measurementTM3.getFirstTransverseSectionMeasurementDetailTM3())
+            );
+        }
+        if (measurementTM3.getSecondTransverseSectionMeasurementDetailTM3() != null) {
+            measurementTM3DTO.setSecondTransverseSectionMeasurementDetail(
+                    detailMeasurementMapper(measurementTM3.getSecondTransverseSectionMeasurementDetailTM3())
+            );
+        }
+        if (measurementTM3.getThirdTransverseSectionMeasurementDetailTM3() != null) {
+            measurementTM3DTO.setThirdTransverseSectionMeasurementDetail(
+                    detailMeasurementMapper(measurementTM3.getThirdTransverseSectionMeasurementDetailTM3())
+            );
+        }
+        return measurementTM3DTO;
+    }
+
     public DetailMeasurementDTO detailMeasurementMapper(DetailMeasurement detailMeasurement) {
         DetailMeasurementDTO detailMeasurementDTO =
                 modelMapper.map(detailMeasurement, DetailMeasurementDTO.class);
