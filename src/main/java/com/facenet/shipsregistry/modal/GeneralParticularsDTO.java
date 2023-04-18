@@ -29,7 +29,7 @@ public class GeneralParticularsDTO {
 
     private String reportNo;
 
-    private String nameOfSurveyor;
+    private String surveyorInfo;
 
     private String measurementEquipmentInfo;
 
