@@ -23,6 +23,3 @@ public class MeasurementTM1RequestBody {
 
     private DetailMeasurementRequestBody afterReadingMeasurementDetail;
 }
-
-public class MeasurementTM1RequestBody {
-}
