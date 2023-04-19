@@ -2,6 +2,8 @@ package com.facenet.shipsregistry.request;
 
 import lombok.*;
 
+import java.util.List;
+
 /**
  * @author: hungdinh
  * Date created: 11/04/2023
@@ -12,11 +14,9 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ParamValueRequestBody {
+public class StructuralMemberTM4RequestBody {
 
-    private String param;
+    private String structuralMemberTitle;
 
-    private String value;
-
-    private Integer type;
+    private List<MeasurementTM4RequestBody> measurementTM4List;
 }

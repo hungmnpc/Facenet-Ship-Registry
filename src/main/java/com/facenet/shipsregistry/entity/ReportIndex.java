@@ -39,6 +39,9 @@ public class ReportIndex {
     @OneToMany(mappedBy = "reportIndex", cascade = CascadeType.ALL)
     private List<FormTM2> formTM2List;
 
+    @OneToMany(mappedBy = "reportIndex", cascade = CascadeType.ALL)
+    private List<FormTM4> formTM4List;
+
     public ReportIndex(Integer partIndex, String item) {
         this.partIndex = partIndex;
         this.item = item;

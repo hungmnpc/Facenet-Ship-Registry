@@ -17,8 +17,8 @@ import java.util.List;
 public class FrameNumberDTO {
 
     private Long id;
-    private String name;
-    private FormTM7 formTM7;
-    private List<MeasurementTM7> measurementTM7List;
 
+    private String name;
+
+    private List<MeasurementTM7DTO> measurementTM7List;
 }

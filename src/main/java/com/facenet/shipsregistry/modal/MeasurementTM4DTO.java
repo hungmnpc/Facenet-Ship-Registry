@@ -1,5 +1,10 @@
 package com.facenet.shipsregistry.modal;
 
+import com.facenet.shipsregistry.entity.DetailMeasurement;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import lombok.*;
 
 /**
@@ -16,5 +21,9 @@ public class MeasurementTM4DTO {
 
     private Long id;
 
-    private FormTM4DTO formTM4DTO;
+    private String structuralMember;
+
+    private String item;
+
+    private DetailMeasurementDTO detailMeasurementDTO;
 }

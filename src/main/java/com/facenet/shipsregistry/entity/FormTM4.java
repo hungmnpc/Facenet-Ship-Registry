@@ -22,12 +22,6 @@ public class FormTM4 {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "description")
-    private String description;
-
-    @Column(name = "name")
-    private String name;
-
     @Column(name = "tank_description")
     private String tankDescription;
 
@@ -35,5 +29,9 @@ public class FormTM4 {
     private String locationOfStructure;
 
     @OneToMany(mappedBy = "formTM4", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private List<MeasurementTM4> measurementTM4List;
+    private List<StructuralMemberTM4> structuralMemberTM4List;
+
+    @ManyToOne
+    @JoinColumn(name = "report_id")
+    private ReportIndex reportIndex;
 }

@@ -17,8 +17,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StructuralDescriptionTM6DTO {
+
     private Long id;
+
     private String structuralDescription;
-    private FormTM6 formTM6;
-    private List<MeasurementTM6> measurementTM6List;
+
+    private List<MeasurementTM6DTO> measurementTM6List;
 }

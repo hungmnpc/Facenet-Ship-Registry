@@ -16,7 +16,7 @@ import java.util.List;
 @ToString
 public class FormTM3DTO implements FormDTO{
 
-    private String type = "Form TM3";
+    private String type = "FORM TM3";
 
     private Long id;
 

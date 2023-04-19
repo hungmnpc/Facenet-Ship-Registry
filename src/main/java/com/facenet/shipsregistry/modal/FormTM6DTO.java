@@ -12,7 +12,9 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FormTM6DTO {
+public class FormTM6DTO implements FormDTO{
+
+    private String type = "FORM TM6";
 
     private Long id;
 
@@ -23,5 +25,6 @@ public class FormTM6DTO {
     private String structuralMembers;
 
     private String locationOfStructure;
-    private List<StructuralDescriptionTM6> structuralDescriptionTM6List;
+
+    private List<StructuralDescriptionTM6DTO> structuralDescriptionTM6List;
 }

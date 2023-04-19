@@ -23,10 +23,17 @@ public class MeasurementTM4 {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "form_TM4_id")
-    private FormTM4 formTM4;
+    @Column(name = "structural_member")
+    private String structuralMember;
 
-    @OneToMany(mappedBy = "measurementTM4", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private List<StructuralMemberDetailsTM4> structuralMemberDetailsTM4List;
+    @Column(name = "item")
+    private String item;
+
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "measurement_detail_id")
+    private DetailMeasurement detailMeasurement;
+
+    @ManyToOne
+    @JoinColumn(name = "structural_title_id")
+    private StructuralMemberTM4 structuralMemberTM4;
 }
