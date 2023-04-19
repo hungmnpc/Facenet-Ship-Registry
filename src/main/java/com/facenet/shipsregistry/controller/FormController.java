@@ -4,6 +4,7 @@ import com.facenet.shipsregistry.modal.FormDTO;
 import com.facenet.shipsregistry.modal.FormTM1DTO;
 import com.facenet.shipsregistry.modal.ReportIndexDTO;
 import com.facenet.shipsregistry.request.FormTM1RequestBody;
+import com.facenet.shipsregistry.request.FormTM5RequestBody;
 import com.facenet.shipsregistry.service.FormService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -68,6 +69,23 @@ public class FormController {
     public ResponseEntity<?> saveNewFormTm2(HttpServletRequest request) {
         return ResponseEntity.created(URI.create(request.getRequestURI())).body("TM2");
     }
+    @PostMapping("/{id}/tm5s")
+    public ResponseEntity<?> saveNewFormTm5(HttpServletRequest request,
+                                            @PathVariable Long id,
+                                            @RequestBody FormTM5RequestBody requestBody) {
+        try {
+            FormDTO formTM5DTOSave = formService.saveNewFormTM5(requestBody, id);
+            if (formTM5DTOSave != null) {
+                return ResponseEntity.created(URI.create(request.getRequestURI())).body(formTM5DTOSave);
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (Exception exception) {
+            log.debug(exception.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
 
 
 }

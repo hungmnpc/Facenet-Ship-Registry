@@ -23,5 +23,5 @@ public class FormTM6DTO {
     private String structuralMembers;
 
     private String locationOfStructure;
-    private List<StructuralDescriptionTM6> structuralDescriptionTM6List;
+    private List<StructuralDescriptionTM6DTO> structuralDescriptionTM6List;
 }

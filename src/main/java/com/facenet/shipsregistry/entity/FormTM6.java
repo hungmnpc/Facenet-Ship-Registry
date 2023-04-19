@@ -32,4 +32,7 @@ public class FormTM6 {
 
     @OneToMany(mappedBy = "formTM6", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<StructuralDescriptionTM6> structuralDescriptionTM6List;
+    @ManyToOne
+    @JoinColumn(name = "report_id")
+    private ReportIndex reportIndex;
 }

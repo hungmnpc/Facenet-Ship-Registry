@@ -3,6 +3,7 @@ package com.facenet.shipsregistry.request;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,4 +20,5 @@ public class FormTM5RequestBody {
 
     private String tankHolDescription;
     private String frameNo;
+    private List<MeasurementTM5RequestBody> measurementTM5List;
 }

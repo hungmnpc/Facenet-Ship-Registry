@@ -19,5 +19,5 @@ public class MeasurementTM5DTO {
     private String structuralComponentType;
     private String structuralComponent;
     private FormTM5 formTM5;
-    private DetailMeasurement measurementDetail;
+    private DetailMeasurementDTO measurementDetail;
 }

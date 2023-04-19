@@ -16,5 +16,5 @@ public class MeasurementTM6DTO {
     private String noOrLetter;
     private String name;
     private StructuralDescriptionTM6 structuralDescriptionTM6;
-    private DetailMeasurement measurementDetail;
+    private DetailMeasurementDTO measurementDetail;
 }

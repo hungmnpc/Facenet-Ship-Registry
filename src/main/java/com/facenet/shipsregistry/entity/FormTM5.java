@@ -39,5 +39,8 @@ public class FormTM5 {
 
     @OneToMany(mappedBy = "formTM5", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<MeasurementTM5> measurementTM5List;
+    @ManyToOne
+    @JoinColumn(name = "report_id")
+    private ReportIndex reportIndex;
 
 }

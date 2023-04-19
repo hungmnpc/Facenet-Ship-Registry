@@ -3,11 +3,14 @@ package com.facenet.shipsregistry.service;
 import com.facenet.shipsregistry.entity.*;
 import com.facenet.shipsregistry.modal.FormDTO;
 import com.facenet.shipsregistry.modal.FormTM1DTO;
+import com.facenet.shipsregistry.modal.FormTM5DTO;
 import com.facenet.shipsregistry.modal.ReportIndexDTO;
 import com.facenet.shipsregistry.repository.FormTM1Repository;
+import com.facenet.shipsregistry.repository.FormTM5Repository;
 import com.facenet.shipsregistry.repository.GeneralParticularsRepository;
 import com.facenet.shipsregistry.repository.ReportIndexRepository;
 import com.facenet.shipsregistry.request.FormTM1RequestBody;
+import com.facenet.shipsregistry.request.FormTM5RequestBody;
 import com.facenet.shipsregistry.request.ReportIndexRequestBody;
 import com.facenet.shipsregistry.utils.MapperUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +33,9 @@ public class FormServiceImpl implements FormService{
 
     @Autowired
     FormTM1Repository formTM1Repository;
+
+    @Autowired
+    FormTM5Repository formTM5Repository;
 
     @Autowired
     ReportIndexRepository reportIndexRepository;
@@ -134,4 +140,49 @@ public class FormServiceImpl implements FormService{
 //        List<FormTM1DTO> formTM1DTOList =
         return null;
     }
+
+    /**
+     *
+     * @param requestBody
+     * @param reportIndexID
+     * @return
+     */
+    @Override
+    public FormDTO saveNewFormTM5(FormTM5RequestBody requestBody, Long reportIndexID) {
+
+        Optional<ReportIndex> reportIndex = reportIndexRepository.findById(reportIndexID);
+        FormTM5 formTM5 = new FormTM5(null, requestBody.getDescription(),requestBody.getName(), requestBody.getLocationOfStructure(),requestBody.getTankHolDescription(),null,null,null);;
+        reportIndex.ifPresent(formTM5::setReportIndex);
+        List<MeasurementTM5> measurementTM5List =
+                requestBody.getMeasurementTM5List().stream()
+                        .map(measurementTM5DTO -> {
+                            DetailMeasurement measurementDetail = new DetailMeasurement(
+                                    measurementTM5DTO.getMeasurementDetail().getOriginalThickness(),
+                                    measurementTM5DTO.getMeasurementDetail().getMaxAlwbDim(),
+                                    measurementTM5DTO.getMeasurementDetail().getGaugedP(),
+                                    measurementTM5DTO.getMeasurementDetail().getGaugedS()
+                            );
+                            return new MeasurementTM5(null, measurementTM5DTO.getStructuralComponentType(),
+                                    measurementTM5DTO.getStructuralComponent(), formTM5,
+                                    measurementDetail);
+                        }).toList();
+        formTM5.setMeasurementTM5List(measurementTM5List);
+        try {
+            FormTM5 formTM5Saved = formTM5Repository.save(formTM5);
+            if (formTM5Saved.getId() > 0) {
+                return mapperUtils.formTM5Mapper(formTM5Saved);
+            } else  {
+                return null;
+            }
+        } catch (Exception exception) {
+            log.debug(exception.getMessage());
+            return null;
+        }
+    }
+    @Override
+    public FormTM5DTO getFormTM5ByID(Long id) {
+        Optional<FormTM5> formTM5 = formTM5Repository.findById(id);
+        return formTM5.map(tm5 -> mapperUtils.formTM5Mapper(tm5)).orElse(null);
+    }
+
 }

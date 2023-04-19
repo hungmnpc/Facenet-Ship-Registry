@@ -26,4 +26,7 @@ public class FormTM7 {
 
     @OneToMany(mappedBy = "formTM7", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<FrameNumber> frameNumber;
+    @ManyToOne
+    @JoinColumn(name = "report_id")
+    private ReportIndex reportIndex;
 }

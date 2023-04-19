@@ -20,6 +20,7 @@ public class FormTM7DTO {
 
     private String description;
 
-    private List<FrameNumber> frameNumber;
+    private List<FrameNumberDTO> frameNumber;
+
 
 }

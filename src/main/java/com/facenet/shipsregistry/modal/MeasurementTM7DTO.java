@@ -15,7 +15,7 @@ public class MeasurementTM7DTO {
     private Long id;
     private FrameNumber frameNumber;
     private String name;
-    private DetailMeasurement upperPart;
-    private DetailMeasurement midPart;
-    private DetailMeasurement lowerPart;
+    private DetailMeasurementDTO upperPart;
+    private DetailMeasurementDTO midPart;
+    private DetailMeasurementDTO lowerPart;
 }
