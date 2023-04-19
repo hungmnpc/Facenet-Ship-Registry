@@ -1,6 +1,6 @@
 package com.facenet.shipsregistry.repository;
 
-import com.facenet.shipsregistry.entity.StructuralMemberDetailsTM4;
+import com.facenet.shipsregistry.entity.StructuralMemberTM4;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface StructuralMemberDetailsTM4Repository extends JpaRepository<StructuralMemberDetailsTM4, Long> {
+public interface StructuralMemberDetailsTM4Repository extends JpaRepository<StructuralMemberTM4, Long> {
 }
