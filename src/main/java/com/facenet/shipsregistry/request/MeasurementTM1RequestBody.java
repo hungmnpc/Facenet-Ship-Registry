@@ -22,4 +22,3 @@ public class MeasurementTM1RequestBody {
 
     private DetailMeasurementRequestBody afterReadingMeasurementDetail;
 }
-

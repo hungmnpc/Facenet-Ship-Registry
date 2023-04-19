@@ -15,6 +15,7 @@ import lombok.*;
 @ToString
 public class MeasurementTM2RequestBody {
 
+
     private String strakePosition;
 
     private String noOrLetter;
