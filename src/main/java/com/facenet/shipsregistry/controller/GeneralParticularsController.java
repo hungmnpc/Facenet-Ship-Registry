@@ -1,6 +1,5 @@
 package com.facenet.shipsregistry.controller;
 
-import com.facenet.shipsregistry.entity.GeneralParticulars;
 import com.facenet.shipsregistry.modal.GeneralParticularsDTO;
 import com.facenet.shipsregistry.modal.ReportIndexDTO;
 import com.facenet.shipsregistry.request.GeneralParticularRequestBody;
@@ -42,7 +41,12 @@ public class GeneralParticularsController {
                 = generalParticularsService.getAllGeneralParticulars();
         return ResponseEntity.ok(generalParticularsDTOList);
     }
-
+    @GetMapping("/getAllReport-indexes")
+    public ResponseEntity<List<ReportIndexDTO>> getAllReportIndexes() {
+        List<ReportIndexDTO> reportIndexDTOList
+                = formService.getAllReportIndexes();
+        return ResponseEntity.ok(reportIndexDTOList);
+    }
     /**
      *
      * @param requestBody
@@ -87,4 +91,5 @@ public class GeneralParticularsController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
 }

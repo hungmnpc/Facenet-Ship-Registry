@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author: hungdinh
@@ -105,7 +106,7 @@ public class FormServiceImpl implements FormService{
      */
     @Override
     public ReportIndexDTO saveNewReportIndex(ReportIndexRequestBody requestBody, Long id) {
-        ReportIndex reportIndex = new ReportIndex(null, requestBody.getPartIndex(), requestBody.getItem(), null, null);
+        ReportIndex reportIndex = new ReportIndex(null, requestBody.getPartIndex(), requestBody.getItem(), null, null,null);
         Optional<GeneralParticulars> generalParticulars =
                 generalParticularsRepository.findById(id);
         log.info(generalParticulars.get().getReportNo());
@@ -129,6 +130,13 @@ public class FormServiceImpl implements FormService{
     public ReportIndexDTO getReportIndexByID(Long id) {
         Optional<ReportIndex> reportIndex = reportIndexRepository.findById(id);
         return reportIndex.map(index -> mapperUtils.reportIndexMapper(index)).orElse(null);
+    }
+    @Override
+    public List<ReportIndexDTO> getAllReportIndexes() {
+        List<ReportIndex> reportIndexes = reportIndexRepository.findAll();
+        return reportIndexes.stream()
+                .map(index -> mapperUtils.reportIndexMapper(index))
+                .collect(Collectors.toList());
     }
 
     /**

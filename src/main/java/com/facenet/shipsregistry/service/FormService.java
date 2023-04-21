@@ -21,6 +21,8 @@ public interface FormService {
      */
     public FormDTO saveNewFormTM1(FormTM1RequestBody requestBody, Long reportIndex);
 
+    public List<ReportIndexDTO> getAllReportIndexes();
+
     /**
      *
      * @param id
