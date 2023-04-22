@@ -72,9 +72,6 @@ public class GeneralParticularsController {
             @PathVariable Long id,
             HttpServletRequest request
     ) {
-
-        log.info("{}", id);
-        log.info("{}", requestBody.toString());
         try {
             ReportIndexDTO reportIndexDTO = formService.saveNewReportIndex(requestBody, id);
             if (reportIndexDTO != null) {
@@ -83,7 +80,7 @@ public class GeneralParticularsController {
                 return ResponseEntity.badRequest().build();
             }
         } catch (Exception exception) {
-            log.debug(exception.getMessage());
+            log.error(exception.getMessage());
             return ResponseEntity.internalServerError().build();
         }
     }

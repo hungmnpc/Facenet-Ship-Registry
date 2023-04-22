@@ -25,5 +25,5 @@ public class MeasurementTM4DTO {
 
     private String item;
 
-    private DetailMeasurementDTO detailMeasurementDTO;
+    private DetailMeasurementDTO detailMeasurement;
 }

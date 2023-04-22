@@ -14,7 +14,5 @@ import lombok.*;
 @ToString
 public class ReportIndexRequestBody {
 
-    private Integer partIndex;
-
     private String item;
 }

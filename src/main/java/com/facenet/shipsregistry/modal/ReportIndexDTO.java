@@ -3,10 +3,7 @@ package com.facenet.shipsregistry.modal;
 import com.facenet.shipsregistry.entity.FormTM1;
 import com.facenet.shipsregistry.entity.GeneralParticulars;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -19,6 +16,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class ReportIndexDTO {
 
     private Long id;
