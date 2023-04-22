@@ -56,32 +56,22 @@ public class DetailMeasurement {
     @OneToOne(mappedBy = "measurementDetail",
             cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private MeasurementTM5 measurementTM5;
+
     @OneToOne(mappedBy = "measurementDetail",
             cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private MeasurementTM6 measurementTM6;
+
     @OneToOne(mappedBy = "upperPart",
             cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private MeasurementTM7 measurementTM7UpperPart;
+
     @OneToOne(mappedBy = "midPart",
             cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private MeasurementTM7 measurementTM7MidPart;
+
     @OneToOne(mappedBy = "lowerPart",
             cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private MeasurementTM7 measurementTM7LowerPart;
-
-
-//    @OneToOne(mappedBy = "firstTransverseSectionMeasurementDetailTM2",
-//            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-//    private MeasurementTM2 measurementTM2FirstTranList;
-//
-//    @OneToOne(mappedBy = "secondTransverseSectionMeasurementDetailTM2",
-//            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-//    private MeasurementTM2 measurementTM2SecondTranList;
-//
-//    @OneToOne(mappedBy = "thirdTransverseSectionMeasurementDetailTM2",
-//            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-//    private MeasurementTM2 measurementTM2ThirdTranList;
-
 
     @OneToOne(mappedBy = "firstTransverseSectionMeasurementDetailTM3",
             cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -95,9 +85,9 @@ public class DetailMeasurement {
             cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private MeasurementTM3 measurementTM3ThirdTranList;
 
-    @OneToOne(mappedBy = "measurementDetailId",
+    @OneToOne(mappedBy = "detailMeasurement",
             cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private StructuralMemberDetailsTM4 structuralMemberDetailsTM4;
+    private MeasurementTM4 measurementTM4;
 
 //
 //    @OneToOne(mappedBy = "firstTransverseSectionMeasurementDetailTM3",

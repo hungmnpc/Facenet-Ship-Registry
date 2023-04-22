@@ -19,7 +19,9 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FormTM5DTO {
+public class FormTM5DTO implements FormDTO{
+
+    private String type = "FORM TM5";
 
     private Long id;
 
@@ -33,8 +35,7 @@ public class FormTM5DTO {
 
     private String frameNo;
 
-    private List<MeasurementTM5> measurementTM5List;
-
+    private List<MeasurementTM5DTO> measurementTM5List;
 
     private Integer deadweight;
 
