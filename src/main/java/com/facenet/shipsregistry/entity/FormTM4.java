@@ -34,4 +34,9 @@ public class FormTM4 {
     @ManyToOne
     @JoinColumn(name = "report_id")
     private ReportIndex reportIndex;
+
+    public FormTM4(String tankDescription, String locationOfStructure) {
+        this.tankDescription = tankDescription;
+        this.locationOfStructure = locationOfStructure;
+    }
 }

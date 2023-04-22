@@ -5,21 +5,15 @@ import com.facenet.shipsregistry.modal.FormDTO;
 import com.facenet.shipsregistry.modal.FormTM1DTO;
 import com.facenet.shipsregistry.modal.FormTM3DTO;
 import com.facenet.shipsregistry.modal.ReportIndexDTO;
-import com.facenet.shipsregistry.repository.FormTM1Repository;
-import com.facenet.shipsregistry.repository.FormTM3Repository;
+import com.facenet.shipsregistry.repository.*;
+import com.facenet.shipsregistry.request.*;
 import com.facenet.shipsregistry.repository.GeneralParticularsRepository;
 import com.facenet.shipsregistry.repository.ReportIndexRepository;
 import com.facenet.shipsregistry.request.FormTM1RequestBody;
-import com.facenet.shipsregistry.request.FormTM3RequestBody;
-import com.facenet.shipsregistry.repository.FormTM2Repository;
-import com.facenet.shipsregistry.repository.GeneralParticularsRepository;
-import com.facenet.shipsregistry.repository.ReportIndexRepository;
-import com.facenet.shipsregistry.request.FormTM1RequestBody;
-import com.facenet.shipsregistry.request.FormTM2RequestBody;
-import com.facenet.shipsregistry.request.ReportIndexRequestBody;
 import com.facenet.shipsregistry.utils.MapperUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -43,6 +37,9 @@ public class FormServiceImpl implements FormService{
     
     @Autowired
     FormTM2Repository formTM2Repository;
+
+    @Autowired
+    FormTM4Repository formTM4Repository;
 
     @Autowired
     ReportIndexRepository reportIndexRepository;
@@ -172,18 +169,29 @@ public class FormServiceImpl implements FormService{
      */
     @Override
     public ReportIndexDTO saveNewReportIndex(ReportIndexRequestBody requestBody, Long id) {
-        ReportIndex reportIndex = new ReportIndex(requestBody.getPartIndex(), requestBody.getItem());
+
         Optional<GeneralParticulars> generalParticulars =
                 generalParticularsRepository.findById(id);
-        log.info(generalParticulars.get().getReportNo());
-        generalParticulars.ifPresent(reportIndex::setGeneralParticulars);
-        try {
-            ReportIndex reportIndexSaved = reportIndexRepository.save(reportIndex);
-            if (reportIndexSaved.getId() > 0) {
-                return mapperUtils.reportIndexMapper(reportIndexSaved);
+
+        List<ReportIndex> reportIndexList = reportIndexRepository.findReportIndexExist(id, requestBody.getItem());
+        if (reportIndexList.size() > 0) {
+            return null;
+        }
+        if (generalParticulars.isPresent()) {
+            ReportIndex reportIndex = new ReportIndex(
+                    generalParticulars.get().getReportIndexList().size() + 1,
+                    requestBody.getItem());
+
+
+            reportIndex.setGeneralParticulars(generalParticulars.get());
+            try {
+                ReportIndex reportIndexSaved = reportIndexRepository.save(reportIndex);
+                if (reportIndexSaved.getId() > 0) {
+                    return mapperUtils.reportIndexMapper(reportIndexSaved);
+                }
+            } catch (Exception exception) {
+                log.debug(exception.getMessage());
             }
-        } catch (Exception exception) {
-            log.debug(exception.getMessage());
         }
         return null;
     }
@@ -248,9 +256,53 @@ public class FormServiceImpl implements FormService{
             log.debug(exception.getMessage());
             return null;
         }
-
-
-
         return null;
+    }
+
+    /**
+     * @param requestBody
+     * @param reportIndexID
+     * @return
+     */
+    @Override
+    public FormDTO saveNewFormTM4(FormTM4RequestBody requestBody, Long reportIndexID) {
+        Optional<ReportIndex> reportIndex = reportIndexRepository.findById(reportIndexID);
+        FormTM4 formTM4 = new FormTM4(requestBody.getTankDescription(), requestBody.getLocationOfStructure());
+        reportIndex.ifPresent(formTM4::setReportIndex);
+        List<StructuralMemberTM4> structuralMemberTM4List =
+                requestBody.getStructuralMemberTM4List().stream()
+                        .map(structuralMemberTM4RequestBody -> {
+                            StructuralMemberTM4 structuralMemberTM4 = new StructuralMemberTM4(
+                                    null, structuralMemberTM4RequestBody.getStructuralMemberTitle(),
+                                    formTM4, null
+                            );
+                            List<MeasurementTM4> measurementTM4List =
+                                    structuralMemberTM4RequestBody.getMeasurementTM4List().stream()
+                                            .map(measurementTM4RequestBody -> {
+                                                DetailMeasurement detailMeasurement =
+                                                        mapperUtils.mapperToDetailMeasurement(
+                                                                measurementTM4RequestBody.getDetailMeasurement());
+
+                                                return new MeasurementTM4(null,
+                                                        measurementTM4RequestBody.getStructuralMember(),
+                                                        measurementTM4RequestBody.getItem(),
+                                                        detailMeasurement,
+                                                        structuralMemberTM4);
+                                            }).toList();
+                            structuralMemberTM4.setMeasurementTM4List(measurementTM4List);
+                            return structuralMemberTM4;
+                        }).toList();
+        formTM4.setStructuralMemberTM4List(structuralMemberTM4List);
+        try {
+            FormTM4 formTM4Saved = formTM4Repository.save(formTM4);
+            if (formTM4Saved.getId() > 0) {
+                return mapperUtils.formTM4Mapper(formTM4);
+            } else {
+                return null;
+            }
+        } catch (Exception exception) {
+            log.error("{}", exception.getMessage());
+            return null;
+        }
     }
 }

@@ -3,19 +3,19 @@ package com.facenet.shipsregistry.utils;
 import com.facenet.shipsregistry.entity.*;
 import com.facenet.shipsregistry.modal.*;
 import com.facenet.shipsregistry.request.DetailMeasurementRequestBody;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author: hungdinh
  * Date created: 11/04/2023
  */
 @Component
+@Slf4j
 public class MapperUtils {
 
     @Autowired
@@ -141,6 +141,44 @@ public class MapperUtils {
                         .toList();
         formTM3DTO.setMeasurementTM3DTOList(measurementTM3DTOList);
         return formTM3DTO;
+    }
+
+    /**
+     *
+     * @param formTM4
+     * @return
+     */
+    public FormTM4DTO formTM4Mapper(FormTM4 formTM4) {
+        FormTM4DTO formTM4DTO = modelMapper.map(formTM4, FormTM4DTO.class);
+        List<StructuralMemberTM4DTO> structuralMemberTM4DTOList =
+                formTM4.getStructuralMemberTM4List().stream()
+                        .map(this::structuralMemberTM4Mapper)
+                        .toList();
+        structuralMemberTM4DTOList.forEach(structuralMemberTM4DTO -> System.out.println(structuralMemberTM4DTO.toString()));
+        formTM4DTO.setStructuralMemberTM4List(structuralMemberTM4DTOList);
+        log.info("{}", formTM4DTO.toString());
+        return formTM4DTO;
+    }
+
+    /**
+     *
+     * @param measurementTM4
+     * @return
+     */
+    public MeasurementTM4DTO measurementTM4Mapper(MeasurementTM4 measurementTM4) {
+        MeasurementTM4DTO measurementTM4DTO = modelMapper.map(measurementTM4, MeasurementTM4DTO.class);
+        measurementTM4DTO.setDetailMeasurement(detailMeasurementMapper(measurementTM4.getDetailMeasurement()));
+        return measurementTM4DTO;
+    }
+
+    public StructuralMemberTM4DTO structuralMemberTM4Mapper(StructuralMemberTM4 structuralMemberTM4) {
+        StructuralMemberTM4DTO structuralMemberTM4DTO =
+                modelMapper.map(structuralMemberTM4, StructuralMemberTM4DTO.class);
+        List<MeasurementTM4DTO> measurementTM4DTOList = structuralMemberTM4.getMeasurementTM4List()
+                .stream().map(this::measurementTM4Mapper)
+                .toList();
+        structuralMemberTM4DTO.setMeasurementTM4DTOList(measurementTM4DTOList);
+        return structuralMemberTM4DTO;
     }
 
     /**

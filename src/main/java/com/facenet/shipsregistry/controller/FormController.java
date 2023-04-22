@@ -1,6 +1,7 @@
 package com.facenet.shipsregistry.controller;
 
 import com.facenet.shipsregistry.modal.FormDTO;
+import com.facenet.shipsregistry.modal.FormTM4DTO;
 import com.facenet.shipsregistry.modal.ReportIndexDTO;
 import com.facenet.shipsregistry.request.FormTM1RequestBody;
 import com.facenet.shipsregistry.request.FormTM3RequestBody;
@@ -12,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 
@@ -71,7 +73,18 @@ public class FormController {
     public ResponseEntity<?> saveNewFormTm2(HttpServletRequest request,
                                             @PathVariable Long id,
                                             @RequestBody FormTM4RequestBody requestBody) {
-        return ResponseEntity.ok().build();
+
+        try {
+            FormDTO formTM4DTO = formService.saveNewFormTM4(requestBody, id);
+            if (formTM4DTO != null) {
+                return ResponseEntity.created(URI.create(request.getRequestURI())).body(formTM4DTO);
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (Exception exception) {
+            log.debug(exception.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @GetMapping("/{id}")
