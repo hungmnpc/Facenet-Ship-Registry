@@ -5,6 +5,11 @@ import lombok.*;
 
 import java.util.List;
 
+/**
+ * @author: CongTu
+ * Date created: 14/04/2023
+ */
+
 @Entity
 @Table(name = "structural_description_TM6")
 @Setter
@@ -17,12 +22,13 @@ public class StructuralDescriptionTM6 {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "structural_description")
-    private String structuralDescription;
+    @Column(name = "structural_description_title")
+    private String structuralDescriptionTitle;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "form_TM6_id")
     private FormTM6 formTM6;
+
     @OneToMany(mappedBy = "structuralDescriptionTM6", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<MeasurementTM6> measurementTM6List;
 }

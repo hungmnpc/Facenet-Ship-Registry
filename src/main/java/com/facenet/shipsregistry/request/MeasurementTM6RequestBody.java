@@ -11,8 +11,9 @@ import lombok.*;
 @ToString
 public class MeasurementTM6RequestBody {
 
-    private String name;
-    private String noOrLetter;
-    private StructuralDescriptionTM6 structuralDescriptionTM6;
-    private DetailMeasurement measurementDetail;
+    private String description;
+
+    private String item;
+
+    private DetailMeasurementRequestBody detailMeasurement;
 }

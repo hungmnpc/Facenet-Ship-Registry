@@ -42,6 +42,9 @@ public class FormServiceImpl implements FormService{
     FormTM4Repository formTM4Repository;
 
     @Autowired
+    FormTM6Repository formTM6Repository;
+
+    @Autowired
     ReportIndexRepository reportIndexRepository;
 
     @Autowired
@@ -58,7 +61,7 @@ public class FormServiceImpl implements FormService{
     public FormDTO saveNewFormTM1(FormTM1RequestBody requestBody, Long reportIndexID) {
 
         Optional<ReportIndex> reportIndex = reportIndexRepository.findById(reportIndexID);
-        FormTM1 formTM1 = new FormTM1(null, requestBody.getStrakePosition(), null, null);;
+        FormTM1 formTM1 = new FormTM1(null, requestBody.getStrakePosition(), null, null);
         reportIndex.ifPresent(formTM1::setReportIndex);
         List<MeasurementTM1> measurementTM1List =
                 requestBody.getMeasurementTM1List().stream()
@@ -112,7 +115,7 @@ public class FormServiceImpl implements FormService{
 
         Optional<ReportIndex> reportIndex = reportIndexRepository.findById(reportIndexID);
         FormTM3 formTM3 = new FormTM3(null, requestBody.getFirstFrameNo(), requestBody.getSecondFrameNo()
-                , requestBody.getThirdFrameNo(), null, null);;
+                , requestBody.getThirdFrameNo(), null, null);
         reportIndex.ifPresent(formTM3::setReportIndex);
         List<MeasurementTM3> measurementTM3List =
                 requestBody.getMeasurementTM3List().stream()
@@ -297,6 +300,53 @@ public class FormServiceImpl implements FormService{
             FormTM4 formTM4Saved = formTM4Repository.save(formTM4);
             if (formTM4Saved.getId() > 0) {
                 return mapperUtils.formTM4Mapper(formTM4);
+            } else {
+                return null;
+            }
+        } catch (Exception exception) {
+            log.error("{}", exception.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * @param requestBody
+     * @param reportIndexID
+     * @return
+     */
+    @Override
+    public FormDTO saveNewFormTM6(FormTM6RequestBody requestBody, Long reportIndexID) {
+        Optional<ReportIndex> reportIndex = reportIndexRepository.findById(reportIndexID);
+        FormTM6 formTM6 = new FormTM6(requestBody.getStructuralMembers(), requestBody.getLocationOfStructure());
+        reportIndex.ifPresent(formTM6::setReportIndex);
+        List<StructuralDescriptionTM6> structuralDescriptionTM6List =
+                requestBody.getStructuralDescriptionTM6List().stream()
+                        .map(structuralDescriptionTM6RequestBody -> {
+                            StructuralDescriptionTM6 structuralDescriptionTM6 = new StructuralDescriptionTM6(
+                                    null, structuralDescriptionTM6RequestBody.getStructuralDescriptionTitle(),
+                                    formTM6, null
+                            );
+                            List<MeasurementTM6> measurementTM6List =
+                                    structuralDescriptionTM6RequestBody.getMeasurementTM6List().stream()
+                                            .map(measurementTM6RequestBody -> {
+                                                DetailMeasurement detailMeasurement =
+                                                        mapperUtils.mapperToDetailMeasurement(
+                                                                measurementTM6RequestBody.getDetailMeasurement());
+
+                                                return new MeasurementTM6(null,
+                                                        measurementTM6RequestBody.getDescription(),
+                                                        measurementTM6RequestBody.getItem(),
+                                                        detailMeasurement,
+                                                        structuralDescriptionTM6);
+                                            }).toList();
+                            structuralDescriptionTM6.setMeasurementTM6List(measurementTM6List);
+                            return structuralDescriptionTM6;
+                        }).toList();
+        formTM6.setStructuralDescriptionTM6List(structuralDescriptionTM6List);
+        try {
+            FormTM6 formTM6Saved = formTM6Repository.save(formTM6);
+            if (formTM6Saved.getId() > 0) {
+                return mapperUtils.formTM6Mapper(formTM6);
             } else {
                 return null;
             }

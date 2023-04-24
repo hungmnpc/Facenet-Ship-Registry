@@ -3,10 +3,7 @@ package com.facenet.shipsregistry.controller;
 import com.facenet.shipsregistry.modal.FormDTO;
 import com.facenet.shipsregistry.modal.FormTM4DTO;
 import com.facenet.shipsregistry.modal.ReportIndexDTO;
-import com.facenet.shipsregistry.request.FormTM1RequestBody;
-import com.facenet.shipsregistry.request.FormTM3RequestBody;
-import com.facenet.shipsregistry.request.FormTM2RequestBody;
-import com.facenet.shipsregistry.request.FormTM4RequestBody;
+import com.facenet.shipsregistry.request.*;
 import com.facenet.shipsregistry.service.FormService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -70,7 +67,7 @@ public class FormController {
     }
 
     @PostMapping("/{id}/tm4s")
-    public ResponseEntity<?> saveNewFormTm2(HttpServletRequest request,
+    public ResponseEntity<?> saveNewFormTm4(HttpServletRequest request,
                                             @PathVariable Long id,
                                             @RequestBody FormTM4RequestBody requestBody) {
 
@@ -78,6 +75,24 @@ public class FormController {
             FormDTO formTM4DTO = formService.saveNewFormTM4(requestBody, id);
             if (formTM4DTO != null) {
                 return ResponseEntity.created(URI.create(request.getRequestURI())).body(formTM4DTO);
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (Exception exception) {
+            log.debug(exception.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @PostMapping("/{id}/tm6s")
+    public ResponseEntity<?> saveNewFormTm6(HttpServletRequest request,
+                                            @PathVariable Long id,
+                                            @RequestBody FormTM6RequestBody requestBody) {
+
+        try {
+            FormDTO formTM6DTO = formService.saveNewFormTM6(requestBody, id);
+            if (formTM6DTO != null) {
+                return ResponseEntity.created(URI.create(request.getRequestURI())).body(formTM6DTO);
             } else {
                 return ResponseEntity.badRequest().build();
             }
