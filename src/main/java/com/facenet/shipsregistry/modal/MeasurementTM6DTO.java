@@ -15,9 +15,9 @@ public class MeasurementTM6DTO {
 
     private Long id;
 
-    private String noOrLetter;
+    private String structuralDescription;
 
-    private String name;
+    private String item;
 
-    private DetailMeasurementDTO measurementDetail;
+    private DetailMeasurementDTO detailMeasurement;
 }

@@ -78,4 +78,12 @@ public interface FormService {
      * @return
      */
     public FormDTO saveNewFormTM4 (FormTM4RequestBody requestBody, Long id);
+
+    /**
+     *
+     * @param requestBody
+     * @param id
+     * @return
+     */
+    public FormDTO saveNewFormTM6 (FormTM6RequestBody requestBody, Long id);
 }
