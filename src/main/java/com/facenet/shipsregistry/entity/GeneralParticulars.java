@@ -61,4 +61,7 @@ public class GeneralParticulars {
     @Column(name = "measurement_equipment_info")
     @Lob
     private String measurementEquipmentInfo;
+
+    @Column(name = "survey_type")
+    private String surveyType;
 }

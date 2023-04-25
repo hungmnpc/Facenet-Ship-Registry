@@ -99,8 +99,14 @@ public class FormServiceImpl implements FormService{
      */
     @Override
     public FormTM1DTO getFormTM1ByID(Long id) {
-        Optional<FormTM1> formTM1 = formTM1Repository.findById(id);
-        return formTM1.map(tm1 -> mapperUtils.formTM1Mapper(tm1)).orElse(null);
+        log.info(id.toString());
+        FormTM1 formTM1 = formTM1Repository.getById(id);
+        if (formTM1 != null) {
+            log.info("{}", formTM1.getReportIndex());
+            return mapperUtils.formTM1Mapper(formTM1);
+        } else {
+            return null;
+        }
     }
 
     /**

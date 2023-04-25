@@ -45,6 +45,10 @@ public enum ParamType {
                 return "OPERATOR_NAME";
             case 5:
                 return "QUALIFICATION_OF_OPERATOR";
+            case 6:
+                return "TM4_VALUE";
+            case 7:
+                return "TM5_VALUE";
             default:
                 return "NONE";
         }

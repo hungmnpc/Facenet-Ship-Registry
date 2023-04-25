@@ -2,12 +2,12 @@ package com.facenet.shipsregistry.service;
 
 import com.facenet.shipsregistry.entity.Certificate;
 import com.facenet.shipsregistry.entity.GeneralParticulars;
+import com.facenet.shipsregistry.entity.ReportIndex;
 import com.facenet.shipsregistry.entity.Ship;
-import com.facenet.shipsregistry.modal.CertificateDTO;
-import com.facenet.shipsregistry.modal.GeneralParticularsDTO;
-import com.facenet.shipsregistry.modal.ShipDTO;
+import com.facenet.shipsregistry.modal.*;
 import com.facenet.shipsregistry.repository.CertificateRepository;
 import com.facenet.shipsregistry.repository.GeneralParticularsRepository;
+import com.facenet.shipsregistry.repository.ReportIndexRepository;
 import com.facenet.shipsregistry.repository.ShipRepository;
 import com.facenet.shipsregistry.request.CertificateRequestBody;
 import com.facenet.shipsregistry.request.GeneralParticularRequestBody;
@@ -42,6 +42,9 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
 
     @Autowired
     private GeneralParticularsRepository generalParticularsRepository;
+
+    @Autowired
+    private ReportIndexRepository reportIndexRepository;
 
     @Autowired
     private MapperUtils mapperUtils;
@@ -81,7 +84,8 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
                         requestBody.getFirstDateOfMeasurement(),
                         requestBody.getLastDateOfMeasurement(),
                         requestBody.getNameOfOperator(), null, false,
-                        requestBody.getMeasurementEquipmentInfo()
+                        requestBody.getMeasurementEquipmentInfo(),
+                        requestBody.getSurveyType()
                         );
         if (ship.isPresent()) {
             generalParticulars.setShip(ship.get());
@@ -91,7 +95,6 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
                     shipRepository.findShipByImoNumber(newShip.getImoNumber())
                             .orElse(null));
         }
-
         GeneralParticulars generalParticularsSaved =
                 generalParticularsRepository.save(generalParticulars);
 
@@ -178,5 +181,31 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
         return generalParticularsList.stream()
                 .map(generalParticulars -> mapperUtils.generalParticularsMapper(generalParticulars))
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    public ReportMenu getReportMenu(Long id) {
+        String reportNo = generalParticularsRepository.getReportNo(id);
+        if (reportNo != null) {
+            List<ReportIndex> reportIndices = reportIndexRepository.findAllReportIndexInGP(id);
+            List<ReportIndexDTO> reportIndexDTOS = reportIndices.stream()
+                    .map(reportIndex -> mapperUtils.reportIndexMapper(reportIndex))
+                    .toList();
+            List<ReportMenu.Part> parts = reportIndexDTOS.stream()
+                    .map(reportIndex -> {
+                        return new ReportMenu.Part(
+                                reportIndex.getPartIndex(), reportIndex.getItem(),
+                                reportIndex.getFormList().stream()
+                                        .map(formDTO -> new ReportMenu.Form(1L, formDTO.getType()))
+                                        .toList());
+                    }).toList();
+            ReportMenu reportMenu = new ReportMenu(reportNo, parts);
+            return reportMenu;
+        }
+        return null;
     }
 }

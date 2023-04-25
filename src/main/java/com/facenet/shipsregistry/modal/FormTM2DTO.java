@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class FormTM2DTO implements FormDTO {
+public class FormTM2DTO extends FormDTO {
 
     String type = "FORM TM2";
 

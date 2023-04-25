@@ -28,15 +28,15 @@ public class MeasurementTM1 {
     @Column(name = "no_or_letter")
     private String noOrLetter;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "form_TM1_id")
     private FormTM1 formTM1;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToOne(fetch = FetchType.EAGER,cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "forward_reading_measurement_detail_id")
     private DetailMeasurement forwardReadingMeasurementDetail;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToOne(fetch = FetchType.EAGER,cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "after_reading_measurement_detail_id")
     private DetailMeasurement afterReadingMeasurementDetail;
 }

@@ -9,7 +9,7 @@ import lombok.*;
  */
 
 @Entity
-@Table(name = "param_value_custom")
+@Table(name = "param_value")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -30,5 +30,4 @@ public class ParamValue {
     @Column(name = "type")
     @Enumerated(EnumType.ORDINAL)
     private ParamType type;
-
 }
