@@ -349,6 +349,13 @@ public class FormServiceImpl implements FormService{
             return null;
         }
     }
+
+    /**
+     *
+     * @param requestBody
+     * @param reportIndexID
+     * @return
+     */
     @Override
     public FormDTO saveNewFormTM7(FormTM7RequestBody requestBody, Long reportIndexID) {
         Optional<ReportIndex> reportIndex = reportIndexRepository.findById(reportIndexID);
@@ -375,7 +382,7 @@ public class FormServiceImpl implements FormService{
                                                 mapperUtils.mapperToDetailMeasurement(
                                                         measurementTM7RequestBody.getUpperPart()
                                                 );
-                                                return new MeasurementTM7(null, measurementTM7RequestBody.getName(),
+                                                return new MeasurementTM7(null, measurementTM7RequestBody.getItem(),
                                                         frameNumberTM7, second,
                                                         third, first);
                                             }).toList();
@@ -394,6 +401,11 @@ public class FormServiceImpl implements FormService{
             log.error("{}", exception.getMessage());
             return null;
         }
+    }
+    @Override
+    public FormTM7DTO getFormTM7ByID(Long id) {
+        Optional<FormTM7> formTM7 = formTM7Repository.findById(id);
+        return formTM7.map(tm7 -> mapperUtils.formTM7Mapper(tm7)).orElse(null);
     }
 
     /**

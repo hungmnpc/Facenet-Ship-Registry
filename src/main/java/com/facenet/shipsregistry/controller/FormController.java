@@ -128,11 +128,10 @@ public class FormController {
     public ResponseEntity<?> saveNewFormTm7(HttpServletRequest request,
                                             @PathVariable Long id,
                                             @RequestBody FormTM7RequestBody requestBody) {
-
         try {
-            FormDTO formTM7DTO = formService.saveNewFormTM7(requestBody, id);
-            if (formTM7DTO != null) {
-                return ResponseEntity.created(URI.create(request.getRequestURI())).body(formTM7DTO);
+            FormDTO formTM7DTOSave = formService.saveNewFormTM7(requestBody, id);
+            if (formTM7DTOSave != null) {
+                return ResponseEntity.created(URI.create(request.getRequestURI())).body(formTM7DTOSave);
             } else {
                 return ResponseEntity.badRequest().build();
             }

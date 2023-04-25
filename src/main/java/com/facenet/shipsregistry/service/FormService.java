@@ -80,6 +80,8 @@ public interface FormService {
 
     FormDTO saveNewFormTM7(FormTM7RequestBody requestBody, Long reportIndexID);
 
+    FormTM7DTO getFormTM7ByID(Long id);
+
     /**
      *
      * @param requestBody
