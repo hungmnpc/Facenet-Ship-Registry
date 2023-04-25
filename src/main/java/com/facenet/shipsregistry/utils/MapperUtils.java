@@ -334,14 +334,42 @@ public class MapperUtils {
     public ReportIndexDTO reportIndexMapper(ReportIndex reportIndex) {
         ReportIndexDTO reportIndexDTO = modelMapper.map(reportIndex, ReportIndexDTO.class);
         reportIndexDTO.setReportNo(reportIndex.getGeneralParticulars().getReportNo());
-        List<FormTM1DTO> formTM1DTOList = new ArrayList<>();
+        List<FormDTO> formDTOList = new ArrayList<>();
         if (reportIndex.getFormTM1List() != null) {
-            for (FormTM1 formTM1 : reportIndex.getFormTM1List()) {
-                Optional<FormTM1> formTM1DB = formTM1Repository.findById(formTM1.getId());
-                formTM1DB.ifPresent(tm1 -> formTM1DTOList.add(formTM1Mapper(tm1)));
-            }
+            formDTOList.addAll(reportIndex.getFormTM1List().stream()
+                    .map(this::formTM1Mapper)
+                    .toList());
         }
-        List<FormDTO> formDTOList = new ArrayList<>(formTM1DTOList);
+        if (reportIndex.getFormTM2List() != null) {
+            formDTOList.addAll(reportIndex.getFormTM2List().stream()
+                    .map(this::formTM2Mapper)
+                    .toList());
+        }
+        if (reportIndex.getFormTM3List() != null) {
+            formDTOList.addAll(reportIndex.getFormTM3List().stream()
+                    .map(this::formTM3Mapper)
+                    .toList());
+        }
+        if (reportIndex.getFormTM4List() != null) {
+            formDTOList.addAll(reportIndex.getFormTM4List().stream()
+                    .map(this::formTM4Mapper)
+                    .toList());
+        }
+        if (reportIndex.getFormTM5List() != null) {
+            formDTOList.addAll(reportIndex.getFormTM5List().stream()
+                    .map(this::formTM5Mapper)
+                    .toList());
+        }
+        if (reportIndex.getFormTM6List() != null) {
+            formDTOList.addAll(reportIndex.getFormTM6List().stream()
+                    .map(this::formTM6Mapper)
+                    .toList());
+        }
+        if (reportIndex.getFormTM7List() != null) {
+            formDTOList.addAll(reportIndex.getFormTM7List().stream()
+                    .map(this::formTM7Mapper)
+                    .toList());
+        }
         reportIndexDTO.setFormList(formDTOList);
         return reportIndexDTO;
     }

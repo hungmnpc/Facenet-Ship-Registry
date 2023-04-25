@@ -97,7 +97,6 @@ public class FormServiceImpl implements FormService{
     }
     @Override
     public FormTM1DTO getFormTM1ByID(Long id) {
-        log.info(id.toString());
         FormTM1 formTM1 = formTM1Repository.getById(id);
         if (formTM1 != null) {
             log.info("{}", formTM1.getReportIndex());
@@ -355,11 +354,21 @@ public class FormServiceImpl implements FormService{
             return null;
         }
     }
+
+    /**
+     *
+     * @param requestBody
+     * @param reportIndexID
+     * @return
+     */
     @Override
     public FormDTO saveNewFormTM7(FormTM7RequestBody requestBody, Long reportIndexID) {
         Optional<ReportIndex> reportIndex = reportIndexRepository.findById(reportIndexID);
         FormTM7 formTM7 = new FormTM7(requestBody.getName(), requestBody.getDescription());
         reportIndex.ifPresent(formTM7::setReportIndex);
+        if (reportIndex.isEmpty()) {
+            return null;
+        }
         List<FrameNumber> frameNumberList =
                 requestBody.getFrameNumberList().stream()
                         .map(frameNumberRequestBody -> {

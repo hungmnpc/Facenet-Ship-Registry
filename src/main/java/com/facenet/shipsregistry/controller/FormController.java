@@ -42,7 +42,7 @@ public class FormController {
                 return ResponseEntity.badRequest().build();
             }
         } catch (Exception exception) {
-            log.debug(exception.getMessage());
+            log.error(exception.getMessage());
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -58,7 +58,7 @@ public class FormController {
                 return ResponseEntity.badRequest().build();
             }
         } catch (Exception exception) {
-            log.debug(exception.getMessage());
+            log.error(exception.getMessage());
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -74,7 +74,7 @@ public class FormController {
                 return ResponseEntity.badRequest().build();
             }
         } catch (Exception exception) {
-            log.debug(exception.getMessage());
+            log.error(exception.getMessage());
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -92,7 +92,7 @@ public class FormController {
                 return ResponseEntity.badRequest().build();
             }
         } catch (Exception exception) {
-            log.debug(exception.getMessage());
+            log.error(exception.getMessage());
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -110,7 +110,7 @@ public class FormController {
                 return ResponseEntity.badRequest().build();
             }
         } catch (Exception exception) {
-            log.debug(exception.getMessage());
+            log.error(exception.getMessage());
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -135,7 +135,7 @@ public class FormController {
                 return ResponseEntity.badRequest().build();
             }
         } catch (Exception exception) {
-            log.debug(exception.getMessage());
+            log.error(exception.getMessage());
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -150,7 +150,7 @@ public class FormController {
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
             }
         } catch (Exception exception) {
-            log.debug(exception.getMessage());
+            log.error(exception.getMessage());
             return ResponseEntity.internalServerError().build();
         }
     }

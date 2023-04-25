@@ -35,14 +35,24 @@ public class ReportIndex {
 
     @OneToMany(mappedBy = "reportIndex", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<FormTM1> formTM1List;
-    @OneToMany(mappedBy = "reportIndex", cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "reportIndex", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<FormTM5> formTM5List;
 
-    @OneToMany(mappedBy = "reportIndex", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "reportIndex", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<FormTM2> formTM2List;
 
-    @OneToMany(mappedBy = "reportIndex", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "reportIndex", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<FormTM4> formTM4List;
+
+    @OneToMany(mappedBy = "reportIndex", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private List<FormTM7> formTM7List;
+
+    @OneToMany(mappedBy = "reportIndex", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private List<FormTM6> formTM6List;
+
+    @OneToMany(mappedBy = "reportIndex", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private List<FormTM3> formTM3List;
 
     public ReportIndex(Integer partIndex, String item) {
         this.partIndex = partIndex;
