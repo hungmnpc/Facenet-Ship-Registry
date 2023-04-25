@@ -61,4 +61,30 @@ public class ParamValueServiceImpl implements ParamValueService{
             return null;
         }
     }
+
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    public void deleteParamValue(Long id) {
+        paramValueRepository.deleteById(id);
+    }
+
+    /**
+     * @param id
+     * @param requestBody
+     * @return
+     */
+    @Override
+    public ParamValueDTO updateParamValue(Long id, ParamValueRequestBody requestBody) {
+        Optional<ParamValue> paramValue = paramValueRepository.findById(id);
+        if (paramValue.isPresent()) {
+            paramValue.get().setParam(requestBody.getParam());
+            paramValue.get().setValue(requestBody.getValue());
+            return mapperUtils.paramValueMapper(paramValue.get());
+        } else {
+            return null;
+        }
+    }
 }

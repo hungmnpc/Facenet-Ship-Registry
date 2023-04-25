@@ -27,4 +27,19 @@ public interface ParamValueService {
      */
     public ParamValueDTO saveNewParamValue(ParamValueRequestBody requestBody);
 
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public void deleteParamValue(Long id);
+
+    /**
+     *
+     * @param id
+     * @param requestBody
+     * @return
+     */
+    public ParamValueDTO updateParamValue(Long id, ParamValueRequestBody requestBody);
+
 }
