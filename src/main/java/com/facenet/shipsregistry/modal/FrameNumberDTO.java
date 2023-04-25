@@ -3,10 +3,7 @@ package com.facenet.shipsregistry.modal;
 
 import com.facenet.shipsregistry.entity.FormTM7;
 import com.facenet.shipsregistry.entity.MeasurementTM7;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -20,5 +17,5 @@ public class FrameNumberDTO {
 
     private String name;
 
-    private List<MeasurementTM7DTO> measurementTM7List;
+    private List<MeasurementTM7DTO> measurementTM7DTOList;
 }

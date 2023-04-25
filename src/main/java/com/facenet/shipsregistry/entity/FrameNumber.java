@@ -21,7 +21,7 @@ public class FrameNumber {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "id_formTM7")
     private FormTM7 formTM7;
 

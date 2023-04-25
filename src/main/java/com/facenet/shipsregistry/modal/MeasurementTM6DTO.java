@@ -15,7 +15,7 @@ public class MeasurementTM6DTO {
 
     private Long id;
 
-    private String structuralDescription;
+    private String description;
 
     private String item;
 

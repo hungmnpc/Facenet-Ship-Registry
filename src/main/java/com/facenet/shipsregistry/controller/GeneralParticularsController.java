@@ -1,8 +1,8 @@
 package com.facenet.shipsregistry.controller;
 
-import com.facenet.shipsregistry.entity.GeneralParticulars;
 import com.facenet.shipsregistry.modal.GeneralParticularsDTO;
 import com.facenet.shipsregistry.modal.ReportIndexDTO;
+import com.facenet.shipsregistry.modal.ReportMenu;
 import com.facenet.shipsregistry.request.GeneralParticularRequestBody;
 import com.facenet.shipsregistry.request.ReportIndexRequestBody;
 import com.facenet.shipsregistry.service.FormService;
@@ -42,7 +42,6 @@ public class GeneralParticularsController {
                 = generalParticularsService.getAllGeneralParticulars();
         return ResponseEntity.ok(generalParticularsDTOList);
     }
-
     /**
      *
      * @param requestBody
@@ -66,6 +65,13 @@ public class GeneralParticularsController {
         }
     }
 
+    /**
+     *
+     * @param requestBody
+     * @param id
+     * @param request
+     * @return
+     */
     @PostMapping("/{id}/report-indexes")
     public ResponseEntity<?> saveNewReportIndex(
             @RequestBody ReportIndexRequestBody requestBody,
@@ -79,6 +85,18 @@ public class GeneralParticularsController {
             } else {
                 return ResponseEntity.badRequest().build();
             }
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+
+    @GetMapping("/{id}/report-indexes")
+    public ResponseEntity getReportIndex(@PathVariable(name = "id") Long id) {
+        try {
+            ReportMenu reportMenu = generalParticularsService.getReportMenu(id);
+            return ResponseEntity.ok(reportMenu);
         } catch (Exception exception) {
             log.error(exception.getMessage());
             return ResponseEntity.internalServerError().build();
