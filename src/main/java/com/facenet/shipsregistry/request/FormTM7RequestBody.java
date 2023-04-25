@@ -15,5 +15,5 @@ public class FormTM7RequestBody {
     private String description;
 
     private String name;
-    private List<MeasurementTM7RequestBody> measurementTM7List;
+    private List<FrameNumberRequestBody> frameNumberList;
     }

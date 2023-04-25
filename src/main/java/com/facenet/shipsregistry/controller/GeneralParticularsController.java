@@ -41,12 +41,6 @@ public class GeneralParticularsController {
                 = generalParticularsService.getAllGeneralParticulars();
         return ResponseEntity.ok(generalParticularsDTOList);
     }
-    @GetMapping("/getAllReport-indexes")
-    public ResponseEntity<List<ReportIndexDTO>> getAllReportIndexes() {
-        List<ReportIndexDTO> reportIndexDTOList
-                = formService.getAllReportIndexes();
-        return ResponseEntity.ok(reportIndexDTOList);
-    }
     /**
      *
      * @param requestBody

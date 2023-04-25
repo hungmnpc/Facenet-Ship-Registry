@@ -29,4 +29,9 @@ public class FormTM7 {
     @ManyToOne
     @JoinColumn(name = "report_id")
     private ReportIndex reportIndex;
+
+    public FormTM7(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 }

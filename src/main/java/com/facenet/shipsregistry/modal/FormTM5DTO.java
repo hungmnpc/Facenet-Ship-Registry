@@ -37,8 +37,5 @@ public class FormTM5DTO implements FormDTO{
 
     private List<MeasurementTM5DTO> measurementTM5List;
 
-    private Integer deadweight;
-
-    private Date dateOfBuild;
 
 }

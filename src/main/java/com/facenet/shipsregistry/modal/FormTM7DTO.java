@@ -22,5 +22,5 @@ public class FormTM7DTO implements FormDTO{
 
     private String description;
 
-    private List<FrameNumberDTO> frameNumber;
+    private List<FrameNumberDTO> frameNumberList;
 }
