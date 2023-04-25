@@ -68,4 +68,35 @@ public class ParamValueController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteParamValue(@PathVariable Long id) {
+        try {
+            paramValueService.deleteParamValue(id);
+            return ResponseEntity.ok("Xóa thành công.");
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateParamValue(@PathVariable Long id, @RequestBody ParamValueRequestBody requestBody) {
+        try {
+            ParamValueDTO paramValueDTO = paramValueService.updateParamValue(id, requestBody);
+            if (paramValueDTO != null) {
+                return ResponseEntity.ok(paramValueDTO);
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }

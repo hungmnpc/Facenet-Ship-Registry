@@ -13,5 +13,6 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class FormDTO {
+
     private String type;
 }
