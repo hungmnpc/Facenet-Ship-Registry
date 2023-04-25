@@ -1,18 +1,17 @@
 package com.facenet.shipsregistry.controller;
 
 import com.facenet.shipsregistry.modal.FormDTO;
-import com.facenet.shipsregistry.modal.FormTM1DTO;
+import com.facenet.shipsregistry.modal.FormTM4DTO;
 import com.facenet.shipsregistry.modal.ReportIndexDTO;
-import com.facenet.shipsregistry.request.FormTM1RequestBody;
-import com.facenet.shipsregistry.request.FormTM5RequestBody;
+import com.facenet.shipsregistry.request.*;
 import com.facenet.shipsregistry.service.FormService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
-
 import java.net.URI;
 
 /**
@@ -50,6 +49,59 @@ public class FormController {
         }
     }
 
+    @PostMapping("/{id}/tm2s")
+    public ResponseEntity<?> saveNewFormTm2(HttpServletRequest request,
+                                            @PathVariable Long id,
+                                            @RequestBody FormTM2RequestBody requestBody) {
+        try {
+            FormDTO formTM2Saved = formService.saveNewFormTM2(requestBody, id);
+            if (formTM2Saved != null) {
+                return ResponseEntity.created(URI.create(request.getRequestURI())).body(formTM2Saved);
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (Exception exception) {
+            log.debug(exception.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @PostMapping("/{id}/tm4s")
+    public ResponseEntity<?> saveNewFormTm4(HttpServletRequest request,
+                                            @PathVariable Long id,
+                                            @RequestBody FormTM4RequestBody requestBody) {
+
+        try {
+            FormDTO formTM4DTO = formService.saveNewFormTM4(requestBody, id);
+            if (formTM4DTO != null) {
+                return ResponseEntity.created(URI.create(request.getRequestURI())).body(formTM4DTO);
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (Exception exception) {
+            log.debug(exception.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @PostMapping("/{id}/tm6s")
+    public ResponseEntity<?> saveNewFormTm6(HttpServletRequest request,
+                                            @PathVariable Long id,
+                                            @RequestBody FormTM6RequestBody requestBody) {
+
+        try {
+            FormDTO formTM6DTO = formService.saveNewFormTM6(requestBody, id);
+            if (formTM6DTO != null) {
+                return ResponseEntity.created(URI.create(request.getRequestURI())).body(formTM6DTO);
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (Exception exception) {
+            log.debug(exception.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getAllFormFromReportIndex(@PathVariable Long id) {
         try {
@@ -65,18 +117,20 @@ public class FormController {
         }
     }
 
+
     @PostMapping("/tm2")
     public ResponseEntity<?> saveNewFormTm2(HttpServletRequest request) {
         return ResponseEntity.created(URI.create(request.getRequestURI())).body("TM2");
     }
-    @PostMapping("/{id}/tm5s")
-    public ResponseEntity<?> saveNewFormTm5(HttpServletRequest request,
+
+    @PostMapping("/{id}/tm3s")
+    public ResponseEntity<?> saveNewFormTm3(HttpServletRequest request,
                                             @PathVariable Long id,
-                                            @RequestBody FormTM5RequestBody requestBody) {
+                                            @RequestBody FormTM3RequestBody requestBody) {
         try {
-            FormDTO formTM5DTOSave = formService.saveNewFormTM5(requestBody, id);
-            if (formTM5DTOSave != null) {
-                return ResponseEntity.created(URI.create(request.getRequestURI())).body(formTM5DTOSave);
+            FormDTO formTM3DTOSave = formService.saveNewFormTM3(requestBody, id);
+            if (formTM3DTOSave != null) {
+                return ResponseEntity.created(URI.create(request.getRequestURI())).body(formTM3DTOSave);
             } else {
                 return ResponseEntity.badRequest().build();
             }
@@ -85,5 +139,4 @@ public class FormController {
             return ResponseEntity.internalServerError().build();
         }
     }
-
 }

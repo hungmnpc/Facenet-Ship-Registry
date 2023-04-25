@@ -12,9 +12,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MeasurementTM6DTO {
+
     private Long id;
-    private String noOrLetter;
-    private String name;
-    private StructuralDescriptionTM6 structuralDescriptionTM6;
-    private DetailMeasurementDTO measurementDetail;
+
+    private String structuralDescription;
+
+    private String item;
+
+    private DetailMeasurementDTO detailMeasurement;
 }

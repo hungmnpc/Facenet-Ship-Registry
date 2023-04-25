@@ -15,9 +15,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MeasurementTM5DTO {
+
     private Long id;
+
     private String structuralComponentType;
+
     private String structuralComponent;
-    private FormTM5 formTM5;
-    private DetailMeasurementDTO measurementDetail;
+
+    private DetailMeasurement measurementDetail;
 }

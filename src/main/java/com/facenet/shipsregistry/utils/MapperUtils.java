@@ -2,19 +2,20 @@ package com.facenet.shipsregistry.utils;
 
 import com.facenet.shipsregistry.entity.*;
 import com.facenet.shipsregistry.modal.*;
+import com.facenet.shipsregistry.request.DetailMeasurementRequestBody;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author: hungdinh
  * Date created: 11/04/2023
  */
 @Component
+@Slf4j
 public class MapperUtils {
 
     @Autowired
@@ -62,6 +63,11 @@ public class MapperUtils {
         return paramValueDTO;
     }
 
+    /**
+     *
+     * @param formTm1
+     * @return
+     */
     public FormTM1DTO formTM1Mapper(FormTM1 formTm1) {
         FormTM1DTO formTM1DTO = modelMapper.map(formTm1, FormTM1DTO.class);
         List<MeasurementTM1DTO> measurementTM1DTOList =
@@ -79,6 +85,41 @@ public class MapperUtils {
                         .toList();
         formTM5DTO.setMeasurementTM5DTOList(measurementTM5DTOList);
         return formTM5DTO;
+    }
+
+    /**
+     *
+     * @param formTM2
+     * @return
+     */
+    public FormTM2DTO formTM2Mapper(FormTM2 formTM2) {
+        FormTM2DTO formTM2DTO = modelMapper.map(formTM2, FormTM2DTO.class);
+        List<MeasurementTM2DTO> measurementTM2DTOList =
+                formTM2.getMeasurementTM2List().stream()
+                        .map(this::measurementTM2DTO)
+                        .toList();
+        formTM2DTO.setMeasurementTM2DTOList(measurementTM2DTOList);
+        return formTM2DTO;
+    }
+
+    public MeasurementTM2DTO measurementTM2DTO(MeasurementTM2 measurementTM2) {
+        MeasurementTM2DTO measurementTM2DTO = modelMapper.map(measurementTM2, MeasurementTM2DTO.class);
+        if (measurementTM2DTO.getFirstTransverseSectionMeasurementDetailTM2() != null) {
+            measurementTM2DTO.setFirstTransverseSectionMeasurementDetailTM2(
+                    detailMeasurementMapper(measurementTM2.getFirstTransverseSectionMeasurementDetailTM2())
+            );
+        }
+        if (measurementTM2DTO.getSecondTransverseSectionMeasurementDetailTM2() != null) {
+            measurementTM2DTO.setSecondTransverseSectionMeasurementDetailTM2(
+                    detailMeasurementMapper(measurementTM2.getSecondTransverseSectionMeasurementDetailTM2())
+            );
+        }
+        if (measurementTM2DTO.getThirdTransverseSectionMeasurementDetailTM2() != null) {
+            measurementTM2DTO.setThirdTransverseSectionMeasurementDetailTM2(
+                    detailMeasurementMapper(measurementTM2.getThirdTransverseSectionMeasurementDetailTM2())
+            );
+        }
+        return measurementTM2DTO;
     }
 
     /**
@@ -111,6 +152,117 @@ public class MapperUtils {
     }
 
 
+    public FormTM3DTO formTM3Mapper(FormTM3 formTm3) {
+        FormTM3DTO formTM3DTO = modelMapper.map(formTm3, FormTM3DTO.class);
+        List<MeasurementTM3DTO> measurementTM3DTOList =
+                formTm3.getMeasurementTM3List().stream()
+                        .map(this::measurementTM3Mapper)
+                        .toList();
+        formTM3DTO.setMeasurementTM3DTOList(measurementTM3DTOList);
+        return formTM3DTO;
+    }
+
+    /**
+     *
+     * @param formTM4
+     * @return
+     */
+    public FormTM4DTO formTM4Mapper(FormTM4 formTM4) {
+        FormTM4DTO formTM4DTO = modelMapper.map(formTM4, FormTM4DTO.class);
+        List<StructuralMemberTM4DTO> structuralMemberTM4DTOList =
+                formTM4.getStructuralMemberTM4List().stream()
+                        .map(this::structuralMemberTM4Mapper)
+                        .toList();
+        structuralMemberTM4DTOList.forEach(structuralMemberTM4DTO -> System.out.println(structuralMemberTM4DTO.toString()));
+        formTM4DTO.setStructuralMemberTM4List(structuralMemberTM4DTOList);
+        log.info("{}", formTM4DTO.toString());
+        return formTM4DTO;
+    }
+
+    /**
+     *
+     * @param measurementTM4
+     * @return
+     */
+    public MeasurementTM4DTO measurementTM4Mapper(MeasurementTM4 measurementTM4) {
+        MeasurementTM4DTO measurementTM4DTO = modelMapper.map(measurementTM4, MeasurementTM4DTO.class);
+        measurementTM4DTO.setDetailMeasurement(detailMeasurementMapper(measurementTM4.getDetailMeasurement()));
+        return measurementTM4DTO;
+    }
+
+    public StructuralMemberTM4DTO structuralMemberTM4Mapper(StructuralMemberTM4 structuralMemberTM4) {
+        StructuralMemberTM4DTO structuralMemberTM4DTO =
+                modelMapper.map(structuralMemberTM4, StructuralMemberTM4DTO.class);
+        List<MeasurementTM4DTO> measurementTM4DTOList = structuralMemberTM4.getMeasurementTM4List()
+                .stream().map(this::measurementTM4Mapper)
+                .toList();
+        structuralMemberTM4DTO.setMeasurementTM4DTOList(measurementTM4DTOList);
+        return structuralMemberTM4DTO;
+    }
+
+    /**
+     *
+     * @param formTM6
+     * @return
+     */
+    public FormTM6DTO formTM6Mapper(FormTM6 formTM6) {
+        FormTM6DTO formTM6DTO = modelMapper.map(formTM6, FormTM6DTO.class);
+        List<StructuralDescriptionTM6DTO> structuralDescriptionTM6DTOList =
+                formTM6.getStructuralDescriptionTM6List().stream()
+                        .map(this::structuralMemberTM6Mapper)
+                        .toList();
+        structuralDescriptionTM6DTOList.forEach(structuralDescriptionTM6DTO -> System.out.println(structuralDescriptionTM6DTO.toString()));
+        formTM6DTO.setStructuralDescriptionTM6List(structuralDescriptionTM6DTOList);
+        log.info("{}", formTM6DTO.toString());
+        return formTM6DTO;
+    }
+
+    /**
+     *
+     * @param measurementTM6
+     * @return
+     */
+    public MeasurementTM6DTO measurementTM6Mapper(MeasurementTM6 measurementTM6) {
+        MeasurementTM6DTO measurementTM6DTO = modelMapper.map(measurementTM6, MeasurementTM6DTO.class);
+        measurementTM6DTO.setDetailMeasurement(detailMeasurementMapper(measurementTM6.getDetailMeasurement()));
+        return measurementTM6DTO;
+    }
+
+    public StructuralDescriptionTM6DTO structuralMemberTM6Mapper(StructuralDescriptionTM6 structuralDescriptionTM6) {
+        StructuralDescriptionTM6DTO structuralDescriptionTM6DTO =
+                modelMapper.map(structuralDescriptionTM6, StructuralDescriptionTM6DTO.class);
+        List<MeasurementTM6DTO> measurementTM6DTOList = structuralDescriptionTM6.getMeasurementTM6List()
+                .stream().map(this::measurementTM6Mapper)
+                .toList();
+        structuralDescriptionTM6DTO.setMeasurementTM6DTOList(measurementTM6DTOList);
+        return structuralDescriptionTM6DTO;
+    }
+
+    /**
+     *
+     * @param measurementTM3
+     * @return
+     */
+    public MeasurementTM3DTO measurementTM3Mapper(MeasurementTM3 measurementTM3) {
+        MeasurementTM3DTO measurementTM3DTO = modelMapper.map(measurementTM3, MeasurementTM3DTO.class);
+        if (measurementTM3.getFirstTransverseSectionMeasurementDetailTM3() != null) {
+            measurementTM3DTO.setFirstTransverseSectionMeasurementDetail(
+                    detailMeasurementMapper(measurementTM3.getFirstTransverseSectionMeasurementDetailTM3())
+            );
+        }
+        if (measurementTM3.getSecondTransverseSectionMeasurementDetailTM3() != null) {
+            measurementTM3DTO.setSecondTransverseSectionMeasurementDetail(
+                    detailMeasurementMapper(measurementTM3.getSecondTransverseSectionMeasurementDetailTM3())
+            );
+        }
+        if (measurementTM3.getThirdTransverseSectionMeasurementDetailTM3() != null) {
+            measurementTM3DTO.setThirdTransverseSectionMeasurementDetail(
+                    detailMeasurementMapper(measurementTM3.getThirdTransverseSectionMeasurementDetailTM3())
+            );
+        }
+        return measurementTM3DTO;
+    }
+
     public DetailMeasurementDTO detailMeasurementMapper(DetailMeasurement detailMeasurement) {
         DetailMeasurementDTO detailMeasurementDTO =
                 modelMapper.map(detailMeasurement, DetailMeasurementDTO.class);
@@ -130,5 +282,11 @@ public class MapperUtils {
         List<FormDTO> formDTOList = new ArrayList<>(formTM1DTOList);
         reportIndexDTO.setFormList(formDTOList);
         return reportIndexDTO;
+    }
+
+
+    public DetailMeasurement mapperToDetailMeasurement(DetailMeasurementRequestBody requestBody) {
+        return new DetailMeasurement(requestBody.getOriginalThickness(),
+                requestBody.getMaxAlwbDim(), requestBody.getGaugedP(), requestBody.getGaugedS());
     }
 }

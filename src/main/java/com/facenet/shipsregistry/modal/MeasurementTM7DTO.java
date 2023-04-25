@@ -12,10 +12,14 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MeasurementTM7DTO {
+
     private Long id;
-    private FrameNumber frameNumber;
+
     private String name;
+
     private DetailMeasurementDTO upperPart;
+
     private DetailMeasurementDTO midPart;
+
     private DetailMeasurementDTO lowerPart;
 }

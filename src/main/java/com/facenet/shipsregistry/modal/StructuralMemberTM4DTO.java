@@ -2,6 +2,8 @@ package com.facenet.shipsregistry.modal;
 
 import lombok.*;
 
+import java.util.List;
+
 /**
  * @author: CongTu
  * Date created: 15/04/2023
@@ -12,13 +14,11 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class StructuralMemberDetailsTM4DTO {
+public class StructuralMemberTM4DTO {
 
     private Long id;
 
-    private String structuralMemberName;
+    private String structuralMemberTitle;
 
-    private String itemName;
-
-    private MeasurementTM4DTO measurementTM4DTO;
+    private List<MeasurementTM4DTO> measurementTM4DTOList;
 }

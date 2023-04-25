@@ -12,13 +12,20 @@ import lombok.Setter;
 
 import java.util.List;
 
+/**
+ * @author: CongTu
+ * Date created: 24/04/2023
+ */
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class StructuralDescriptionTM6DTO {
+
     private Long id;
-    private String structuralDescription;
-    private FormTM6 formTM6;
-    private List<MeasurementTM6> measurementTM6List;
+
+    private String structuralDescriptionTitle;
+
+    private List<MeasurementTM6DTO> measurementTM6DTOList;
 }

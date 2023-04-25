@@ -2,6 +2,8 @@ package com.facenet.shipsregistry.modal;
 
 import lombok.*;
 
+import java.util.List;
+
 /**
  * @author: CongTu
  * Date created: 15/04/2023
@@ -12,15 +14,15 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class FormTM4DTO {
+public class FormTM4DTO implements FormDTO{
+
+    private String type = "FORM TM4";
 
     private Long id;
-
-    private String description;
-
-    private String name;
 
     private String tankDescription;
 
     private String locationOfStructure;
+
+    private List<StructuralMemberTM4DTO> structuralMemberTM4List;
 }

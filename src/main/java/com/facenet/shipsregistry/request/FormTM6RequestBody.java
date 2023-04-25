@@ -5,6 +5,11 @@ import lombok.*;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * @author: CongTu
+ * Date created: 24/04/2023
+ */
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -12,12 +17,10 @@ import java.util.List;
 @ToString
 public class FormTM6RequestBody {
 
-    private String description;
-
-    private String name;
-
     private String structuralMembers;
 
     private String locationOfStructure;
-    private List<MeasurementTM6RequestBody> measurementTM6List;
+
+    private List<StructuralDescriptionTM6RequestBody> structuralDescriptionTM6List;
+
 }

@@ -12,7 +12,9 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FormTM7DTO {
+public class FormTM7DTO implements FormDTO{
+
+    private String type = "FORM TM7";
 
     private Long id;
 
@@ -21,6 +23,4 @@ public class FormTM7DTO {
     private String description;
 
     private List<FrameNumberDTO> frameNumber;
-
-
 }

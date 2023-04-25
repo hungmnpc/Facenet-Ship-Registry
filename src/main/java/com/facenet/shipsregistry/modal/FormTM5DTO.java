@@ -2,9 +2,6 @@ package com.facenet.shipsregistry.modal;
 
 
 import com.facenet.shipsregistry.entity.MeasurementTM5;
-import com.facenet.shipsregistry.entity.ReportIndex;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +19,9 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FormTM5DTO implements FormDTO {
+public class FormTM5DTO implements FormDTO{
+
+    private String type = "FORM TM5";
 
     private Long id;
 
@@ -36,10 +35,10 @@ public class FormTM5DTO implements FormDTO {
 
     private String frameNo;
 
-    private List<MeasurementTM5DTO> measurementTM5DTOList;
+    private List<MeasurementTM5DTO> measurementTM5List;
 
-    @ManyToOne
-    @JoinColumn(name = "report_id")
-    private ReportIndex reportIndex;
+    private Integer deadweight;
+
+    private Date dateOfBuild;
 
 }

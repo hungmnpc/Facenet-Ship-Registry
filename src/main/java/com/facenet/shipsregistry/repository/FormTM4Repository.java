@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface FormTM4Repository extends JpaRepository<FormTM4,Long> {
+public interface FormTM4Repository extends JpaRepository<FormTM4, Long> {
 }

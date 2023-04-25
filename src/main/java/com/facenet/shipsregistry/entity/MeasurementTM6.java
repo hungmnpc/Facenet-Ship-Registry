@@ -17,17 +17,17 @@ public class MeasurementTM6 {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "description")
+    private String description;
 
-    @Column(name = "no_or_letter")
-    private String noOrLetter;
-
-    @ManyToOne
-    @JoinColumn(name = "structural_description_id")
-    private StructuralDescriptionTM6 structuralDescriptionTM6;
+    @Column(name = "item")
+    private String item;
 
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "measurement_detail_id")
-    private DetailMeasurement measurementDetail;
+    private DetailMeasurement detailMeasurement;
+
+    @ManyToOne
+    @JoinColumn(name = "structural_title_id")
+    private StructuralDescriptionTM6 structuralDescriptionTM6;
 }

@@ -56,43 +56,39 @@ public class DetailMeasurement {
     @OneToOne(mappedBy = "measurementDetail",
             cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private MeasurementTM5 measurementTM5;
-    @OneToOne(mappedBy = "measurementDetail",
+
+    @OneToOne(mappedBy = "detailMeasurement",
             cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private MeasurementTM6 measurementTM6;
+
     @OneToOne(mappedBy = "upperPart",
             cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private MeasurementTM7 measurementTM7UpperPart;
+
     @OneToOne(mappedBy = "midPart",
             cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private MeasurementTM7 measurementTM7MidPart;
+
     @OneToOne(mappedBy = "lowerPart",
             cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private MeasurementTM7 measurementTM7LowerPart;
 
+    @OneToOne(mappedBy = "firstTransverseSectionMeasurementDetailTM3",
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private MeasurementTM3 measurementTM3FirstTranList;
 
-//    @OneToOne(mappedBy = "firstTransverseSectionMeasurementDetailTM2",
-//            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-//    private MeasurementTM2 measurementTM2FirstTranList;
-//
-//    @OneToOne(mappedBy = "secondTransverseSectionMeasurementDetailTM2",
-//            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-//    private MeasurementTM2 measurementTM2SecondTranList;
-//
-//    @OneToOne(mappedBy = "thirdTransverseSectionMeasurementDetailTM2",
-//            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-//    private MeasurementTM2 measurementTM2ThirdTranList;
-//
-//    @OneToOne(mappedBy = "firstFrameNoTM2",
-//            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-//    private MeasurementTM2 measurementTM2FirstFrameNoList;
-//
-//    @OneToOne(mappedBy = "secondFrameNoTM2",
-//            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-//    private MeasurementTM2 measurementTM2SecondFrameNoList;
-//
-//    @OneToOne(mappedBy = "thirdFrameNoTM2",
-//            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-//    private MeasurementTM2 measurementTM2ThirdFrameNoList;
+    @OneToOne(mappedBy = "secondTransverseSectionMeasurementDetailTM3",
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private MeasurementTM3 measurementTM3SecondTranList;
+
+    @OneToOne(mappedBy = "thirdTransverseSectionMeasurementDetailTM3",
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private MeasurementTM3 measurementTM3ThirdTranList;
+
+    @OneToOne(mappedBy = "detailMeasurement",
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private MeasurementTM4 measurementTM4;
+
 //
 //    @OneToOne(mappedBy = "firstTransverseSectionMeasurementDetailTM3",
 //            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
