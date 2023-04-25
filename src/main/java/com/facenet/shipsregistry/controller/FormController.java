@@ -48,7 +48,22 @@ public class FormController {
             return ResponseEntity.internalServerError().build();
         }
     }
-
+    @PostMapping("/{id}/tm5s")
+    public ResponseEntity<?> saveNewFormTm5(HttpServletRequest request,
+                                            @PathVariable Long id,
+                                            @RequestBody FormTM5RequestBody requestBody) {
+        try {
+            FormDTO formTM5DTOSave = formService.saveNewFormTM5(requestBody, id);
+            if (formTM5DTOSave != null) {
+                return ResponseEntity.created(URI.create(request.getRequestURI())).body(formTM5DTOSave);
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (Exception exception) {
+            log.debug(exception.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
     @PostMapping("/{id}/tm2s")
     public ResponseEntity<?> saveNewFormTm2(HttpServletRequest request,
                                             @PathVariable Long id,
@@ -93,6 +108,31 @@ public class FormController {
             FormDTO formTM6DTO = formService.saveNewFormTM6(requestBody, id);
             if (formTM6DTO != null) {
                 return ResponseEntity.created(URI.create(request.getRequestURI())).body(formTM6DTO);
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (Exception exception) {
+            log.debug(exception.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    /**
+     *
+     * @param request
+     * @param id
+     * @param requestBody
+     * @return
+     */
+    @PostMapping("/{id}/tm7s")
+    public ResponseEntity<?> saveNewFormTm7(HttpServletRequest request,
+                                            @PathVariable Long id,
+                                            @RequestBody FormTM7RequestBody requestBody) {
+
+        try {
+            FormDTO formTM7DTO = formService.saveNewFormTM7(requestBody, id);
+            if (formTM7DTO != null) {
+                return ResponseEntity.created(URI.create(request.getRequestURI())).body(formTM7DTO);
             } else {
                 return ResponseEntity.badRequest().build();
             }

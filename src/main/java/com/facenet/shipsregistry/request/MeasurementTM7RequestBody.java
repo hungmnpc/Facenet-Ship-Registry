@@ -11,8 +11,10 @@ import lombok.*;
 public class MeasurementTM7RequestBody {
 
     private String name;
-    private FrameNumber frameNumber;
-    private DetailMeasurement upperPart;
-    private DetailMeasurement midPart;
-    private DetailMeasurement lowerPart;
+
+    private DetailMeasurementRequestBody upperPart;
+
+    private DetailMeasurementRequestBody midPart;
+
+    private DetailMeasurementRequestBody lowerPart;
 }
