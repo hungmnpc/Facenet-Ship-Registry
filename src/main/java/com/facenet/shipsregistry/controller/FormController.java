@@ -25,11 +25,13 @@ public class FormController {
     @Autowired
     FormService formService;
 
-    @GetMapping("")
-    public ResponseEntity<?> getAllForm() {
-        return ResponseEntity.ok().build();
-    }
-
+    /**
+     *
+     * @param request
+     * @param id
+     * @param requestBody
+     * @return
+     */
     @PostMapping("/{id}/tm1s")
     public ResponseEntity<?> saveNewFormTm1(HttpServletRequest request,
                                             @PathVariable Long id,
@@ -46,6 +48,14 @@ public class FormController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    /**
+     *
+     * @param request
+     * @param id
+     * @param requestBody
+     * @return
+     */
     @PostMapping("/{id}/tm5s")
     public ResponseEntity<?> saveNewFormTm5(HttpServletRequest request,
                                             @PathVariable Long id,
@@ -62,6 +72,14 @@ public class FormController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    /**
+     *
+     * @param request
+     * @param id
+     * @param requestBody
+     * @return
+     */
     @PostMapping("/{id}/tm2s")
     public ResponseEntity<?> saveNewFormTm2(HttpServletRequest request,
                                             @PathVariable Long id,
@@ -79,6 +97,13 @@ public class FormController {
         }
     }
 
+    /**
+     *
+     * @param request
+     * @param id
+     * @param requestBody
+     * @return
+     */
     @PostMapping("/{id}/tm4s")
     public ResponseEntity<?> saveNewFormTm4(HttpServletRequest request,
                                             @PathVariable Long id,
@@ -97,6 +122,13 @@ public class FormController {
         }
     }
 
+    /**
+     *
+     * @param request
+     * @param id
+     * @param requestBody
+     * @return
+     */
     @PostMapping("/{id}/tm6s")
     public ResponseEntity<?> saveNewFormTm6(HttpServletRequest request,
                                             @PathVariable Long id,
@@ -140,6 +172,11 @@ public class FormController {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}")
     public ResponseEntity<?> getAllFormFromReportIndex(@PathVariable Long id) {
         try {
@@ -155,12 +192,13 @@ public class FormController {
         }
     }
 
-
-    @PostMapping("/tm2")
-    public ResponseEntity<?> saveNewFormTm2(HttpServletRequest request) {
-        return ResponseEntity.created(URI.create(request.getRequestURI())).body("TM2");
-    }
-
+    /**
+     *
+     * @param request
+     * @param id
+     * @param requestBody
+     * @return
+     */
     @PostMapping("/{id}/tm3s")
     public ResponseEntity<?> saveNewFormTm3(HttpServletRequest request,
                                             @PathVariable Long id,
@@ -176,11 +214,5 @@ public class FormController {
             log.debug(exception.getMessage());
             return ResponseEntity.internalServerError().build();
         }
-    }
-
-    @GetMapping("/tm1s/{id}")
-    public ResponseEntity<?> getFormTm1(@PathVariable Long id) {
-        FormDTO formDTO = formService.getFormTM1ByID(id);
-        return ResponseEntity.ok(formDTO);
     }
 }
