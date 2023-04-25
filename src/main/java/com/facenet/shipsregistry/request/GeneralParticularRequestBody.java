@@ -29,6 +29,8 @@ public class GeneralParticularRequestBody {
 
     private String measurementEquipmentInfo;
 
+    private String surveyType;
+
     private String placeOfMeasurement;
 
     private LocalDate firstDateOfMeasurement;

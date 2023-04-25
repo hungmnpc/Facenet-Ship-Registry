@@ -25,10 +25,19 @@ public class FormTM1 {
     @Column(name = "strake_position")
     private String strakePosition;
 
-    @OneToMany(mappedBy = "formTM1", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "formTM1", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<MeasurementTM1> measurementTM1List;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "report_id")
     private ReportIndex reportIndex;
+
+    @Override
+    public String toString() {
+        return "FormTM1{" +
+                "id=" + id +
+                ", strakePosition='" + strakePosition + '\'' +
+                ", reportIndex=" + reportIndex +
+                '}';
+    }
 }

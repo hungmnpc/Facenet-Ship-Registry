@@ -33,7 +33,7 @@ public class ReportIndex {
     @JoinColumn(name = "general_particulars_id")
     private GeneralParticulars generalParticulars;
 
-    @OneToMany(mappedBy = "reportIndex", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "reportIndex", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<FormTM1> formTM1List;
     @OneToMany(mappedBy = "reportIndex", cascade = CascadeType.ALL)
     private List<FormTM5> formTM5List;

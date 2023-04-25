@@ -2,6 +2,7 @@ package com.facenet.shipsregistry.utils;
 
 import com.facenet.shipsregistry.entity.*;
 import com.facenet.shipsregistry.modal.*;
+import com.facenet.shipsregistry.repository.FormTM1Repository;
 import com.facenet.shipsregistry.request.DetailMeasurementRequestBody;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author: hungdinh
@@ -20,6 +22,9 @@ public class MapperUtils {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private FormTM1Repository formTM1Repository;
 
     /**
      *
@@ -103,6 +108,11 @@ public class MapperUtils {
         return formTM2DTO;
     }
 
+    /**
+     *
+     * @param measurementTM2
+     * @return
+     */
     public MeasurementTM2DTO measurementTM2DTO(MeasurementTM2 measurementTM2) {
         MeasurementTM2DTO measurementTM2DTO = modelMapper.map(measurementTM2, MeasurementTM2DTO.class);
         if (measurementTM2DTO.getFirstTransverseSectionMeasurementDetailTM2() != null) {
@@ -153,6 +163,11 @@ public class MapperUtils {
     }
 
 
+    /**
+     *
+     * @param formTm3
+     * @return
+     */
     public FormTM3DTO formTM3Mapper(FormTM3 formTm3) {
         FormTM3DTO formTM3DTO = modelMapper.map(formTm3, FormTM3DTO.class);
         List<MeasurementTM3DTO> measurementTM3DTOList =
@@ -298,6 +313,11 @@ public class MapperUtils {
         return measurementTM3DTO;
     }
 
+    /**
+     *
+     * @param detailMeasurement
+     * @return
+     */
     public DetailMeasurementDTO detailMeasurementMapper(DetailMeasurement detailMeasurement) {
         DetailMeasurementDTO detailMeasurementDTO =
                 modelMapper.map(detailMeasurement, DetailMeasurementDTO.class);
@@ -305,21 +325,32 @@ public class MapperUtils {
         return detailMeasurementDTO;
     }
 
+    /**
+     *
+     *
+     * @param reportIndex
+     * @return
+     */
     public ReportIndexDTO reportIndexMapper(ReportIndex reportIndex) {
         ReportIndexDTO reportIndexDTO = modelMapper.map(reportIndex, ReportIndexDTO.class);
         reportIndexDTO.setReportNo(reportIndex.getGeneralParticulars().getReportNo());
         List<FormTM1DTO> formTM1DTOList = new ArrayList<>();
         if (reportIndex.getFormTM1List() != null) {
-             formTM1DTOList = reportIndex.getFormTM1List().stream()
-                    .map(this::formTM1Mapper)
-                    .toList();
+            for (FormTM1 formTM1 : reportIndex.getFormTM1List()) {
+                Optional<FormTM1> formTM1DB = formTM1Repository.findById(formTM1.getId());
+                formTM1DB.ifPresent(tm1 -> formTM1DTOList.add(formTM1Mapper(tm1)));
+            }
         }
         List<FormDTO> formDTOList = new ArrayList<>(formTM1DTOList);
         reportIndexDTO.setFormList(formDTOList);
         return reportIndexDTO;
     }
 
-
+    /**
+     *
+     * @param requestBody
+     * @return
+     */
     public DetailMeasurement mapperToDetailMeasurement(DetailMeasurementRequestBody requestBody) {
         return new DetailMeasurement(requestBody.getOriginalThickness(),
                 requestBody.getMaxAlwbDim(), requestBody.getGaugedP(), requestBody.getGaugedS());

@@ -19,4 +19,7 @@ public interface ReportIndexRepository extends JpaRepository<ReportIndex, Long> 
     @Query(value = "select r from ReportIndex r " +
             "join r.generalParticulars gp where gp.id = :gpID and r.item = :item")
     List<ReportIndex> findReportIndexExist(@Param("gpID") Long id, @Param("item") String item);
+
+    @Query(value = "select r from ReportIndex r where r.generalParticulars.id = :id")
+    List<ReportIndex> findAllReportIndexInGP(@Param("id") Long id);
 }

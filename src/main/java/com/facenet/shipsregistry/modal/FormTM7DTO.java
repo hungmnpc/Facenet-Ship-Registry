@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FormTM7DTO implements FormDTO{
+public class FormTM7DTO extends FormDTO{
 
     private String type = "FORM TM7";
 

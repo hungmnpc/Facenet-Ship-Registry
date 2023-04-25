@@ -31,6 +31,8 @@ public class GeneralParticularsDTO {
 
     private String surveyorInfo;
 
+    private String surveyType;
+
     private String measurementEquipmentInfo;
 
     private String placeOfMeasurement;

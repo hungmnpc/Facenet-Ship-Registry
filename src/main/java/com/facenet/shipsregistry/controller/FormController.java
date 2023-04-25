@@ -1,7 +1,6 @@
 package com.facenet.shipsregistry.controller;
 
 import com.facenet.shipsregistry.modal.FormDTO;
-import com.facenet.shipsregistry.modal.FormTM4DTO;
 import com.facenet.shipsregistry.modal.ReportIndexDTO;
 import com.facenet.shipsregistry.request.*;
 import com.facenet.shipsregistry.service.FormService;
@@ -10,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 
@@ -178,5 +176,11 @@ public class FormController {
             log.debug(exception.getMessage());
             return ResponseEntity.internalServerError().build();
         }
+    }
+
+    @GetMapping("/tm1s/{id}")
+    public ResponseEntity<?> getFormTm1(@PathVariable Long id) {
+        FormDTO formDTO = formService.getFormTM1ByID(id);
+        return ResponseEntity.ok(formDTO);
     }
 }
