@@ -35,6 +35,8 @@ public class ReportIndex {
 
     @OneToMany(mappedBy = "reportIndex", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<FormTM1> formTM1List;
+    @OneToMany(mappedBy = "reportIndex", cascade = CascadeType.ALL)
+    private List<FormTM5> formTM5List;
 
     @OneToMany(mappedBy = "reportIndex", cascade = CascadeType.ALL)
     private List<FormTM2> formTM2List;

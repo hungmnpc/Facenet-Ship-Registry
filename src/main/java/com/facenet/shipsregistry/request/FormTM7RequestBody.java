@@ -3,6 +3,7 @@ package com.facenet.shipsregistry.request;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,4 +15,5 @@ public class FormTM7RequestBody {
     private String description;
 
     private String name;
+    private List<FrameNumberRequestBody> frameNumberList;
     }

@@ -13,6 +13,5 @@ public class MeasurementTM5RequestBody {
 
     private String structuralComponentType;
     private String structuralComponent;
-    private FormTM5 formTM5;
-    private DetailMeasurement measurementDetail;
+    private DetailMeasurementRequestBody measurementDetail;
 }

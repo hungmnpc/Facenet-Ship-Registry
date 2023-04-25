@@ -17,8 +17,8 @@ public class MeasurementTM7 {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "item")
+    private String item;
 
     @ManyToOne
     @JoinColumn(name = "id_frame _number")
