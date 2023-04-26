@@ -75,18 +75,10 @@ public class FormServiceImpl implements FormService{
         List<MeasurementTM1> measurementTM1List =
                 requestBody.getMeasurementTM1List().stream()
                         .map(measurementTM1DTO -> {
-                            DetailMeasurement detailMeasurementForward = new DetailMeasurement(
-                                    measurementTM1DTO.getForwardReadingMeasurementDetail().getOriginalThickness(),
-                                    measurementTM1DTO.getForwardReadingMeasurementDetail().getMaxAlwbDim(),
-                                    measurementTM1DTO.getForwardReadingMeasurementDetail().getGaugedP(),
-                                    measurementTM1DTO.getForwardReadingMeasurementDetail().getGaugedS()
-                            );
-                            DetailMeasurement detailMeasurementAfter = new DetailMeasurement(
-                                    measurementTM1DTO.getAfterReadingMeasurementDetail().getOriginalThickness(),
-                                    measurementTM1DTO.getAfterReadingMeasurementDetail().getMaxAlwbDim(),
-                                    measurementTM1DTO.getAfterReadingMeasurementDetail().getGaugedP(),
-                                    measurementTM1DTO.getAfterReadingMeasurementDetail().getGaugedS()
-                            );
+                            DetailMeasurement detailMeasurementForward =
+                                    createNewDetailMeasurement(measurementTM1DTO.getForwardReadingMeasurementDetail());
+                            DetailMeasurement detailMeasurementAfter =
+                                    createNewDetailMeasurement(measurementTM1DTO.getAfterReadingMeasurementDetail());
                              return new MeasurementTM1(null, measurementTM1DTO.getPlatePosition(),
                                     measurementTM1DTO.getNoOrLetter(), formTM1,
                                     detailMeasurementForward, detailMeasurementAfter );
@@ -126,12 +118,8 @@ public class FormServiceImpl implements FormService{
         List<MeasurementTM5> measurementTM5List =
                 requestBody.getMeasurementTM5List().stream()
                         .map(measurementTM5DTO -> {
-                            DetailMeasurement measurementDetail = new DetailMeasurement(
-                                    measurementTM5DTO.getMeasurementDetail().getOriginalThickness(),
-                                    measurementTM5DTO.getMeasurementDetail().getMaxAlwbDim(),
-                                    measurementTM5DTO.getMeasurementDetail().getGaugedP(),
-                                    measurementTM5DTO.getMeasurementDetail().getGaugedS()
-                            );
+                            DetailMeasurement measurementDetail =
+                                    createNewDetailMeasurement(measurementTM5DTO.getMeasurementDetail());
                             return new MeasurementTM5(null, measurementTM5DTO.getStructuralComponentType(),
                                     measurementTM5DTO.getStructuralComponent(), formTM5,
                                     measurementDetail);
@@ -175,24 +163,12 @@ public class FormServiceImpl implements FormService{
         List<MeasurementTM3> measurementTM3List =
                 requestBody.getMeasurementTM3List().stream()
                         .map(measurementTM3DTO -> {
-                            DetailMeasurement detailMeasurementFirst = new DetailMeasurement(
-                                    measurementTM3DTO.getFirstTransverseSectionMeasurementDetail().getOriginalThickness(),
-                                    measurementTM3DTO.getFirstTransverseSectionMeasurementDetail().getMaxAlwbDim(),
-                                    measurementTM3DTO.getFirstTransverseSectionMeasurementDetail().getGaugedP(),
-                                    measurementTM3DTO.getFirstTransverseSectionMeasurementDetail().getGaugedS()
-                            );
-                            DetailMeasurement detailMeasurementSecond = new DetailMeasurement(
-                                    measurementTM3DTO.getSecondTransverseSectionMeasurementDetail().getOriginalThickness(),
-                                    measurementTM3DTO.getSecondTransverseSectionMeasurementDetail().getMaxAlwbDim(),
-                                    measurementTM3DTO.getSecondTransverseSectionMeasurementDetail().getGaugedP(),
-                                    measurementTM3DTO.getSecondTransverseSectionMeasurementDetail().getGaugedS()
-                            );
-                            DetailMeasurement detailMeasurementThird = new DetailMeasurement(
-                                    measurementTM3DTO.getThirdTransverseSectionMeasurementDetail().getOriginalThickness(),
-                                    measurementTM3DTO.getThirdTransverseSectionMeasurementDetail().getMaxAlwbDim(),
-                                    measurementTM3DTO.getThirdTransverseSectionMeasurementDetail().getGaugedP(),
-                                    measurementTM3DTO.getThirdTransverseSectionMeasurementDetail().getGaugedS()
-                            );
+                            DetailMeasurement detailMeasurementFirst =
+                                    createNewDetailMeasurement(measurementTM3DTO.getFirstTransverseSectionMeasurementDetail());
+                            DetailMeasurement detailMeasurementSecond =
+                                    createNewDetailMeasurement(measurementTM3DTO.getSecondTransverseSectionMeasurementDetail());
+                            DetailMeasurement detailMeasurementThird =
+                                    createNewDetailMeasurement(measurementTM3DTO.getThirdTransverseSectionMeasurementDetail());
                             return new MeasurementTM3(null, measurementTM3DTO.getStructuralMember(),
                                     measurementTM3DTO.getNoOrLetter(), formTM3,
                                     detailMeasurementFirst, detailMeasurementSecond, detailMeasurementThird );
@@ -537,6 +513,6 @@ public class FormServiceImpl implements FormService{
 
     private DetailMeasurement createNewDetailMeasurement(DetailMeasurementRequestBody requestBody) {
         return new DetailMeasurement(requestBody.getOriginalThickness(), requestBody.getMaxAlwbDim(),
-                requestBody.getGaugedP(), requestBody.getGaugedS());
+                requestBody.getGaugedP(), requestBody.getGaugedS(), requestBody.getPercent());
     }
 }

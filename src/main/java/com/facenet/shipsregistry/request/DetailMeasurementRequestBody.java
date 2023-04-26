@@ -21,4 +21,6 @@ public class DetailMeasurementRequestBody {
     private Double gaugedP;
 
     private Double gaugedS;
+
+    private String percent;
 }

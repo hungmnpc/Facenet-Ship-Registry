@@ -23,11 +23,12 @@ import java.util.List;
 @Setter
 public class DetailMeasurement {
 
-    public DetailMeasurement(Double originalThickness, Double maxAlwbDim, Double gaugedP, Double gaugedS) {
+    public DetailMeasurement(Double originalThickness, Double maxAlwbDim, Double gaugedP, Double gaugedS, String percent) {
         this.originalThickness = originalThickness;
         this.maxAlwbDim = maxAlwbDim;
         this.gaugedP = gaugedP;
         this.gaugedS = gaugedS;
+        this.percent = percent;
     }
 
     @Id
@@ -45,6 +46,9 @@ public class DetailMeasurement {
 
     @Column(name = "gauged_S", columnDefinition = "Decimal(10,2)")
     private Double gaugedS;
+
+    @Column(name = "percent", nullable = false)
+    private String percent;
 
     @OneToOne(mappedBy = "forwardReadingMeasurementDetail",
             fetch = FetchType.LAZY,
@@ -101,5 +105,6 @@ public class DetailMeasurement {
        this.setGaugedP(requestBody.getGaugedP());
        this.setGaugedS(requestBody.getGaugedS());
        this.setMaxAlwbDim(requestBody.getMaxAlwbDim());
+       this.setPercent(requestBody.getPercent());
     }
 }

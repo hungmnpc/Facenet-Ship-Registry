@@ -381,6 +381,6 @@ public class MapperUtils {
      */
     public DetailMeasurement mapperToDetailMeasurement(DetailMeasurementRequestBody requestBody) {
         return new DetailMeasurement(requestBody.getOriginalThickness(),
-                requestBody.getMaxAlwbDim(), requestBody.getGaugedP(), requestBody.getGaugedS());
+                requestBody.getMaxAlwbDim(), requestBody.getGaugedP(), requestBody.getGaugedS(), requestBody.getPercent());
     }
 }
