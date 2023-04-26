@@ -42,4 +42,10 @@ public interface ParamValueService {
      */
     public ParamValueDTO updateParamValue(Long id, ParamValueRequestBody requestBody);
 
+    /**
+     *
+     * @return
+     */
+    public List<ParamValueDTO> getAllParamValue();
+
 }

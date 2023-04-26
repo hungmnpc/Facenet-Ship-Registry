@@ -121,6 +121,33 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
     }
 
     /**
+     * @param id
+     */
+    @Override
+    public void deleteCertificate(Long id) {
+        certificateRepository.deleteById(id);
+    }
+
+    /**
+     * @param id
+     * @param requestBody
+     * @return
+     */
+    @Override
+    public CertificateDTO updateCertificate(Long id, CertificateRequestBody requestBody) {
+        Optional<Certificate> certificateOptional = certificateRepository.findById(id);
+        if (certificateOptional.isPresent()) {
+            Certificate certificate = certificateOptional.get();
+            certificate.setCertificateNo(requestBody.getCertificateNo());
+            certificate.setCertificateOrganization(requestBody.getCertificateOrganization());
+            certificate.setValidStartDate(requestBody.getValidStartDate());
+            certificate.setValidEndDate(requestBody.getValidEndDate());
+            return mapperUtils.certificateMapper(certificate);
+        }
+        return null;
+    }
+
+    /**
      *
      * @param imoNumber
      * @param name

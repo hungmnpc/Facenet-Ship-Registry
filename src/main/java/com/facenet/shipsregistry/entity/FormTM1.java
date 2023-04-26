@@ -1,5 +1,6 @@
 package com.facenet.shipsregistry.entity;
 
+import com.facenet.shipsregistry.request.FormTM1RequestBody;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,6 +32,10 @@ public class FormTM1 {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "report_id")
     private ReportIndex reportIndex;
+
+    public void update(FormTM1RequestBody requestBody) {
+        this.setStrakePosition(requestBody.getStrakePosition());
+    }
 
     @Override
     public String toString() {
