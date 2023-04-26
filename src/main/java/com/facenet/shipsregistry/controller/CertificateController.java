@@ -64,4 +64,36 @@ public class CertificateController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteCertificate(@PathVariable Long id) {
+        try {
+            generalParticularsService.deleteCertificate(id);
+            return ResponseEntity.ok("Xóa thành công");
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateCertificate(@PathVariable Long id,
+                                               @RequestBody CertificateRequestBody requestBody ) {
+        try {
+            CertificateDTO certificateDTO = generalParticularsService.updateCertificate(id, requestBody);
+            if (certificateDTO != null) {
+                return ResponseEntity.ok(certificateDTO);
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }

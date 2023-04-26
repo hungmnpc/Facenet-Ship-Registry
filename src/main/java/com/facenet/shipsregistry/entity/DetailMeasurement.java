@@ -1,5 +1,6 @@
 package com.facenet.shipsregistry.entity;
 
+import com.facenet.shipsregistry.request.DetailMeasurementRequestBody;
 import jakarta.persistence.*;
 import jdk.jfr.Enabled;
 import lombok.AllArgsConstructor;
@@ -90,4 +91,15 @@ public class DetailMeasurement {
     @OneToOne(mappedBy = "detailMeasurement",fetch = FetchType.LAZY,
             cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private MeasurementTM4 measurementTM4;
+
+    /**
+     *
+     * @param requestBody
+     */
+    public void update(DetailMeasurementRequestBody requestBody) {
+       this.setOriginalThickness(requestBody.getOriginalThickness());
+       this.setGaugedP(requestBody.getGaugedP());
+       this.setGaugedS(requestBody.getGaugedS());
+       this.setMaxAlwbDim(requestBody.getMaxAlwbDim());
+    }
 }

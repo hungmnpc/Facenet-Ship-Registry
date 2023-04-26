@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +25,9 @@ import java.util.Optional;
 @Transactional
 @Slf4j
 public class FormServiceImpl implements FormService{
+
+    @Autowired
+    DetailMeasurementRepository detailMeasurementRepository;
 
     @Autowired
     FormTM1Repository formTM1Repository;
@@ -41,6 +46,7 @@ public class FormServiceImpl implements FormService{
 
     @Autowired
     FormTM5Repository formTM5Repository;
+
     @Autowired
     FormTM7Repository formTM7Repository;
 
@@ -49,6 +55,9 @@ public class FormServiceImpl implements FormService{
 
     @Autowired
     GeneralParticularsRepository generalParticularsRepository;
+
+    @Autowired
+    MeasurementTM1Repository measurementTM1Repository;
 
     @Autowired
     MapperUtils mapperUtils;
@@ -456,5 +465,78 @@ public class FormServiceImpl implements FormService{
             log.error("{}", exception.getMessage());
             return null;
         }
+    }
+
+    /**
+     * @param id
+     * @param requestBody
+     * @return
+     */
+    @Override
+    public FormDTO updateFormTM1(Long id, FormTM1RequestBody requestBody) {
+        Optional<FormTM1> formTM1Optional = formTM1Repository.findById(id);
+        if (formTM1Optional.isPresent()) {
+            FormTM1 formTM1 = formTM1Optional.get();
+            formTM1.update(requestBody);
+            List<MeasurementTM1> measurementTM1List = requestBody.getMeasurementTM1List().stream()
+                    .map(value -> {
+                        MeasurementTM1 measurementTM1 = new MeasurementTM1(null, value.getPlatePosition(),
+                                value.getNoOrLetter(), formTM1, null, null);
+                        DetailMeasurement forward = createNewDetailMeasurement(value.getForwardReadingMeasurementDetail());
+                        DetailMeasurement after = createNewDetailMeasurement(value.getAfterReadingMeasurementDetail());
+                        measurementTM1.setForwardReadingMeasurementDetail(forward);
+                        measurementTM1.setAfterReadingMeasurementDetail(after);
+                        return measurementTM1;
+                    }).toList();
+            formTM1.setMeasurementTM1List(measurementTM1List);
+            FormTM1 formTM1Update = formTM1Repository.save(formTM1);
+            return mapperUtils.formTM1Mapper(formTM1Update);
+        }
+        return null;
+    }
+
+    /**
+     * @param id
+     * @param requestBody
+     * @return
+     */
+    @Override
+    public DetailMeasurementDTO updateDetailMeasurement(Long id, DetailMeasurementRequestBody requestBody) {
+        Optional<DetailMeasurement> detailMeasurementOptional = detailMeasurementRepository.findById(id);
+        if (detailMeasurementOptional.isPresent()) {
+            DetailMeasurement detailMeasurement = detailMeasurementOptional.get();
+            detailMeasurement.update(requestBody);
+            return mapperUtils.detailMeasurementMapper(detailMeasurement);
+        }
+        return null;
+    }
+
+    /**
+     * @param id
+     * @param requestBody
+     * @return
+     */
+    @Override
+    public MeasurementTM1DTO updateMeasurementTM1(Long id, MeasurementTM1RequestBody requestBody) {
+        Optional<MeasurementTM1> measurementTM1Optional = measurementTM1Repository.findById(id);
+        if (measurementTM1Optional.isPresent()) {
+            MeasurementTM1 measurementTM1 = measurementTM1Optional.get();
+            measurementTM1.update(requestBody);
+            updateDetailMeasurement(
+                    measurementTM1.getForwardReadingMeasurementDetail().getId(),
+                    requestBody.getForwardReadingMeasurementDetail()
+            );
+            updateDetailMeasurement(
+                    measurementTM1.getAfterReadingMeasurementDetail().getId(),
+                    requestBody.getAfterReadingMeasurementDetail()
+            );
+
+        }
+        return null;
+    }
+
+    private DetailMeasurement createNewDetailMeasurement(DetailMeasurementRequestBody requestBody) {
+        return new DetailMeasurement(requestBody.getOriginalThickness(), requestBody.getMaxAlwbDim(),
+                requestBody.getGaugedP(), requestBody.getGaugedS());
     }
 }
