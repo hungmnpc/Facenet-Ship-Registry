@@ -1,5 +1,6 @@
 package com.facenet.shipsregistry.entity;
 
+import com.facenet.shipsregistry.request.MeasurementTM1RequestBody;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.engine.internal.Cascade;
@@ -39,4 +40,13 @@ public class MeasurementTM1 {
     @OneToOne(fetch = FetchType.EAGER,cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "after_reading_measurement_detail_id")
     private DetailMeasurement afterReadingMeasurementDetail;
+
+    /**
+     *
+     * @param requestBody
+     */
+    public void update(MeasurementTM1RequestBody requestBody) {
+        this.setPlatePosition(requestBody.getPlatePosition());
+        this.setNoOrLetter(requestBody.getNoOrLetter());
+    }
 }

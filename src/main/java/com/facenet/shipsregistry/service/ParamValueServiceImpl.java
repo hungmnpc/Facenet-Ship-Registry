@@ -87,4 +87,15 @@ public class ParamValueServiceImpl implements ParamValueService{
             return null;
         }
     }
+
+    /**
+     * @return
+     */
+    @Override
+    public List<ParamValueDTO> getAllParamValue() {
+        List<ParamValue> paramValueList = paramValueRepository.findAll();
+        return paramValueList.stream()
+                .map(paramValue -> mapperUtils.paramValueMapper(paramValue))
+                .toList();
+    }
 }

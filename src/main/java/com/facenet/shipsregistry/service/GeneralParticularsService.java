@@ -41,6 +41,20 @@ public interface GeneralParticularsService {
 
     /**
      *
+     * @param id
+     */
+    public void deleteCertificate(Long id);
+
+    /**
+     *
+     * @param id
+     * @param requestBody
+     * @return
+     */
+    public CertificateDTO updateCertificate(Long id, CertificateRequestBody requestBody);
+
+    /**
+     *
      * @param imoNumber
      * @param name
      * @param absIdentification

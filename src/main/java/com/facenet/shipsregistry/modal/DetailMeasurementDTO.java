@@ -25,4 +25,6 @@ public class DetailMeasurementDTO {
     private Double gaugedP;
 
     private Double gaugedS;
+
+    private String percent;
 }
