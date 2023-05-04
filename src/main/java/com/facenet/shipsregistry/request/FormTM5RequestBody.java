@@ -12,6 +12,8 @@ import java.util.List;
 @ToString
 public class FormTM5RequestBody {
 
+    private String code;
+
     private String description;
 
     private String name;

@@ -35,8 +35,11 @@ public class FormTM4 {
     @JoinColumn(name = "report_id")
     private ReportIndex reportIndex;
 
-    public FormTM4(String tankDescription, String locationOfStructure) {
+    public FormTM4(String tankDescription, String locationOfStructure, String code) {
         this.tankDescription = tankDescription;
         this.locationOfStructure = locationOfStructure;
+        this.code = code;
     }
+
+    private String code;
 }

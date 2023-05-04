@@ -26,6 +26,8 @@ public class FormTM2 {
     @Column(name = "name")
     private String name;
 
+    private String code;
+
     @OneToMany(mappedBy = "formTM2", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<MeasurementTM2> measurementTM2List;
 
