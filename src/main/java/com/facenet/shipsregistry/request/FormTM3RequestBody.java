@@ -16,6 +16,8 @@ import java.util.List;
 @ToString
 public class FormTM3RequestBody {
 
+    private String code;
+
     private String firstFrameNo;
 
     private String secondFrameNo;

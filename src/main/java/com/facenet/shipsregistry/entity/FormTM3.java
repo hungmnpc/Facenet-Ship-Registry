@@ -37,4 +37,6 @@ public class FormTM3 {
     @ManyToOne
     @JoinColumn(name = "report_id")
     private ReportIndex reportIndex;
+
+    private String code;
 }
