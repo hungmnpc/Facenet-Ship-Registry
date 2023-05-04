@@ -99,7 +99,8 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
                 generalParticularsRepository.save(generalParticulars);
 
         if (generalParticularsSaved.getId() > 0) {
-            return mapperUtils.generalParticularsMapper(generalParticulars);
+            GeneralParticularsDTO generalParticularsDTO = mapperUtils.generalParticularsMapper(generalParticulars);
+            return generalParticularsDTO;
         }
         return null;
     }
@@ -234,5 +235,13 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
             return reportMenu;
         }
         return null;
+    }
+
+    /**
+     * @param id
+     */
+    @Override
+    public void deleteGeneralParticulars(Long id) {
+        generalParticularsRepository.deleteById(id);
     }
 }

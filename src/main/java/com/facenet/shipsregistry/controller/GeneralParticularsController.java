@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
@@ -60,7 +61,7 @@ public class GeneralParticularsController {
                 return ResponseEntity.badRequest().build();
             }
         } catch (Exception exception) {
-            log.debug(exception.getMessage());
+            log.error(exception.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -97,6 +98,23 @@ public class GeneralParticularsController {
         try {
             ReportMenu reportMenu = generalParticularsService.getReportMenu(id);
             return ResponseEntity.ok(reportMenu);
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteAllReport(@PathVariable(name = "id") Long id) {
+        try {
+            generalParticularsService.deleteGeneralParticulars(id);
+            return ResponseEntity.ok().body("Xóa General Particulars "+ id +" thành công");
+
         } catch (Exception exception) {
             log.error(exception.getMessage());
             return ResponseEntity.internalServerError().build();
