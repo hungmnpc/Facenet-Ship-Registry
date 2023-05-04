@@ -15,4 +15,6 @@ import lombok.*;
 public class FormDTO {
 
     private String type;
+
+    private String code;
 }

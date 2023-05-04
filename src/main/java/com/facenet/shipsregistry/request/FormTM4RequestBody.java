@@ -16,6 +16,8 @@ import java.util.List;
 @ToString
 public class FormTM4RequestBody {
 
+    private String code;
+
     private String tankDescription;
 
     private String locationOfStructure;

@@ -31,8 +31,11 @@ public class FormTM6 {
     @JoinColumn(name = "report_id")
     private ReportIndex reportIndex;
 
-    public FormTM6(String structuralMembers, String locationOfStructure) {
+    public FormTM6(String structuralMembers, String locationOfStructure, String code) {
         this.structuralMembers = structuralMembers;
         this.locationOfStructure = locationOfStructure;
+        this.code = code;
     }
+
+    private String code;
 }
