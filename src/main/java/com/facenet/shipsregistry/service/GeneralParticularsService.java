@@ -34,6 +34,12 @@ public interface GeneralParticularsService {
 
     /**
      *
+     * @param id
+     */
+    public void deleteGeneralParticulars(Long id);
+
+    /**
+     *
      * @param requestBody
      * @return
      */
