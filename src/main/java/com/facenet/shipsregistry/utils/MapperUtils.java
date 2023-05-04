@@ -50,6 +50,7 @@ public class MapperUtils {
      * @return
      */
     public GeneralParticularsDTO generalParticularsMapper(GeneralParticulars generalParticulars) {
+
         GeneralParticularsDTO generalParticularsDTO =
                 modelMapper.map(generalParticulars, GeneralParticularsDTO.class);
         generalParticularsDTO.setShipInfo(shipMapper(generalParticulars.getShip()));
