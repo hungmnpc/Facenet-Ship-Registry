@@ -41,6 +41,8 @@ public interface FormService {
 
     FormTM5DTO getFormTM5ByID(Long id);
 
+
+
     /**
      *
      * @param id
@@ -78,8 +80,19 @@ public interface FormService {
      */
     public FormDTO saveNewFormTM4 (FormTM4RequestBody requestBody, Long id);
 
+    /**
+     *
+     * @param requestBody
+     * @param reportIndexID
+     * @return
+     */
     FormDTO saveNewFormTM7(FormTM7RequestBody requestBody, Long reportIndexID);
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     FormTM7DTO getFormTM7ByID(Long id);
 
     /**
@@ -97,4 +110,5 @@ public interface FormService {
      * @return
      */
     public FormDTO saveNewFormTM5(FormTM5RequestBody requestBody, Long reportIndex);
+
 }

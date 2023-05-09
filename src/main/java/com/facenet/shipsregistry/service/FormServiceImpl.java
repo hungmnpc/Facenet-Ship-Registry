@@ -61,7 +61,7 @@ public class FormServiceImpl implements FormService{
     public FormDTO saveNewFormTM1(FormTM1RequestBody requestBody, Long reportIndexID) {
 
         Optional<ReportIndex> reportIndex = reportIndexRepository.findById(reportIndexID);
-        FormTM1 formTM1 = new FormTM1(null, requestBody.getStrakePosition(), null, null);
+        FormTM1 formTM1 = new FormTM1(null, requestBody.getStrakePosition(), null, null, null);
         reportIndex.ifPresent(formTM1::setReportIndex);
         List<MeasurementTM1> measurementTM1List =
                 requestBody.getMeasurementTM1List().stream()
