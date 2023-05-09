@@ -17,6 +17,8 @@ import java.util.List;
 @ToString
 public class FormTM1RequestBody {
 
+    String code;
+
     private String strakePosition;
 
     private List<MeasurementTM1RequestBody> measurementTM1List;

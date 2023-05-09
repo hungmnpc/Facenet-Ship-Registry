@@ -19,7 +19,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FormTM5DTO implements FormDTO{
+public class FormTM5DTO extends FormDTO{
 
     private String type = "FORM TM5";
 

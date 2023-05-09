@@ -1,7 +1,6 @@
 package com.facenet.shipsregistry.controller;
 
 import com.facenet.shipsregistry.modal.FormDTO;
-import com.facenet.shipsregistry.modal.FormTM4DTO;
 import com.facenet.shipsregistry.modal.ReportIndexDTO;
 import com.facenet.shipsregistry.request.*;
 import com.facenet.shipsregistry.service.FormService;
@@ -10,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 
@@ -27,11 +25,13 @@ public class FormController {
     @Autowired
     FormService formService;
 
-    @GetMapping("")
-    public ResponseEntity<?> getAllForm() {
-        return ResponseEntity.ok().build();
-    }
-
+    /**
+     *
+     * @param request
+     * @param id
+     * @param requestBody
+     * @return
+     */
     @PostMapping("/{id}/tm1s")
     public ResponseEntity<?> saveNewFormTm1(HttpServletRequest request,
                                             @PathVariable Long id,
@@ -44,10 +44,18 @@ public class FormController {
                 return ResponseEntity.badRequest().build();
             }
         } catch (Exception exception) {
-            log.debug(exception.getMessage());
+            log.error(exception.getMessage());
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    /**
+     *
+     * @param request
+     * @param id
+     * @param requestBody
+     * @return
+     */
     @PostMapping("/{id}/tm5s")
     public ResponseEntity<?> saveNewFormTm5(HttpServletRequest request,
                                             @PathVariable Long id,
@@ -60,10 +68,18 @@ public class FormController {
                 return ResponseEntity.badRequest().build();
             }
         } catch (Exception exception) {
-            log.debug(exception.getMessage());
+            log.error(exception.getMessage());
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    /**
+     *
+     * @param request
+     * @param id
+     * @param requestBody
+     * @return
+     */
     @PostMapping("/{id}/tm2s")
     public ResponseEntity<?> saveNewFormTm2(HttpServletRequest request,
                                             @PathVariable Long id,
@@ -76,11 +92,18 @@ public class FormController {
                 return ResponseEntity.badRequest().build();
             }
         } catch (Exception exception) {
-            log.debug(exception.getMessage());
+            log.error(exception.getMessage());
             return ResponseEntity.internalServerError().build();
         }
     }
 
+    /**
+     *
+     * @param request
+     * @param id
+     * @param requestBody
+     * @return
+     */
     @PostMapping("/{id}/tm4s")
     public ResponseEntity<?> saveNewFormTm4(HttpServletRequest request,
                                             @PathVariable Long id,
@@ -94,11 +117,18 @@ public class FormController {
                 return ResponseEntity.badRequest().build();
             }
         } catch (Exception exception) {
-            log.debug(exception.getMessage());
+            log.error(exception.getMessage());
             return ResponseEntity.internalServerError().build();
         }
     }
 
+    /**
+     *
+     * @param request
+     * @param id
+     * @param requestBody
+     * @return
+     */
     @PostMapping("/{id}/tm6s")
     public ResponseEntity<?> saveNewFormTm6(HttpServletRequest request,
                                             @PathVariable Long id,
@@ -112,7 +142,7 @@ public class FormController {
                 return ResponseEntity.badRequest().build();
             }
         } catch (Exception exception) {
-            log.debug(exception.getMessage());
+            log.error(exception.getMessage());
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -136,11 +166,16 @@ public class FormController {
                 return ResponseEntity.badRequest().build();
             }
         } catch (Exception exception) {
-            log.debug(exception.getMessage());
+            log.error(exception.getMessage());
             return ResponseEntity.internalServerError().build();
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}")
     public ResponseEntity<?> getAllFormFromReportIndex(@PathVariable Long id) {
         try {
@@ -151,17 +186,18 @@ public class FormController {
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
             }
         } catch (Exception exception) {
-            log.debug(exception.getMessage());
+            log.error(exception.getMessage());
             return ResponseEntity.internalServerError().build();
         }
     }
 
-
-    @PostMapping("/tm2")
-    public ResponseEntity<?> saveNewFormTm2(HttpServletRequest request) {
-        return ResponseEntity.created(URI.create(request.getRequestURI())).body("TM2");
-    }
-
+    /**
+     *
+     * @param request
+     * @param id
+     * @param requestBody
+     * @return
+     */
     @PostMapping("/{id}/tm3s")
     public ResponseEntity<?> saveNewFormTm3(HttpServletRequest request,
                                             @PathVariable Long id,
@@ -178,4 +214,17 @@ public class FormController {
             return ResponseEntity.internalServerError().build();
         }
     }
+    @PutMapping("/tm1s/{id}")
+    public ResponseEntity<?> updateFormTM1(@PathVariable Long id,
+                                           @RequestBody FormTM1RequestBody requestBody) {
+        try {
+            FormDTO formTM1DTO = formService.updateFormTM1(id,requestBody);
+            return ResponseEntity.ok(formTM1DTO);
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            exception.printStackTrace();
+            return ResponseEntity.internalServerError().body(exception.getMessage());
+        }
+    }
+
 }

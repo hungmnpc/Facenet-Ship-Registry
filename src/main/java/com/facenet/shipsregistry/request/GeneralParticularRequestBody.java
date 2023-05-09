@@ -17,6 +17,7 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class GeneralParticularRequestBody {
 
     private ShipInfoRequestBody ship;
@@ -29,6 +30,8 @@ public class GeneralParticularRequestBody {
 
     private String measurementEquipmentInfo;
 
+    private String surveyType;
+
     private String placeOfMeasurement;
 
     private LocalDate firstDateOfMeasurement;
@@ -36,13 +39,4 @@ public class GeneralParticularRequestBody {
     private LocalDate lastDateOfMeasurement;
 
     private String nameOfOperator;
-
-    /**
-     *
-     * @return
-     */
-    @Override
-    public String toString() {
-        return reportNo;
-    }
 }

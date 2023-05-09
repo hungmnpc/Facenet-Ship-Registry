@@ -18,6 +18,7 @@ public interface FormService {
      */
     public FormDTO saveNewFormTM1(FormTM1RequestBody requestBody, Long reportIndex);
 
+
     /**
      *
      * @param requestBody
@@ -111,4 +112,21 @@ public interface FormService {
      */
     public FormDTO saveNewFormTM5(FormTM5RequestBody requestBody, Long reportIndex);
 
+    /**
+     *
+     * @param id
+     * @param requestBody
+     * @return
+     */
+    public FormDTO updateFormTM1(Long id, FormTM1RequestBody requestBody);
+
+    /**
+     *
+     * @param id
+     * @param requestBody
+     * @return
+     */
+    public DetailMeasurementDTO updateDetailMeasurement(Long id, DetailMeasurementRequestBody requestBody);
+
+    MeasurementTM1DTO updateMeasurementTM1(Long id, MeasurementTM1RequestBody requestBody);
 }

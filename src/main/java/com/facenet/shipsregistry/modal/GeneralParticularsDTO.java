@@ -3,10 +3,7 @@ package com.facenet.shipsregistry.modal;
 import jakarta.persistence.Column;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -19,6 +16,7 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class GeneralParticularsDTO {
 
     private Long id;
@@ -30,6 +28,8 @@ public class GeneralParticularsDTO {
     private String reportNo;
 
     private String surveyorInfo;
+
+    private String surveyType;
 
     private String measurementEquipmentInfo;
 

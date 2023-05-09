@@ -23,7 +23,7 @@ import java.util.List;
 @Setter
 public class DetailMeasurement {
 
-    public DetailMeasurement(Double originalThickness, Double maxAlwbDim, Double gaugedP, Double gaugedS) {
+    public DetailMeasurement(Double originalThickness, Double maxAlwbDim, Double gaugedP, Double gaugedS, String percent) {
         this.originalThickness = originalThickness;
         this.maxAlwbDim = maxAlwbDim;
         this.gaugedP = gaugedP;

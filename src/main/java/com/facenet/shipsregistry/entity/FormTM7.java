@@ -1,5 +1,6 @@
 package com.facenet.shipsregistry.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,9 +10,9 @@ import java.util.List;
 @Table(name = "form_TM7")
 @Setter
 @Getter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class FormTM7 {
 
     @Id
@@ -26,12 +27,16 @@ public class FormTM7 {
 
     @OneToMany(mappedBy = "formTM7", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<FrameNumber> frameNumber;
+
     @ManyToOne
     @JoinColumn(name = "report_id")
     private ReportIndex reportIndex;
 
-    public FormTM7(String name, String description) {
+    public FormTM7(String name, String description, String code) {
         this.name = name;
         this.description = description;
+        this.code = code;
     }
+
+    private String code;
 }

@@ -52,7 +52,7 @@ public class GeneralParticulars {
     @Column(name = "name_of_operator")
     private String nameOfOperator;
 
-    @OneToMany(mappedBy = "generalParticulars", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "generalParticulars", cascade = {CascadeType.ALL})
     private List<ReportIndex> reportIndexList;
 
     @Column(name = "lock", nullable = false)
@@ -61,4 +61,7 @@ public class GeneralParticulars {
     @Column(name = "measurement_equipment_info")
     @Lob
     private String measurementEquipmentInfo;
+
+    @Column(name = "survey_type")
+    private String surveyType;
 }

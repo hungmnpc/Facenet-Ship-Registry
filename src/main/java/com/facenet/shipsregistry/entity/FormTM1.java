@@ -23,7 +23,6 @@ public class FormTM1 {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String code;
-
     @Column(name = "strake_position")
     private String strakePosition;
 

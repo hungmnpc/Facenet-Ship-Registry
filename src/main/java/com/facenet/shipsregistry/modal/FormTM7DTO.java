@@ -1,10 +1,7 @@
 package com.facenet.shipsregistry.modal;
 
 import com.facenet.shipsregistry.entity.FrameNumber;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -12,7 +9,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FormTM7DTO implements FormDTO{
+public class FormTM7DTO extends FormDTO{
 
     private String type = "FORM TM7";
 

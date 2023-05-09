@@ -17,6 +17,8 @@ import java.util.List;
 @ToString
 public class FormTM6RequestBody {
 
+    private String code;
+
     private String structuralMembers;
 
     private String locationOfStructure;

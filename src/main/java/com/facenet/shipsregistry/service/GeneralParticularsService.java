@@ -2,6 +2,7 @@ package com.facenet.shipsregistry.service;
 
 import com.facenet.shipsregistry.modal.CertificateDTO;
 import com.facenet.shipsregistry.modal.GeneralParticularsDTO;
+import com.facenet.shipsregistry.modal.ReportMenu;
 import com.facenet.shipsregistry.modal.ShipDTO;
 import com.facenet.shipsregistry.request.CertificateRequestBody;
 import com.facenet.shipsregistry.request.GeneralParticularRequestBody;
@@ -33,10 +34,30 @@ public interface GeneralParticularsService {
 
     /**
      *
+     * @param id
+     */
+    public void deleteGeneralParticulars(Long id);
+
+    /**
+     *
      * @param requestBody
      * @return
      */
     public CertificateDTO saveNewCertificate(CertificateRequestBody requestBody);
+
+    /**
+     *
+     * @param id
+     */
+    public void deleteCertificate(Long id);
+
+    /**
+     *
+     * @param id
+     * @param requestBody
+     * @return
+     */
+    public CertificateDTO updateCertificate(Long id, CertificateRequestBody requestBody);
 
     /**
      *
@@ -65,4 +86,11 @@ public interface GeneralParticularsService {
      * @return
      */
     public List<GeneralParticularsDTO> getAllGeneralParticulars();
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public ReportMenu getReportMenu(Long id);
 }

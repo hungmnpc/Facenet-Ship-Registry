@@ -62,6 +62,7 @@ public class ShipsregistryApplication {
 					"MANOP SRISUNGVAL",
 					"22-5280779-A",
 					"DM5E DA-501(Serri DM5EG2210350); OLYMPUS 27MG (Serri 150239211)",
+					"SPECIAL PERIODICAL SURVEY - HULL 3",
 					"NOSCO SHIPYARD - QUANG NINH - VIET NAM",
 					LocalDate.parse("2022-08-07"),
 					LocalDate.parse("2022-08-31"),
@@ -82,13 +83,14 @@ public class ShipsregistryApplication {
 						"MANOP SRISUNGVAL",
 						"22-5280779-A",
 						"DM5E DA-501(Serri DM5EG2210350); OLYMPUS 27MG (Serri 150239211)",
+						"SPECIAL PERIODICAL SURVEY - HULL 3",
 						"NOSCO SHIPYARD - QUANG NINH - VIET NAM",
 						LocalDate.parse("2022-08-07"),
 						LocalDate.parse("2022-08-31"),
 						"NGUYEN VAN LUYEN"
 				) );
 			} catch (Exception exception) {
-				log.debug(exception.getMessage());
+				log.error(exception.getMessage());
 			}
 
 			ParamValueDTO paramValueDTO = paramValueService.saveNewParamValue(
@@ -100,7 +102,6 @@ public class ShipsregistryApplication {
 			ParamValueDTO paramValueDTO3 = paramValueService.saveNewParamValue(
 					new ParamValueRequestBody("Surveyor", "MANOP SRISUNGVAL",2)
 			);
-
 		};
 	}
 }
