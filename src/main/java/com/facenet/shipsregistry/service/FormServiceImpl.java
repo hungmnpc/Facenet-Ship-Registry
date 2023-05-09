@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -57,6 +56,9 @@ public class FormServiceImpl implements FormService{
 
     @Autowired
     MeasurementTM1Repository measurementTM1Repository;
+
+    @Autowired
+    MeasurementTM2Repository measurementTM2Repository;
 
     @Autowired
     MapperUtils mapperUtils;
@@ -259,7 +261,8 @@ public class FormServiceImpl implements FormService{
         Optional<ReportIndex> reportIndex = reportIndexRepository.findById(reportIndexID);
         FormTM2 formTM2 = new FormTM2(
                 requestBody.getName(), requestBody.getFirstFrameNoTM2(),
-                requestBody.getSecondFrameNoTM2(), requestBody.getThirdFrameNoTM2()
+                requestBody.getSecondFrameNoTM2(), requestBody.getThirdFrameNoTM2(),
+                requestBody.getCode()
         );
         reportIndex.ifPresent(formTM2::setReportIndex);
         List<MeasurementTM2> measurementTM2List = requestBody.getMeasurementTM2List().stream()
@@ -460,21 +463,52 @@ public class FormServiceImpl implements FormService{
         if (formTM1Optional.isPresent()) {
             FormTM1 formTM1 = formTM1Optional.get();
             formTM1.update(requestBody);
-            List<MeasurementTM1> measurementTM1List = requestBody.getMeasurementTM1List().stream()
-                    .map(value -> {
-                        MeasurementTM1 measurementTM1 = new MeasurementTM1(null, value.getPlatePosition(),
-                                value.getNoOrLetter(), formTM1, null, null);
-                        DetailMeasurement forward = createNewDetailMeasurement(value.getForwardReadingMeasurementDetail());
-                        DetailMeasurement after = createNewDetailMeasurement(value.getAfterReadingMeasurementDetail());
-                        measurementTM1.setForwardReadingMeasurementDetail(forward);
-                        measurementTM1.setAfterReadingMeasurementDetail(after);
+            measurementTM1Repository.deleteAll(formTM1.getMeasurementTM1List());
+            List<MeasurementTM1> measurementTM1List = requestBody.getMeasurementTM1List()
+                    .stream().map(requestBodyMTM1 -> {
+                        MeasurementTM1 measurementTM1 = createMeasurementTM1(requestBodyMTM1);
+                        measurementTM1.setFormTM1(formTM1);
                         return measurementTM1;
                     }).toList();
             formTM1.setMeasurementTM1List(measurementTM1List);
-            FormTM1 formTM1Update = formTM1Repository.save(formTM1);
-            return mapperUtils.formTM1Mapper(formTM1Update);
+            return mapperUtils.formTM1Mapper(formTM1);
         }
         return null;
+    }
+
+    /**
+     * @param id
+     */
+    @Override
+    public Boolean deleteFormTM1(Long id) {
+        formTM1Repository.deleteById(id);
+        boolean exist = formTM1Repository.existsById(id);
+        return !exist;
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    public Boolean isFormTM1Exist(Long id) {
+        return formTM1Repository.existsById(id);
+    }
+
+    private MeasurementTM1 createMeasurementTM1(MeasurementTM1RequestBody requestBody) {
+        DetailMeasurement after = new DetailMeasurement(requestBody.getAfterReadingMeasurementDetail().getOriginalThickness(),
+                requestBody.getAfterReadingMeasurementDetail().getMaxAlwbDim(),
+                requestBody.getAfterReadingMeasurementDetail().getGaugedP(),
+                requestBody.getAfterReadingMeasurementDetail().getGaugedS(),
+                requestBody.getAfterReadingMeasurementDetail().getPercent());
+
+        DetailMeasurement forward = new DetailMeasurement(requestBody.getForwardReadingMeasurementDetail().getOriginalThickness(),
+                requestBody.getForwardReadingMeasurementDetail().getMaxAlwbDim(),
+                requestBody.getForwardReadingMeasurementDetail().getGaugedP(),
+                requestBody.getForwardReadingMeasurementDetail().getGaugedS(),
+                requestBody.getForwardReadingMeasurementDetail().getPercent());
+
+        return new MeasurementTM1(null, requestBody.getPlatePosition(), requestBody.getNoOrLetter(), null, forward, after);
     }
 
     /**
@@ -520,5 +554,74 @@ public class FormServiceImpl implements FormService{
     private DetailMeasurement createNewDetailMeasurement(DetailMeasurementRequestBody requestBody) {
         return new DetailMeasurement(requestBody.getOriginalThickness(), requestBody.getMaxAlwbDim(),
                 requestBody.getGaugedP(), requestBody.getGaugedS(), requestBody.getPercent());
+    }
+
+    /**
+     *
+     * @param id
+     * @param requestBody
+     * @return
+     */
+    @Override
+    public FormDTO updateFormTM2(Long id, FormTM2RequestBody requestBody) {
+        FormTM2 formTM2 = formTM2Repository.findById(id).orElse(null);
+        if (formTM2 != null) {
+            formTM2.update(requestBody);
+            measurementTM2Repository.deleteAll(formTM2.getMeasurementTM2List());
+            List<MeasurementTM2> measurementTM2List = requestBody.getMeasurementTM2List().stream()
+                    .map(requestBodyMTM2 -> {
+                        MeasurementTM2 measurementTM2 = createMeasurementTM2(requestBodyMTM2);
+                        measurementTM2.setFormTM2(formTM2);
+                        return measurementTM2;
+                    }).toList();
+            formTM2.setMeasurementTM2List(measurementTM2List);
+
+            return mapperUtils.formTM2Mapper(formTM2);
+        }
+        return null;
+    }
+
+    private MeasurementTM2 createMeasurementTM2(MeasurementTM2RequestBody requestBody) {
+        DetailMeasurement first =
+                new DetailMeasurement(requestBody.getFirstTransverseSectionMeasurementDetailTM2().getOriginalThickness(),
+                        requestBody.getFirstTransverseSectionMeasurementDetailTM2().getMaxAlwbDim(),
+                        requestBody.getFirstTransverseSectionMeasurementDetailTM2().getGaugedP(),
+                        requestBody.getFirstTransverseSectionMeasurementDetailTM2().getGaugedS(),
+                        requestBody.getFirstTransverseSectionMeasurementDetailTM2().getPercent());
+        DetailMeasurement second =
+                new DetailMeasurement(requestBody.getSecondTransverseSectionMeasurementDetailTM2().getOriginalThickness(),
+                        requestBody.getSecondTransverseSectionMeasurementDetailTM2().getMaxAlwbDim(),
+                        requestBody.getSecondTransverseSectionMeasurementDetailTM2().getGaugedP(),
+                        requestBody.getSecondTransverseSectionMeasurementDetailTM2().getGaugedS(),
+                        requestBody.getSecondTransverseSectionMeasurementDetailTM2().getPercent());
+        DetailMeasurement third =
+                new DetailMeasurement(requestBody.getFirstTransverseSectionMeasurementDetailTM2().getOriginalThickness(),
+                        requestBody.getFirstTransverseSectionMeasurementDetailTM2().getMaxAlwbDim(),
+                        requestBody.getFirstTransverseSectionMeasurementDetailTM2().getGaugedP(),
+                        requestBody.getFirstTransverseSectionMeasurementDetailTM2().getGaugedS(),
+                        requestBody.getFirstTransverseSectionMeasurementDetailTM2().getPercent());
+
+        return new MeasurementTM2(null, requestBody.getStrakePosition(), requestBody.getNoOrLetter(), null,
+                first, second, third);
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    public Boolean deletedFormTM2(Long id) {
+        formTM2Repository.deleteById(id);
+        boolean isSuccess = !formTM2Repository.existsById(id);
+        return isSuccess;
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    public Boolean isFormTM2Exist(Long id) {
+        return formTM2Repository.existsById(id);
     }
 }
