@@ -37,6 +37,7 @@ public class FormTM1 {
 
     public void update(FormTM1RequestBody requestBody) {
         this.setStrakePosition(requestBody.getStrakePosition());
+        this.setCode(requestBody.getCode());
     }
 
     @Override

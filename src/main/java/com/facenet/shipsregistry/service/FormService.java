@@ -114,6 +114,12 @@ public interface FormService {
     /**
      *
      * @param id
+     */
+    public void deleteFormTM1(Long id);
+
+    /**
+     *
+     * @param id
      * @param requestBody
      * @return
      */
@@ -126,4 +132,5 @@ public interface FormService {
      * @return
      */
     public MeasurementTM1DTO updateMeasurementTM1(Long id, MeasurementTM1RequestBody requestBody);
+
 }

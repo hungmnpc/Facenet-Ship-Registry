@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.text.html.Option;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -456,21 +457,43 @@ public class FormServiceImpl implements FormService{
         if (formTM1Optional.isPresent()) {
             FormTM1 formTM1 = formTM1Optional.get();
             formTM1.update(requestBody);
-            List<MeasurementTM1> measurementTM1List = requestBody.getMeasurementTM1List().stream()
-                    .map(value -> {
-                        MeasurementTM1 measurementTM1 = new MeasurementTM1(null, value.getPlatePosition(),
-                                value.getNoOrLetter(), formTM1, null, null);
-                        DetailMeasurement forward = createNewDetailMeasurement(value.getForwardReadingMeasurementDetail());
-                        DetailMeasurement after = createNewDetailMeasurement(value.getAfterReadingMeasurementDetail());
-                        measurementTM1.setForwardReadingMeasurementDetail(forward);
-                        measurementTM1.setAfterReadingMeasurementDetail(after);
+            formTM1.getMeasurementTM1List().forEach(measurementTM1 -> {
+                measurementTM1Repository.deleteById(measurementTM1.getId());
+            });
+            List<MeasurementTM1> measurementTM1List = requestBody.getMeasurementTM1List()
+                    .stream().map(requestBodyMTM1 -> {
+                        MeasurementTM1 measurementTM1 = createMeasurementTM1(requestBodyMTM1);
+                        measurementTM1.setFormTM1(formTM1);
                         return measurementTM1;
                     }).toList();
             formTM1.setMeasurementTM1List(measurementTM1List);
-            FormTM1 formTM1Update = formTM1Repository.save(formTM1);
-            return mapperUtils.formTM1Mapper(formTM1Update);
+            return mapperUtils.formTM1Mapper(formTM1);
         }
         return null;
+    }
+
+    /**
+     * @param id
+     */
+    @Override
+    public void deleteFormTM1(Long id) {
+        formTM1Repository.deleteById(id);
+    }
+
+    private MeasurementTM1 createMeasurementTM1(MeasurementTM1RequestBody requestBody) {
+        DetailMeasurement after = new DetailMeasurement(requestBody.getAfterReadingMeasurementDetail().getOriginalThickness(),
+                requestBody.getAfterReadingMeasurementDetail().getMaxAlwbDim(),
+                requestBody.getAfterReadingMeasurementDetail().getGaugedP(),
+                requestBody.getAfterReadingMeasurementDetail().getGaugedS(),
+                requestBody.getAfterReadingMeasurementDetail().getPercent());
+
+        DetailMeasurement forward = new DetailMeasurement(requestBody.getForwardReadingMeasurementDetail().getOriginalThickness(),
+                requestBody.getForwardReadingMeasurementDetail().getMaxAlwbDim(),
+                requestBody.getForwardReadingMeasurementDetail().getGaugedP(),
+                requestBody.getForwardReadingMeasurementDetail().getGaugedS(),
+                requestBody.getForwardReadingMeasurementDetail().getPercent());
+
+        return new MeasurementTM1(null, requestBody.getPlatePosition(), requestBody.getNoOrLetter(), null, forward, after);
     }
 
     /**
@@ -517,4 +540,5 @@ public class FormServiceImpl implements FormService{
         return new DetailMeasurement(requestBody.getOriginalThickness(), requestBody.getMaxAlwbDim(),
                 requestBody.getGaugedP(), requestBody.getGaugedS(), requestBody.getPercent());
     }
+
 }
