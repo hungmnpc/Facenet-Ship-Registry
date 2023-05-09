@@ -22,6 +22,8 @@ public class FormTM4 {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String code;
+
     @Column(name = "tank_description")
     private String tankDescription;
 
@@ -41,5 +43,5 @@ public class FormTM4 {
         this.code = code;
     }
 
-    private String code;
+
 }

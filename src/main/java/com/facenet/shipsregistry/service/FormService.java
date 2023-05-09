@@ -167,4 +167,15 @@ public interface FormService {
      */
     public Boolean isFormTM2Exist(Long id);
 
+    FormDTO updateFormTM3(Long id, FormTM3RequestBody requestBody);
+
+    Boolean deletedFormTM3(Long id);
+
+    Boolean isFormTM5Exist(Long id);
+
+    FormDTO updateFormTM5(Long id, FormTM5RequestBody requestBody);
+
+    Boolean deletedFormTM5(Long id);
+
+    Boolean isFormTM3Exist(Long id);
 }

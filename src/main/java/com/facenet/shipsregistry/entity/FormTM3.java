@@ -1,8 +1,11 @@
 package com.facenet.shipsregistry.entity;
 
+import com.facenet.shipsregistry.request.FormTM2RequestBody;
+import com.facenet.shipsregistry.request.FormTM3RequestBody;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,6 +25,8 @@ public class FormTM3 {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String code;
+
     @Column(name = "1st_frame_no")
     private String firstFrameNo;
 
@@ -31,12 +36,25 @@ public class FormTM3 {
     @Column(name = "3rd_frame_no")
     private String thirdFrameNo;
 
-    @OneToMany(mappedBy = "formTM3", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "formTM3", cascade = {CascadeType.ALL})
     private List<MeasurementTM3> measurementTM3List;
 
-    @ManyToOne
+    public FormTM3( String firstFrameNoTM3, String secondFrameNoTM3, String thirdFrameNoTM3, String code) {
+        this.firstFrameNo = firstFrameNoTM3;
+        this.secondFrameNo = secondFrameNoTM3;
+        this.thirdFrameNo = thirdFrameNoTM3;
+        this.measurementTM3List = new ArrayList<>();
+        this.code = code;
+        this.id = null;
+    }
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "report_id")
     private ReportIndex reportIndex;
 
-    private String code;
+    public void update(FormTM3RequestBody requestBody) {
+        this.setFirstFrameNo(requestBody.getFirstFrameNo());
+        this.setSecondFrameNo(requestBody.getSecondFrameNo());
+        this.setThirdFrameNo(requestBody.getThirdFrameNo());
+        this.setCode(requestBody.getCode());
+    }
 }

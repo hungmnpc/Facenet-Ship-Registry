@@ -4,6 +4,8 @@ import com.facenet.shipsregistry.modal.FormDTO;
 import com.facenet.shipsregistry.modal.FormTM1DTO;
 import com.facenet.shipsregistry.request.FormTM1RequestBody;
 import com.facenet.shipsregistry.request.FormTM2RequestBody;
+import com.facenet.shipsregistry.request.FormTM3RequestBody;
+import com.facenet.shipsregistry.request.FormTM5RequestBody;
 import com.facenet.shipsregistry.service.FormService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,6 +92,76 @@ public class FormController {
         }
         try {
             Boolean isDeleted = formService.deletedFormTM2(id);
+            if (isDeleted) {
+                return ResponseEntity.ok("Xóa thành công.");
+            } else {
+                return ResponseEntity.badRequest().body("Không thể xóa Form này");
+
+            }
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            return ResponseEntity.internalServerError().body(exception.getMessage());
+        }
+
+    }
+    @PutMapping("/tm3s/{id}")
+    public ResponseEntity<?> updateFormTM3(@PathVariable Long id,
+                                           @RequestBody FormTM3RequestBody requestBody) {
+        try {
+            FormDTO formTM3DTO = formService.updateFormTM3(id,requestBody);
+            if (formTM3DTO != null) {
+                return ResponseEntity.ok(formTM3DTO);
+            } else {
+                return ResponseEntity.badRequest().body("Form không tồn tại");
+            }
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            exception.printStackTrace();
+            return ResponseEntity.internalServerError().body(exception.getMessage());
+        }
+    }
+    @PutMapping("/tm5s/{id}")
+    public ResponseEntity<?> updateFormTM5(@PathVariable Long id,
+                                           @RequestBody FormTM5RequestBody requestBody) {
+        try {
+            FormDTO formTM5DTO = formService.updateFormTM5(id,requestBody);
+            if (formTM5DTO != null) {
+                return ResponseEntity.ok(formTM5DTO);
+            } else {
+                return ResponseEntity.badRequest().body("Form không tồn tại");
+            }
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            exception.printStackTrace();
+            return ResponseEntity.internalServerError().body(exception.getMessage());
+        }
+    }
+    @DeleteMapping("/tm3s/{id}")
+    public ResponseEntity<?> deleteFormTM3(@PathVariable Long id) {
+        if (!formService.isFormTM3Exist(id)) {
+            return ResponseEntity.badRequest().body("Form không tồn tại");
+        }
+        try {
+            Boolean isDeleted = formService.deletedFormTM3(id);
+            if (isDeleted) {
+                return ResponseEntity.ok("Xóa thành công.");
+            } else {
+                return ResponseEntity.badRequest().body("Không thể xóa Form này");
+
+            }
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            return ResponseEntity.internalServerError().body(exception.getMessage());
+        }
+
+    }
+    @DeleteMapping("/tm5s/{id}")
+    public ResponseEntity<?> deleteFormTM5(@PathVariable Long id) {
+        if (!formService.isFormTM5Exist(id)) {
+            return ResponseEntity.badRequest().body("Form không tồn tại");
+        }
+        try {
+            Boolean isDeleted = formService.deletedFormTM5(id);
             if (isDeleted) {
                 return ResponseEntity.ok("Xóa thành công.");
             } else {

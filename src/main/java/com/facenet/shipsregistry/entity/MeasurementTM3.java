@@ -31,15 +31,15 @@ public class MeasurementTM3 {
     @JoinColumn(name = "form_TM3_id")
     private FormTM3 formTM3;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "1st_transverse_section_measurement_detail_id_TM3")
     private DetailMeasurement firstTransverseSectionMeasurementDetailTM3;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "2nd_transverse_section_measurement_detail_id_TM3")
     private DetailMeasurement secondTransverseSectionMeasurementDetailTM3;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "3rd_transverse_section_measurement_detail_id_TM3")
     private DetailMeasurement thirdTransverseSectionMeasurementDetailTM3;
 
