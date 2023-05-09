@@ -1,5 +1,6 @@
 package com.facenet.shipsregistry.service;
 
+import com.facenet.shipsregistry.entity.FormTM2;
 import com.facenet.shipsregistry.modal.*;
 import com.facenet.shipsregistry.request.*;
 
@@ -114,6 +115,19 @@ public interface FormService {
     /**
      *
      * @param id
+     */
+    public Boolean deleteFormTM1(Long id);
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public Boolean isFormTM1Exist(Long id);
+
+    /**
+     *
+     * @param id
      * @param requestBody
      * @return
      */
@@ -126,4 +140,28 @@ public interface FormService {
      * @return
      */
     public MeasurementTM1DTO updateMeasurementTM1(Long id, MeasurementTM1RequestBody requestBody);
+
+
+    /**
+     *
+     * @param id
+     * @param requestBody
+     * @return
+     */
+    public FormDTO updateFormTM2 (Long id, FormTM2RequestBody requestBody);
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public Boolean deletedFormTM2(Long id);
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public Boolean isFormTM2Exist(Long id);
+
 }
