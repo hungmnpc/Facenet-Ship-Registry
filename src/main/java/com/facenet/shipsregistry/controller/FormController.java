@@ -3,6 +3,7 @@ package com.facenet.shipsregistry.controller;
 import com.facenet.shipsregistry.modal.FormDTO;
 import com.facenet.shipsregistry.modal.FormTM1DTO;
 import com.facenet.shipsregistry.request.FormTM1RequestBody;
+import com.facenet.shipsregistry.request.FormTM2RequestBody;
 import com.facenet.shipsregistry.service.FormService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,12 +44,68 @@ public class FormController {
 
     @DeleteMapping("/tm1s/{id}")
     public ResponseEntity<?> deleteFormTM1(@PathVariable Long id) {
+        if (!formService.isFormTM1Exist(id)) {
+            return ResponseEntity.badRequest().body(String.format("Form TM1 với id = %d không tồn tại", id));
+        }
         try {
-            formService.deleteFormTM1(id);
-            return ResponseEntity.ok("Xóa thành công form TM1");
+            Boolean isDeleted = formService.deleteFormTM1(id);
+            if (isDeleted) {
+                return ResponseEntity.ok("Xóa thành công form TM1");
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
         } catch (Exception exception) {
             log.error(exception.getMessage());
             return ResponseEntity.internalServerError().body(exception.getMessage());
         }
+    }
+
+    /**
+     *
+     * @param id
+     * @param requestBody
+     * @return
+     */
+    @PutMapping("/tm2s/{id}")
+    public ResponseEntity<?> updateFormTM2(@PathVariable Long id,
+                                           @RequestBody FormTM2RequestBody requestBody) {
+        try {
+            FormDTO formTM2DTO = formService.updateFormTM2(id,requestBody);
+            if (formTM2DTO != null) {
+                return ResponseEntity.ok(formTM2DTO);
+            } else {
+                return ResponseEntity.badRequest().body("Form không tồn tại");
+            }
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            exception.printStackTrace();
+            return ResponseEntity.internalServerError().body(exception.getMessage());
+        }
+    }
+
+
+    /**\
+     *
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/tm2s/{id}")
+    public ResponseEntity<?> deleteFormTM2(@PathVariable Long id) {
+        if (!formService.isFormTM2Exist(id)) {
+            return ResponseEntity.badRequest().body("Form không tồn tại");
+        }
+        try {
+            Boolean isDeleted = formService.deletedFormTM2(id);
+            if (isDeleted) {
+                return ResponseEntity.ok("Xóa thành công.");
+            } else {
+                return ResponseEntity.badRequest().body("Không thể xóa Form này");
+
+            }
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            return ResponseEntity.internalServerError().body(exception.getMessage());
+        }
+
     }
 }

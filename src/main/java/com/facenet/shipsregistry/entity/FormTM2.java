@@ -1,5 +1,7 @@
 package com.facenet.shipsregistry.entity;
 
+import com.facenet.shipsregistry.request.FormTM1RequestBody;
+import com.facenet.shipsregistry.request.FormTM2RequestBody;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,7 +30,7 @@ public class FormTM2 {
 
     private String code;
 
-    @OneToMany(mappedBy = "formTM2", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "formTM2", cascade = {CascadeType.ALL})
     private List<MeasurementTM2> measurementTM2List;
 
     private String firstFrameNoTM2;
@@ -37,16 +39,25 @@ public class FormTM2 {
 
     private String thirdFrameNoTM2;
 
-    public FormTM2(String name, String firstFrameNoTM2, String secondFrameNoTM2, String thirdFrameNoTM2) {
+    public FormTM2(String name, String firstFrameNoTM2, String secondFrameNoTM2, String thirdFrameNoTM2, String code) {
         this.name = name;
         this.firstFrameNoTM2 = firstFrameNoTM2;
         this.secondFrameNoTM2 = secondFrameNoTM2;
         this.thirdFrameNoTM2 = thirdFrameNoTM2;
         this.measurementTM2List = new ArrayList<>();
+        this.code = code;
         this.id = null;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "report_id")
     private ReportIndex reportIndex;
+
+    public void update(FormTM2RequestBody requestBody) {
+        this.setName(requestBody.getName());
+        this.setFirstFrameNoTM2(requestBody.getFirstFrameNoTM2());
+        this.setSecondFrameNoTM2(requestBody.getSecondFrameNoTM2());
+        this.setThirdFrameNoTM2(requestBody.getThirdFrameNoTM2());
+        this.setCode(requestBody.getCode());
+    }
 }
