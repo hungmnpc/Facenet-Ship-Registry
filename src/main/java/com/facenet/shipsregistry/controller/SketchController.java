@@ -55,7 +55,7 @@ public class SketchController {
             MediaType mediaType = MediaType.APPLICATION_PDF;
             List<SketchDTO> sketchDTOList = sketchService.getAllSketch();
             log.info("{}", sketchDTOList);
-            File file = new File(sketchDTOList.get(7).getPath());
+            File file = new File(sketchDTOList.get(1).getPath());
             UrlResource resource = new UrlResource(file.toURI());
             String headerValue = "attachment; filename=\"" + resource.getFilename() + "\"";
             return ResponseEntity.ok()

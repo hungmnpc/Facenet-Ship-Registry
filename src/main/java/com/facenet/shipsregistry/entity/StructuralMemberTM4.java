@@ -30,6 +30,6 @@ public class StructuralMemberTM4 {
     @JoinColumn(name = "form_tm4_id")
     private FormTM4 formTM4;
 
-    @OneToMany(mappedBy = "structuralMemberTM4",cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "structuralMemberTM4",cascade = {CascadeType.ALL})
     private List<MeasurementTM4> measurementTM4List;
 }

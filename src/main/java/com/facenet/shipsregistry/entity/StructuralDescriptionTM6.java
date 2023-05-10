@@ -29,6 +29,6 @@ public class StructuralDescriptionTM6 {
     @JoinColumn(name = "form_TM6_id")
     private FormTM6 formTM6;
 
-    @OneToMany(mappedBy = "structuralDescriptionTM6", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "structuralDescriptionTM6", cascade = {CascadeType.ALL})
     private List<MeasurementTM6> measurementTM6List;
 }

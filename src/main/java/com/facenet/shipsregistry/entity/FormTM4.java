@@ -30,7 +30,7 @@ public class FormTM4 {
     @Column(name = "location_of_structure")
     private String locationOfStructure;
 
-    @OneToMany(mappedBy = "formTM4", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "formTM4", cascade = {CascadeType.ALL})
     private List<StructuralMemberTM4> structuralMemberTM4List;
 
     @ManyToOne

@@ -8,11 +8,24 @@ import com.facenet.shipsregistry.repository.ReportIndexRepository;
 import com.facenet.shipsregistry.request.FormTM1RequestBody;
 import com.facenet.shipsregistry.utils.MapperUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * @author: hungdinh
@@ -723,5 +736,73 @@ public class FormServiceImpl implements FormService{
     @Override
     public Boolean isFormTM5Exist(Long id) {
         return formTM5Repository.existsById(id);
+    }
+
+    /**
+     * @param excelFile
+     * @return
+     */
+    @Override
+    public FormTM1DTO uploadFormTm1FromExcel(Long id, MultipartFile excelFile) throws Exception{
+
+        ReportIndex part = reportIndexRepository.findById(id).orElse(null);
+        if (part != null) {
+            Path tempDir = Files.createTempDirectory("");
+            InputStream inputStream = excelFile.getInputStream();
+            File tempFile =tempDir.resolve(excelFile.getOriginalFilename()).toFile();
+            excelFile.transferTo(tempFile);
+            Workbook workbook = WorkbookFactory.create(tempFile);
+            Sheet sheet = workbook.getSheetAt(0);
+            log.info("{}", sheet.getRow(0).getCell(1).getStringCellValue());
+            FormTM1 formTM1 = new FormTM1(null, ""
+                    , sheet.getRow(0).getCell(1).getStringCellValue()
+                    , new ArrayList<>(), part);
+
+
+            Stream<Row> rowStream = StreamSupport.stream(sheet.spliterator(), false);
+            DataFormatter formatter = new DataFormatter();
+            AtomicInteger index = new AtomicInteger();
+            List<MeasurementTM1> measurementTM1List = new ArrayList<>();
+            rowStream.forEach(row -> {
+                Stream<Cell> cellStream = StreamSupport.stream(row.spliterator(), false);
+                List<String> cellVals = cellStream.map(cell -> {
+                    String cellVal = formatter.formatCellValue(cell,new HSSFFormulaEvaluator((HSSFWorkbook) workbook));
+                    return cellVal;
+                }).toList();
+                log.info("{}", cellVals);
+                if (index.get() >= 4) {
+                    MeasurementTM1 measurementTM1 = createMeasurementTM1ByRow(cellVals);
+
+                    if (measurementTM1 != null) {
+                        measurementTM1List.add(measurementTM1);
+                    }
+                    formTM1.setMeasurementTM1List(measurementTM1List);
+                }
+                index.addAndGet(1);
+            });
+            return mapperUtils.formTM1Mapper(formTM1);
+        } else {
+            return null;
+        }
+    }
+
+    private MeasurementTM1 createMeasurementTM1ByRow(List<String> row) {
+        log.info("{}", !row.get(1).equals(""));
+        if (!row.get(1).equals("")) {
+            log.info("Có thể tạo");
+            MeasurementTM1 measurementTM1 =
+                    new MeasurementTM1(null, row.get(0), row.get(1), null, null, null);
+            DetailMeasurement forward = new DetailMeasurement(Double.parseDouble(row.get(2)),
+                    0.0, Double.parseDouble(row.get(3)),Double.parseDouble(row.get(4)), "");
+            DetailMeasurement after = new DetailMeasurement(Double.parseDouble(row.get(2)),
+                    0.0, Double.parseDouble(row.get(11)),Double.parseDouble(row.get(12)), "");
+            measurementTM1.setForwardReadingMeasurementDetail(forward);
+            measurementTM1.setAfterReadingMeasurementDetail(after);
+            return measurementTM1;
+        } else {
+            log.info("Không thể tạo");
+            return null;
+        }
+
     }
 }

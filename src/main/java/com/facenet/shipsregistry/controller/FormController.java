@@ -54,8 +54,6 @@ public class FormController {
         }
     }
 
-
-
     @PostMapping("/tm1s/{id}/sketches")
     public ResponseEntity<?> uploadSketchesToFormTM1(@PathVariable Long id,@RequestBody List<MultipartFile> request) {
         try {
@@ -67,6 +65,7 @@ public class FormController {
             return ResponseEntity.badRequest().body(exception.getMessage());
         }
     }
+
 
     @DeleteMapping("/tm1s/{id}")
     public ResponseEntity<?> deleteFormTM1(@PathVariable Long id) {
@@ -85,7 +84,6 @@ public class FormController {
             return ResponseEntity.internalServerError().body(exception.getMessage());
         }
     }
-
 
     /**
      *
@@ -109,7 +107,6 @@ public class FormController {
             return ResponseEntity.internalServerError().body(exception.getMessage());
         }
     }
-
 
     /**\
      *
