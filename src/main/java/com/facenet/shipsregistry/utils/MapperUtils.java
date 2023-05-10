@@ -104,6 +104,7 @@ public class MapperUtils {
                 formTM2.getMeasurementTM2List().stream()
                         .map(this::measurementTM2DTO)
                         .toList();
+        formTM2DTO.setType(formTM2DTO.getName().toUpperCase());
         formTM2DTO.setMeasurementTM2DTOList(measurementTM2DTOList);
         return formTM2DTO;
     }
