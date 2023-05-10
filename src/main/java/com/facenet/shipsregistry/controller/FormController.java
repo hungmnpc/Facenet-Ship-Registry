@@ -2,13 +2,19 @@ package com.facenet.shipsregistry.controller;
 
 import com.facenet.shipsregistry.modal.FormDTO;
 import com.facenet.shipsregistry.modal.FormTM1DTO;
+import com.facenet.shipsregistry.modal.SketchDTO;
 import com.facenet.shipsregistry.request.FormTM1RequestBody;
 import com.facenet.shipsregistry.request.FormTM2RequestBody;
+import com.facenet.shipsregistry.request.SketchedRequest;
 import com.facenet.shipsregistry.service.FormService;
+import com.facenet.shipsregistry.service.SketchService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * @author: hungdinh
@@ -22,6 +28,9 @@ public class FormController {
 
     @Autowired
     private FormService formService;
+
+    @Autowired
+    private SketchService sketchService;
 
     /**
      *
@@ -42,6 +51,20 @@ public class FormController {
         }
     }
 
+
+
+    @PostMapping("/tm1s/{id}/sketches")
+    public ResponseEntity<?> uploadSketchesToFormTM1(@PathVariable Long id,@RequestBody List<MultipartFile> request) {
+        try {
+            List<SketchDTO> sketchDTOList = sketchService.uploadSketchesIntoFormTM1(request, id);
+            return ResponseEntity.ok(sketchDTOList);
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            exception.printStackTrace();
+            return ResponseEntity.badRequest().body(exception.getMessage());
+        }
+    }
+
     @DeleteMapping("/tm1s/{id}")
     public ResponseEntity<?> deleteFormTM1(@PathVariable Long id) {
         if (!formService.isFormTM1Exist(id)) {
@@ -56,6 +79,7 @@ public class FormController {
             }
         } catch (Exception exception) {
             log.error(exception.getMessage());
+
             return ResponseEntity.internalServerError().body(exception.getMessage());
         }
     }

@@ -93,4 +93,18 @@ public interface GeneralParticularsService {
      * @return
      */
     public ReportMenu getReportMenu(Long id);
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public Boolean deletePart(Long id);
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public Boolean isPartExist(Long id);
 }

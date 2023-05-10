@@ -384,4 +384,8 @@ public class MapperUtils {
         return new DetailMeasurement(requestBody.getOriginalThickness(),
                 requestBody.getMaxAlwbDim(), requestBody.getGaugedP(), requestBody.getGaugedS(), requestBody.getPercent());
     }
+
+    public SketchDTO mapperSketch(Sketch sketch) {
+        return modelMapper.map(sketch, SketchDTO.class);
+    }
 }
