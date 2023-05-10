@@ -25,7 +25,7 @@ public class StructuralDescriptionTM6 {
     @Column(name = "structural_description_title")
     private String structuralDescriptionTitle;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "form_TM6_id")
     private FormTM6 formTM6;
 
