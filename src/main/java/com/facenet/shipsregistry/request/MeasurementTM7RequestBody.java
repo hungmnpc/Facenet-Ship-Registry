@@ -10,7 +10,7 @@ import lombok.*;
 @ToString
 public class MeasurementTM7RequestBody {
 
-    private String name;
+    private String item;
 
     private DetailMeasurementRequestBody upperPart;
 

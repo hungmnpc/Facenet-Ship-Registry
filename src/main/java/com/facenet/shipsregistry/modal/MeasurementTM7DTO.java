@@ -13,7 +13,7 @@ public class MeasurementTM7DTO {
     private Long id;
 
     private String item;
-
+   // private FrameNumber frameNumber;
     private DetailMeasurementDTO upperPart;
 
     private DetailMeasurementDTO midPart;

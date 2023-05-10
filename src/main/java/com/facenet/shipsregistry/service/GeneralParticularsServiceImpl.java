@@ -244,4 +244,23 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
     public void deleteGeneralParticulars(Long id) {
         generalParticularsRepository.deleteById(id);
     }
+
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    public Boolean deletePart(Long id) {
+        reportIndexRepository.deleteById(id);
+        return !reportIndexRepository.existsById(id);
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    public Boolean isPartExist(Long id) {
+        return reportIndexRepository.existsById(id);
+    }
 }

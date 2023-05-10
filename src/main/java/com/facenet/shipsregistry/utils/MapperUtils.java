@@ -85,7 +85,6 @@ public class MapperUtils {
     }
     public FormTM5DTO formTM5Mapper(FormTM5 formTm5) {
         FormTM5DTO formTM5DTO = modelMapper.map(formTm5, FormTM5DTO.class);
-        log.info(formTM5DTO.getFrameNo());
         List<MeasurementTM5DTO> measurementTM5DTOList =
                 formTm5.getMeasurementTM5List().stream()
                         .map(this::measurementTM5Mapper)
@@ -207,6 +206,11 @@ public class MapperUtils {
         return measurementTM4DTO;
     }
 
+    /**
+     *
+     * @param structuralMemberTM4
+     * @return
+     */
     public StructuralMemberTM4DTO structuralMemberTM4Mapper(StructuralMemberTM4 structuralMemberTM4) {
         StructuralMemberTM4DTO structuralMemberTM4DTO =
                 modelMapper.map(structuralMemberTM4, StructuralMemberTM4DTO.class);
@@ -215,17 +219,6 @@ public class MapperUtils {
                 .toList();
         structuralMemberTM4DTO.setMeasurementTM4DTOList(measurementTM4DTOList);
         return structuralMemberTM4DTO;
-    }
-    public FormTM7DTO formTM7Mapper(FormTM7 formTM7) {
-        FormTM7DTO formTM7DTO = modelMapper.map(formTM7, FormTM7DTO.class);
-        List<FrameNumberDTO> frameNumberDTOList =
-                formTM7.getFrameNumber().stream()
-                        .map(this::frameNumberMapper)
-                        .toList();
-        frameNumberDTOList.forEach(frameNumberDTO -> System.out.println(frameNumberDTO.toString()));
-        formTM7DTO.setFrameNumberList(frameNumberDTOList);
-        log.info("{}", formTM7DTO.toString());
-        return formTM7DTO;
     }
 
     /**
@@ -241,6 +234,11 @@ public class MapperUtils {
         return measurementTM7DTO;
     }
 
+    /**
+     *
+     * @param frameNumber
+     * @return
+     */
     public FrameNumberDTO frameNumberMapper(FrameNumber frameNumber) {
         FrameNumberDTO frameNumberDTO =
                 modelMapper.map(frameNumber, FrameNumberDTO.class);
@@ -249,6 +247,23 @@ public class MapperUtils {
                 .toList();
         frameNumberDTO.setMeasurementTM7DTOList(measurementTM7DTOList);
         return frameNumberDTO;
+    }
+
+    /**
+     *
+     * @param formTM7
+     * @return
+     */
+    public FormTM7DTO formTM7Mapper(FormTM7 formTM7) {
+        FormTM7DTO formTM7DTO = modelMapper.map(formTM7, FormTM7DTO.class);
+        List<FrameNumberDTO> frameNumberDTOList =
+                formTM7.getFrameNumber().stream()
+                        .map(this::frameNumberMapper)
+                        .toList();
+        frameNumberDTOList.forEach(frameNumberDTO -> System.out.println(frameNumberDTO.toString()));
+        formTM7DTO.setFrameNumberList(frameNumberDTOList);
+        log.info("{}", formTM7DTO.toString());
+        return formTM7DTO;
     }
 
     /**
@@ -383,5 +398,9 @@ public class MapperUtils {
     public DetailMeasurement mapperToDetailMeasurement(DetailMeasurementRequestBody requestBody) {
         return new DetailMeasurement(requestBody.getOriginalThickness(),
                 requestBody.getMaxAlwbDim(), requestBody.getGaugedP(), requestBody.getGaugedS(), requestBody.getPercent());
+    }
+
+    public SketchDTO mapperSketch(Sketch sketch) {
+        return modelMapper.map(sketch, SketchDTO.class);
     }
 }

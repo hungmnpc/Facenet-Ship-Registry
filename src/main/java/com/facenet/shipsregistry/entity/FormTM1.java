@@ -22,9 +22,7 @@ public class FormTM1 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String code;
-
     @Column(name = "strake_position")
     private String strakePosition;
 
@@ -35,11 +33,6 @@ public class FormTM1 {
     @JoinColumn(name = "report_id")
     private ReportIndex reportIndex;
 
-    public void update(FormTM1RequestBody requestBody) {
-        this.setStrakePosition(requestBody.getStrakePosition());
-        this.setCode(requestBody.getCode());
-    }
-
     @Override
     public String toString() {
         return "FormTM1{" +
@@ -47,5 +40,10 @@ public class FormTM1 {
                 ", strakePosition='" + strakePosition + '\'' +
                 ", reportIndex=" + reportIndex +
                 '}';
+    }
+
+    public void update(FormTM1RequestBody requestBody) {
+        this.setStrakePosition(requestBody.getStrakePosition());
+        this.setCode(requestBody.getCode());
     }
 }
