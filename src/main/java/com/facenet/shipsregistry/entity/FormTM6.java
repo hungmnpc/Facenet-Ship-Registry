@@ -24,10 +24,10 @@ public class FormTM6 {
     @Column(name = "location_of_structure")
     private String locationOfStructure;
 
-    @OneToMany(mappedBy = "formTM6", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "formTM6", cascade = {CascadeType.ALL})
     private List<StructuralDescriptionTM6> structuralDescriptionTM6List;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "report_id")
     private ReportIndex reportIndex;
 
