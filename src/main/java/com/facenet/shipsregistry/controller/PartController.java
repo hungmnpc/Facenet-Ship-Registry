@@ -4,6 +4,7 @@ import com.facenet.shipsregistry.modal.FormDTO;
 import com.facenet.shipsregistry.modal.ReportIndexDTO;
 import com.facenet.shipsregistry.request.*;
 import com.facenet.shipsregistry.service.FormService;
+import com.facenet.shipsregistry.service.GeneralParticularsService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,28 @@ public class PartController {
     @Autowired
     FormService formService;
 
+    @Autowired
+    GeneralParticularsService generalParticularsService;
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletePart(@PathVariable Long id) {
+        if (!generalParticularsService.isPartExist(id)) {
+            return ResponseEntity.badRequest().body("Không tồn tại part");
+        }
+        try {
+            Boolean isDeleted = generalParticularsService.deletePart(id);
+            if (isDeleted) {
+                return ResponseEntity.ok("Xóa part thành công");
+            } else {
+                return ResponseEntity.badRequest().body("Không thể xóa part này");
+            }
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            return ResponseEntity.internalServerError().body(exception.getMessage());
+        }
+    }
+
     /**
      *
      * @param request
@@ -32,7 +55,7 @@ public class PartController {
      * @param requestBody
      * @return
      */
-    @PostMapping("/{id}/tm1s")
+    @PostMapping(value = "/{id}/tm1s")
     public ResponseEntity<?> saveNewFormTm1(HttpServletRequest request,
                                             @PathVariable Long id,
                                             @RequestBody FormTM1RequestBody requestBody) {
