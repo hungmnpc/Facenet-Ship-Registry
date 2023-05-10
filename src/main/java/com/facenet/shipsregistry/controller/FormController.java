@@ -109,18 +109,6 @@ public class FormController {
             return ResponseEntity.internalServerError().body(exception.getMessage());
         }
     }
-    @PutMapping("/tm1s/{id}")
-    public ResponseEntity<?> updateFormTM1(@PathVariable Long id,
-                                           @RequestBody FormTM1RequestBody requestBody) {
-        try {
-            FormDTO formTM1DTO = formService.updateFormTM1(id,requestBody);
-            return ResponseEntity.ok(formTM1DTO);
-        } catch (Exception exception) {
-            log.error(exception.getMessage());
-            exception.printStackTrace();
-            return ResponseEntity.internalServerError().body(exception.getMessage());
-        }
-    }
 
 
     /**\
