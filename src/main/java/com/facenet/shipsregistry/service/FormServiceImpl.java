@@ -769,10 +769,8 @@ public class FormServiceImpl implements FormService{
                     String cellVal = formatter.formatCellValue(cell,new HSSFFormulaEvaluator((HSSFWorkbook) workbook));
                     return cellVal;
                 }).toList();
-                log.info("{}", cellVals);
                 if (index.get() >= 4) {
                     MeasurementTM1 measurementTM1 = createMeasurementTM1ByRow(cellVals);
-
                     if (measurementTM1 != null) {
                         measurementTM1List.add(measurementTM1);
                     }
@@ -787,11 +785,9 @@ public class FormServiceImpl implements FormService{
     }
 
     private MeasurementTM1 createMeasurementTM1ByRow(List<String> row) {
-        log.info("{}", !row.get(1).equals(""));
         if (!row.get(1).equals("")) {
-            log.info("Có thể tạo");
             MeasurementTM1 measurementTM1 =
-                    new MeasurementTM1(null, row.get(0), row.get(1), null, null, null);
+                    new MeasurementTM1(null, row.get(0).trim(), row.get(1).trim(), null, null, null);
             DetailMeasurement forward = new DetailMeasurement(Double.parseDouble(row.get(2)),
                     0.0, Double.parseDouble(row.get(3)),Double.parseDouble(row.get(4)), "");
             DetailMeasurement after = new DetailMeasurement(Double.parseDouble(row.get(2)),
@@ -800,7 +796,6 @@ public class FormServiceImpl implements FormService{
             measurementTM1.setAfterReadingMeasurementDetail(after);
             return measurementTM1;
         } else {
-            log.info("Không thể tạo");
             return null;
         }
 
