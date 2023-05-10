@@ -32,7 +32,7 @@ public class MeasurementTM5 {
     @JoinColumn(name = "form_TM5_id")
     private FormTM5 formTM5;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "measurement_detail_id")
     private DetailMeasurement measurementDetail;
 }

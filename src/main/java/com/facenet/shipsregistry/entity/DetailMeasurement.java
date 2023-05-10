@@ -101,10 +101,10 @@ public class DetailMeasurement {
      * @param requestBody
      */
     public void update(DetailMeasurementRequestBody requestBody) {
-       this.setOriginalThickness(requestBody.getOriginalThickness());
-       this.setGaugedP(requestBody.getGaugedP());
-       this.setGaugedS(requestBody.getGaugedS());
-       this.setMaxAlwbDim(requestBody.getMaxAlwbDim());
-       this.setPercent(requestBody.getPercent());
+        this.setOriginalThickness(requestBody.getOriginalThickness());
+        this.setGaugedP(requestBody.getGaugedP());
+        this.setGaugedS(requestBody.getGaugedS());
+        this.setMaxAlwbDim(requestBody.getMaxAlwbDim());
+        this.setPercent(requestBody.getPercent());
     }
 }
