@@ -24,15 +24,15 @@ public class MeasurementTM7 {
     @JoinColumn(name = "id_frame _number")
     private FrameNumber frameNumber;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "upper_part_id")
     private DetailMeasurement upperPart;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "mid_part_id")
     private DetailMeasurement midPart;
     
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "lower_part_id")
     private DetailMeasurement lowerPart;
 }

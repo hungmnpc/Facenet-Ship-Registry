@@ -55,6 +55,7 @@ public class FormTM5 {
 
     @OneToMany(mappedBy = "formTM5", cascade = {CascadeType.ALL})
     private List<MeasurementTM5> measurementTM5List;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "report_id")
     private ReportIndex reportIndex;

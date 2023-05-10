@@ -25,6 +25,6 @@ public class FrameNumber {
     @JoinColumn(name = "id_formTM7")
     private FormTM7 formTM7;
 
-    @OneToMany(mappedBy = "frameNumber", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "frameNumber", cascade = {CascadeType.ALL})
     private List<MeasurementTM7> measurementTM7List;
 }
