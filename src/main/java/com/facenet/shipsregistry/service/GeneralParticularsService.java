@@ -93,4 +93,12 @@ public interface GeneralParticularsService {
      * @return
      */
     public ReportMenu getReportMenu(Long id);
+
+    /**
+     *
+     * @param id
+     * @param requestBody
+     * @return
+     */
+    GeneralParticularsDTO updateGeneralParticulars(Long id, GeneralParticularRequestBody requestBody);
 }

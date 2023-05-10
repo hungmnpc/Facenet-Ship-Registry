@@ -68,6 +68,30 @@ public class GeneralParticularsController {
 
     /**
      *
+     * @param id
+     * @param requestBody
+     * @return
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateGeneralParticulars(
+            @PathVariable Long id,
+            @RequestBody GeneralParticularRequestBody requestBody
+    ) {
+        try {
+            GeneralParticularsDTO generalParticularsDTO = generalParticularsService.updateGeneralParticulars(id, requestBody);
+            if (generalParticularsDTO != null) {
+                return ResponseEntity.ok(generalParticularsDTO);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            log.error(exception.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+    /**
+     *
      * @param requestBody
      * @param id
      * @param request
@@ -92,7 +116,11 @@ public class GeneralParticularsController {
         }
     }
 
-
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}/report-indexes")
     public ResponseEntity getReportIndex(@PathVariable(name = "id") Long id) {
         try {

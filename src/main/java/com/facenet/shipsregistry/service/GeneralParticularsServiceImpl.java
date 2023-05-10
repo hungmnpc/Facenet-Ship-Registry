@@ -14,7 +14,6 @@ import com.facenet.shipsregistry.request.GeneralParticularRequestBody;
 import com.facenet.shipsregistry.request.ShipInfoRequestBody;
 import com.facenet.shipsregistry.utils.MapperUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -244,4 +243,41 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
     public void deleteGeneralParticulars(Long id) {
         generalParticularsRepository.deleteById(id);
     }
+
+    @Override
+    public GeneralParticularsDTO updateGeneralParticulars(Long id, GeneralParticularRequestBody requestBody) {
+        Optional<GeneralParticulars> generalParticularsOptional = generalParticularsRepository.findById(id);
+        if (generalParticularsOptional.isPresent()) {
+            GeneralParticulars generalParticulars = generalParticularsOptional.get();
+            Optional<Ship> ship = shipRepository.findShipByImoNumber(requestBody.getShip().getImoNumber());
+            Certificate certificate =
+                    certificateRepository.findCertificateByCertificateNo(
+                            requestBody.getCertificateNo()).orElse(null);
+            generalParticulars.setReportNo(requestBody.getReportNo());
+            generalParticulars.setSurveyorInfo(requestBody.getSurveyorInfo());
+            generalParticulars.setCertificate(certificate);
+            generalParticulars.setPlaceOfMeasurement(requestBody.getPlaceOfMeasurement());
+            generalParticulars.setFirstDateOfMeasurement(requestBody.getFirstDateOfMeasurement());
+            generalParticulars.setLastDateOfMeasurement(requestBody.getLastDateOfMeasurement());
+            generalParticulars.setNameOfOperator(requestBody.getNameOfOperator());
+            generalParticulars.setMeasurementEquipmentInfo(requestBody.getMeasurementEquipmentInfo());
+            generalParticulars.setSurveyType(requestBody.getSurveyType());
+            if (ship.isPresent()) {
+                generalParticulars.setShip(ship.get());
+            } else {
+                ShipDTO newShip = saveNewShip(requestBody.getShip());
+                generalParticulars.setShip(
+                        shipRepository.findShipByImoNumber(newShip.getImoNumber())
+                                .orElse(null));
+            }
+            GeneralParticulars generalParticularsSaved = generalParticularsRepository.save(generalParticulars);
+            if (generalParticularsSaved.getId() > 0) {
+                GeneralParticularsDTO generalParticularsDTO = mapperUtils.generalParticularsMapper(generalParticulars);
+                return generalParticularsDTO;
+            }
+        }
+        return null;
+    }
+
 }
+
