@@ -244,6 +244,7 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
         generalParticularsRepository.deleteById(id);
     }
 
+
     @Override
     public GeneralParticularsDTO updateGeneralParticulars(Long id, GeneralParticularRequestBody requestBody) {
         Optional<GeneralParticulars> generalParticularsOptional = generalParticularsRepository.findById(id);
@@ -279,5 +280,23 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
         return null;
     }
 
-}
 
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    public Boolean deletePart(Long id) {
+        reportIndexRepository.deleteById(id);
+        return !reportIndexRepository.existsById(id);
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    public Boolean isPartExist(Long id) {
+        return reportIndexRepository.existsById(id);
+    }
+}

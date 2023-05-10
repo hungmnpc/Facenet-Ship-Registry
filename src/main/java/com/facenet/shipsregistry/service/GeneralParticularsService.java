@@ -97,8 +97,19 @@ public interface GeneralParticularsService {
     /**
      *
      * @param id
+<<<<<<< HEAD
      * @param requestBody
      * @return
      */
     GeneralParticularsDTO updateGeneralParticulars(Long id, GeneralParticularRequestBody requestBody);
+
+    public Boolean deletePart(Long id);
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public Boolean isPartExist(Long id);
+
 }
