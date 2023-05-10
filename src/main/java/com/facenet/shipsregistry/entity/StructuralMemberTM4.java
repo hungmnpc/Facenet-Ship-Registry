@@ -26,7 +26,7 @@ public class StructuralMemberTM4 {
     @Column(name = "structural_member_title")
     private String structuralMemberTitle;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "form_tm4_id")
     private FormTM4 formTM4;
 

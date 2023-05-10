@@ -29,11 +29,11 @@ public class MeasurementTM4 {
     @Column(name = "item")
     private String item;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "measurement_detail_id")
     private DetailMeasurement detailMeasurement;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "structural_title_id")
     private StructuralMemberTM4 structuralMemberTM4;
 }

@@ -33,7 +33,7 @@ public class FormTM4 {
     @OneToMany(mappedBy = "formTM4", cascade = {CascadeType.ALL})
     private List<StructuralMemberTM4> structuralMemberTM4List;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "report_id")
     private ReportIndex reportIndex;
 
