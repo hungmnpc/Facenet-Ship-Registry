@@ -848,4 +848,126 @@ public class FormServiceImpl implements FormService{
         }
         return null;
     }
+
+    /**
+     * @param partId
+     * @param formIndex
+     * @return
+     */
+    @Override
+    public Boolean deletedFormUsingPart(Long partId, Integer formIndex) {
+        ReportIndex reportIndex = reportIndexRepository.findById(partId).orElse(null);
+        if (reportIndex == null) {
+            return false;
+        }
+        ReportIndexDTO reportIndexDTO = mapperUtils.reportIndexMapper(reportIndex);
+        FormDTO formDTO = reportIndexDTO.getFormList().stream()
+                .filter(form -> form.getFormIndex().equals(formIndex))
+                .findFirst().orElse(null);
+        Boolean isDeleted = false;
+        if (formDTO != null) {
+            switch (formDTO.getClass().getSimpleName()) {
+                case "FormTM1DTO":
+                    FormTM1 formTM1 = formTM1Repository.findById(formDTO.getId()).orElse(null);
+                    if (formTM1 != null) {
+                        formTM1Repository.delete(formTM1);
+                        reportIndex.getFormTM1List().remove(formTM1);
+                        isDeleted = !formTM1Repository.existsById((formDTO.getId()));
+                    }
+                    break;
+                case "FormTM2DTO":
+                    FormTM2 formTM2 = formTM2Repository.findById(formDTO.getId()).orElse(null);
+                    if (formTM2 != null) {
+                        formTM2Repository.delete(formTM2);
+                        reportIndex.getFormTM2List().remove(formTM2);
+                        isDeleted = !formTM2Repository.existsById((formDTO.getId()));
+                    }
+                    break;
+                case "FormTM3DTO":
+                    FormTM3 formTM3 = formTM3Repository.findById(formDTO.getId()).orElse(null);
+                    if (formTM3 != null) {
+                        formTM3Repository.delete(formTM3);
+                        reportIndex.getFormTM3List().remove(formTM3);
+                        isDeleted = !formTM3Repository.existsById((formDTO.getId()));
+                    }
+                    break;
+                case "FormTM4DTO":
+                    FormTM4 formTM4 = formTM4Repository.findById(formDTO.getId()).orElse(null);
+                    if (formTM4 != null) {
+                        formTM4Repository.delete(formTM4);
+                        reportIndex.getFormTM4List().remove(formTM4);
+                        isDeleted = !formTM4Repository.existsById((formDTO.getId()));
+                    }
+                    break;
+                case "FormTM5DTO":
+                    FormTM5 formTM5 = formTM5Repository.findById(formDTO.getId()).orElse(null);
+                    if (formTM5 != null) {
+                        formTM5Repository.delete(formTM5);
+                        reportIndex.getFormTM5List().remove(formTM5);
+                        isDeleted = !formTM5Repository.existsById((formDTO.getId()));
+                    }
+                    break;
+                case "FormTM6DTO":
+                    FormTM6 formTM6 = formTM6Repository.findById(formDTO.getId()).orElse(null);
+                    if (formTM6 != null) {
+                        formTM6Repository.delete(formTM6);
+                        reportIndex.getFormTM6List().remove(formTM6);
+                        isDeleted = !formTM6Repository.existsById((formDTO.getId()));
+                    }
+                    break;
+                case "FormTM7DTO":
+                    FormTM7 formTM7 = formTM7Repository.findById(formDTO.getId()).orElse(null);
+                    if (formTM7 != null) {
+                        formTM7Repository.delete(formTM7);
+                        reportIndex.getFormTM7List().remove(formTM7);
+                        isDeleted = !formTM7Repository.existsById((formDTO.getId()));
+                    }
+                    break;
+                default:
+                    isDeleted = false;
+            }
+        }
+
+        if (isDeleted) {
+            reportIndexDTO.getFormList().removeIf(form -> form.getFormIndex().equals(formIndex));
+            log.info("{}",reportIndexDTO.getFormList().size());
+            reportIndexDTO.getFormList().forEach(part -> {
+                if (part.getFormIndex() > formIndex) {
+                    switch (part.getClass().getSimpleName()) {
+                        case "FormTM1DTO" -> {
+                            formTM1Repository.findById(part.getId())
+                                    .ifPresent(formTM1 -> formTM1.setFormIndex(formTM1.getFormIndex() - 1));
+                        }
+                        case "FormTM2DTO" -> {
+                            formTM2Repository.findById(part.getId())
+                                    .ifPresent(formTM2 -> formTM2.setFormIndex(formTM2.getFormIndex() - 1));
+                        }
+                        case "FormTM3DTO" -> {
+                            formTM3Repository.findById(part.getId())
+                                    .ifPresent(formTM3 -> formTM3.setFormIndex(formTM3.getFormIndex() - 1));
+                        }
+                        case "FormTM4DTO" -> {
+                            formTM4Repository.findById(part.getId())
+                                    .ifPresent(formTM4 -> formTM4.setFormIndex(formTM4.getFormIndex() - 1));
+                        }
+                        case "FormTM5DTO" -> {
+                            formTM5Repository.findById(part.getId())
+                                    .ifPresent(formTM5 -> formTM5.setFormIndex(formTM5.getFormIndex() - 1));
+                        }
+                        case "FormTM6DTO" -> {
+                            formTM6Repository.findById(part.getId())
+                                    .ifPresent(formTM6 -> formTM6.setFormIndex(formTM6.getFormIndex() - 1));
+                        }
+                        case "FormTM7DTO" -> {
+                            formTM7Repository.findById(part.getId())
+                                    .ifPresent(formTM7 -> formTM7.setFormIndex(formTM7.getFormIndex() - 1));
+                        }
+                        default -> {
+                        }
+                    }
+                }
+            });
+        }
+        return isDeleted;
+    }
 }

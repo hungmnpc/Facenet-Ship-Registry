@@ -43,6 +43,7 @@ public class ReportMenu {
     @NoArgsConstructor
     @ToString
     public static class Form {
+        Long formID;
 
         Integer index;
 

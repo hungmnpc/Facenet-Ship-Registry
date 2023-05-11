@@ -18,8 +18,6 @@ public class FormTM4DTO extends FormDTO{
 
     private String type = "FORM TM4";
 
-    private Long id;
-
     private String tankDescription;
 
     private String locationOfStructure;

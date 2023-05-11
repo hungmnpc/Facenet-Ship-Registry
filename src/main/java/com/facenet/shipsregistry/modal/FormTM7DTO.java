@@ -13,8 +13,6 @@ public class FormTM7DTO extends FormDTO{
 
     private String type = "FORM TM7";
 
-    private Long id;
-
     private String name;
 
     private String description;

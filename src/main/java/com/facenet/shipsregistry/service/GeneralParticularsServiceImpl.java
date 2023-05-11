@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -227,7 +228,7 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
                             reportIndex.getId(),
                             reportIndex.getPartIndex(), reportIndex.getItem(),
                             reportIndex.getFormList().stream()
-                                    .map(formDTO -> new ReportMenu.Form(formDTO.getFormIndex(), formDTO.getType()))
+                                    .map(formDTO -> new ReportMenu.Form(formDTO.getId(), formDTO.getFormIndex(), formDTO.getType()))
                                     .toList())).toList();
             ReportMenu reportMenu = new ReportMenu(reportNo, parts);
             return reportMenu;
@@ -286,7 +287,16 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
      */
     @Override
     public Boolean deletePart(Long id) {
-        reportIndexRepository.deleteById(id);
+        ReportIndex reportIndex = reportIndexRepository.findById(id).orElse(null);
+        if (reportIndex != null) {
+            Long gpId = reportIndex.getGeneralParticulars().getId();
+            reportIndexRepository.deleteById(id);
+            if (!reportIndexRepository.existsById(id)) {
+                List<ReportIndex> reportIndices = reportIndexRepository.getALlReportIndexInGPSortASC(gpId);
+                AtomicInteger index = new AtomicInteger();
+                reportIndices.forEach(reportIndexDB -> reportIndexDB.setPartIndex(index.incrementAndGet()));
+            }
+        }
         return !reportIndexRepository.existsById(id);
     }
 
@@ -297,5 +307,27 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
     @Override
     public Boolean isPartExist(Long id) {
         return reportIndexRepository.existsById(id);
+    }
+
+    /**
+     * @param id
+     * @param item
+     * @param partIndex
+     * @return
+     */
+    @Override
+    public ReportMenu.Part updateReportIndex(Long id, String item, Integer partIndex) {
+        ReportIndex reportIndex = reportIndexRepository.findById(id).orElse(null);
+        if (reportIndex != null) {
+            reportIndex.setPartIndex(partIndex);
+            reportIndex.setItem(item);
+            ReportIndexDTO reportIndexDTO = mapperUtils.reportIndexMapper(reportIndex);
+            return new ReportMenu.Part(reportIndex.getId(), reportIndex.getPartIndex(), reportIndex.getItem(),
+                    reportIndexDTO.getFormList().stream()
+                            .map(formDTO -> new ReportMenu.Form(formDTO.getId(), formDTO.getFormIndex(), formDTO.getType()))
+                            .toList());
+        } else {
+            return null;
+        }
     }
 }
