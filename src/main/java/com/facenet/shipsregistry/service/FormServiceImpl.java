@@ -121,16 +121,78 @@ public class FormServiceImpl implements FormService{
             return null;
         }
     }
+
     @Override
     public FormTM1DTO getFormTM1ByID(Long id) {
         FormTM1 formTM1 = formTM1Repository.getById(id);
         if (formTM1 != null) {
-            log.info("{}", formTM1.getReportIndex());
             return mapperUtils.formTM1Mapper(formTM1);
         } else {
             return null;
         }
     }
+
+    @Override
+    public FormTM2DTO getFormTM2ByID(Long id){
+       FormTM2 formTM2=formTM2Repository.findById(id).orElse(null);
+       if(formTM2 != null) {
+           return mapperUtils.formTM2Mapper(formTM2);
+       }else {
+           return null;
+       }
+    }
+    @Override
+    public FormTM3DTO getFormTM3ByID(Long id){
+        FormTM3 formTM3=formTM3Repository.findById(id).orElse(null);
+        if(formTM3 != null) {
+            return mapperUtils.formTM3Mapper(formTM3);
+        }else {
+            return null;
+        }
+    }
+
+    @Override
+    public FormTM4DTO getFormTM4ByID(Long id){
+        FormTM4 formTM4 = formTM4Repository.findById(id).orElse(null);
+        if(formTM4 != null) {
+            return mapperUtils.formTM4Mapper(formTM4);
+        }else {
+            return null;
+        }
+    }
+
+    @Override
+    public FormTM5DTO getFormTM5ByID(Long id){
+        FormTM5 formTM5 = formTM5Repository.findById(id).orElse(null);
+        if (formTM5 != null) {
+            return mapperUtils.formTM5Mapper(formTM5);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public FormTM6DTO getFormTM6ByID(Long id) {
+        Optional<FormTM6> formTM6 = formTM6Repository.findById(id);
+        if (formTM6.isPresent()) {
+            return mapperUtils.formTM6Mapper(formTM6.get());
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public FormTM7DTO getFormTM7ByID(Long id) {
+        FormTM7 formTM7 = formTM7Repository.findById(id).orElse(null);
+        if (formTM7 != null) {
+            return mapperUtils.formTM7Mapper(formTM7);
+        } else {
+            return null;
+        }
+    }
+
+
+
     @Override
     public FormDTO saveNewFormTM5(FormTM5RequestBody requestBody, Long reportIndexID) {
         Optional<ReportIndex> reportIndex = reportIndexRepository.findById(reportIndexID);
@@ -157,20 +219,6 @@ public class FormServiceImpl implements FormService{
             return null;
         }
     }
-
-    /**
-     *
-     * @param id
-     * @return
-     */
-    @Override
-    public FormTM5DTO getFormTM5ByID(Long id) {
-        Optional<FormTM5> formTM5 = formTM5Repository.findById(id);
-        return formTM5.map(tm5 -> mapperUtils.formTM5Mapper(tm5)).orElse(null);
-    }
-
-
-
 
     /**
      * @param requestBody
@@ -202,15 +250,7 @@ public class FormServiceImpl implements FormService{
         }
     }
 
-    /**
-     * @param id
-     * @return
-     */
-    @Override
-    public FormTM3DTO getFormTM3ByID(Long id) {
-        Optional<FormTM3> formTM3 = formTM3Repository.findById(id);
-        return formTM3.map(tm3 -> mapperUtils.formTM3Mapper(tm3)).orElse(null);
-    }
+
 
     /**
      * @param requestBody
@@ -416,11 +456,7 @@ public class FormServiceImpl implements FormService{
             return null;
         }
     }
-    @Override
-    public FormTM7DTO getFormTM7ByID(Long id) {
-        Optional<FormTM7> formTM7 = formTM7Repository.findById(id);
-        return formTM7.map(tm7 -> mapperUtils.formTM7Mapper(tm7)).orElse(null);
-    }
+
 
     /**
      *
@@ -519,6 +555,27 @@ public class FormServiceImpl implements FormService{
         return !exist;
     }
 
+    @Override
+    public Boolean deleteFormTM4(Long id) {
+        formTM4Repository.deleteById(id);
+        boolean exist = formTM4Repository.existsById(id);
+        return !exist;
+    }
+
+    @Override
+    public Boolean deleteFormTM6(Long id) {
+        formTM6Repository.deleteById(id);
+        boolean exist = formTM6Repository.existsById(id);
+        return !exist;
+    }
+
+    @Override
+    public Boolean deleteFormTM7(Long id) {
+        formTM7Repository.deleteById(id);
+        boolean exist = formTM7Repository.existsById(id);
+        return !exist;
+    }
+
     /**
      * @param id
      * @return
@@ -528,6 +585,20 @@ public class FormServiceImpl implements FormService{
         return formTM1Repository.existsById(id);
     }
 
+    @Override
+    public Boolean isFormTM4Exist(Long id) {
+        return formTM4Repository.existsById(id);
+    }
+
+    @Override
+    public Boolean isFormTM6Exist(Long id) {
+        return formTM6Repository.existsById(id);
+    }
+
+    @Override
+    public Boolean isFormTM7Exist(Long id) {
+        return formTM7Repository.existsById(id);
+    }
     private MeasurementTM1 createMeasurementTM1(MeasurementTM1RequestBody requestBody) {
         DetailMeasurement after = createNewDetailMeasurement(requestBody.getAfterReadingMeasurementDetail());
         DetailMeasurement forward = createNewDetailMeasurement(requestBody.getForwardReadingMeasurementDetail());
@@ -757,14 +828,6 @@ public class FormServiceImpl implements FormService{
         }
     }
 
-    /**
-     * @param id
-     * @return
-     */
-    @Override
-    public FormTM1DTO getFormTM1(Long id) {
-        return null;
-    }
 
     private MeasurementTM1 createMeasurementTM1ByRow(List<String> row) {
         if (!row.get(1).equals("")) {
