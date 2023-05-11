@@ -144,6 +144,7 @@ public interface FormService {
     public DetailMeasurementDTO updateDetailMeasurement(Long id, DetailMeasurementRequestBody requestBody);
 
 
+
     MeasurementTM1DTO updateMeasurementTM1(Long id, MeasurementTM1RequestBody requestBody);
 
     /**
@@ -168,17 +169,50 @@ public interface FormService {
      */
     public Boolean isFormTM2Exist(Long id);
 
+    /**
+     *
+     * @param id
+     * @param requestBody
+     * @return
+     */
     FormDTO updateFormTM3(Long id, FormTM3RequestBody requestBody);
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     Boolean deletedFormTM3(Long id);
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     Boolean isFormTM5Exist(Long id);
 
+    /**
+     *
+     * @param id
+     * @param requestBody
+     * @return
+     */
     FormDTO updateFormTM5(Long id, FormTM5RequestBody requestBody);
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     Boolean deletedFormTM5(Long id);
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     Boolean isFormTM3Exist(Long id);
+
 
 
     /**
@@ -194,4 +228,28 @@ public interface FormService {
      * @return
      */
     public FormTM1DTO getFormTM1(Long id);
+
+    /**
+     *
+     * @param id
+     * @param requestBody
+     * @return
+     */
+    FormDTO updateFormTM7(Long id, FormTM7RequestBody requestBody);
+
+    /**
+     *
+     * @param id
+     * @param requestBody
+     * @return
+     */
+    FormDTO updateFormTM6(Long id, FormTM6RequestBody requestBody);
+
+    /**
+     *
+     * @param id
+     * @param requestBody
+     * @return
+     */
+    FormDTO updateFormTM4(Long id, FormTM4RequestBody requestBody);
 }

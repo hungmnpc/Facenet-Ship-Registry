@@ -31,7 +31,7 @@ public class MeasurementTM7 {
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "mid_part_id")
     private DetailMeasurement midPart;
-    
+
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "lower_part_id")
     private DetailMeasurement lowerPart;

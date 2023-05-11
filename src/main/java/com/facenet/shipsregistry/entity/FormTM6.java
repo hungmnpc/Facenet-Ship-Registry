@@ -1,5 +1,7 @@
 package com.facenet.shipsregistry.entity;
 
+import com.facenet.shipsregistry.request.FormTM6RequestBody;
+import com.facenet.shipsregistry.request.FormTM7RequestBody;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,6 +19,8 @@ public class FormTM6 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String code;
 
     @Column(name = "structural_members")
     private String structuralMembers;
@@ -36,8 +40,11 @@ public class FormTM6 {
         this.locationOfStructure = locationOfStructure;
         this.code = code;
     }
-
-    private String code;
+    public void update(FormTM6RequestBody requestBody) {
+        this.setStructuralMembers(requestBody.getStructuralMembers());
+        this.setLocationOfStructure(requestBody.getLocationOfStructure());
+        this.setCode(requestBody.getCode());
+    }
 
     @Column(name = "form_index")
     private Integer formIndex;
