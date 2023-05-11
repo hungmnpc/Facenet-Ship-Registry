@@ -91,6 +91,8 @@ public interface FormService {
      */
     FormDTO saveNewFormTM7(FormTM7RequestBody requestBody, Long reportIndexID);
 
+    FormTM6DTO getFormTM6ByID(Long id);
+
     /**
      *
      * @param id
@@ -105,6 +107,11 @@ public interface FormService {
      * @return
      */
     public FormDTO saveNewFormTM6 (FormTM6RequestBody requestBody, Long id);
+
+    FormTM2DTO getFormTM2ByID(Long id);
+
+    FormTM4DTO getFormTM4ByID(Long id);
+
 
     /**
      *
@@ -128,12 +135,25 @@ public interface FormService {
      */
     public Boolean deleteFormTM1(Long id);
 
+    public Boolean deleteFormTM4(Long id);
+
+    public Boolean deleteFormTM6(Long id);
+
+    public Boolean deleteFormTM7(Long id);
+
     /**
      *
      * @param id
      * @return
      */
     public Boolean isFormTM1Exist(Long id);
+
+    Boolean isFormTM4Exist(Long id);
+
+
+    Boolean isFormTM6Exist(Long id);
+
+    Boolean isFormTM7Exist(Long id);
 
     /**
      *
@@ -221,13 +241,6 @@ public interface FormService {
      * @return
      */
     public FormTM1DTO uploadFormTm1FromExcel(Long id, MultipartFile excelFile) throws Exception;
-
-    /**
-     *
-     * @param id
-     * @return
-     */
-    public FormTM1DTO getFormTM1(Long id);
 
     /**
      *
