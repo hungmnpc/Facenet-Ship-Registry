@@ -796,29 +796,8 @@ public class FormServiceImpl implements FormService{
             List<FrameNumber> frameNumberList =
                     requestBody.getFrameNumberList().stream()
                             .map(frameNumberRequestBody -> {
-                                FrameNumber frameNumberTM7 = new FrameNumber(
-                                        null, frameNumberRequestBody.getName(),
-                                        formTM7, null
-                                );
-                                List<MeasurementTM7> measurementTM7List =
-                                        frameNumberRequestBody.getMeasurementTM7List().stream()
-                                                .map(measurementTM7RequestBody -> {
-                                                    DetailMeasurement first =
-                                                            mapperUtils.mapperToDetailMeasurement(
-                                                                    measurementTM7RequestBody.getLowerPart());
-                                                    DetailMeasurement second =
-                                                            mapperUtils.mapperToDetailMeasurement(
-                                                                    measurementTM7RequestBody.getMidPart()
-                                                            );
-                                                    DetailMeasurement third =
-                                                            mapperUtils.mapperToDetailMeasurement(
-                                                                    measurementTM7RequestBody.getUpperPart()
-                                                            );
-                                                    return new MeasurementTM7(null, measurementTM7RequestBody.getItem(),
-                                                            frameNumberTM7, second,
-                                                            third, first);
-                                                }).toList();
-                                frameNumberTM7.setMeasurementTM7List(measurementTM7List);
+                                FrameNumber frameNumberTM7 = createNewFrameNumber(frameNumberRequestBody);
+                                frameNumberTM7.setFormTM7(formTM7);
                                 return frameNumberTM7;
                             }).toList();
             formTM7.setFrameNumber(frameNumberList);
@@ -838,24 +817,9 @@ public class FormServiceImpl implements FormService{
             List<StructuralDescriptionTM6> structuralDescriptionTM6List =
                     requestBody.getStructuralDescriptionTM6List().stream()
                             .map(structuralDescriptionTM6RequestBody -> {
-                                StructuralDescriptionTM6 structuralDescriptionTM6 = new StructuralDescriptionTM6(
-                                        null, structuralDescriptionTM6RequestBody.getStructuralDescriptionTitle(),
-                                        formTM6, null
-                                );
-                                List<MeasurementTM6> measurementTM6List =
-                                        structuralDescriptionTM6RequestBody.getMeasurementTM6List().stream()
-                                                .map(measurementTM6RequestBody -> {
-                                                    DetailMeasurement detailMeasurement =
-                                                            mapperUtils.mapperToDetailMeasurement(
-                                                                    measurementTM6RequestBody.getDetailMeasurement());
-
-                                                    return new MeasurementTM6(null,
-                                                            measurementTM6RequestBody.getDescription(),
-                                                            measurementTM6RequestBody.getItem(),
-                                                            detailMeasurement,
-                                                            structuralDescriptionTM6);
-                                                }).toList();
-                                structuralDescriptionTM6.setMeasurementTM6List(measurementTM6List);
+                                StructuralDescriptionTM6 structuralDescriptionTM6 =
+                                        createNewStructuralDesTM6(structuralDescriptionTM6RequestBody);
+                                structuralDescriptionTM6.setFormTM6(formTM6);
                                 return structuralDescriptionTM6;
                             }).toList();
             formTM6.setStructuralDescriptionTM6List(structuralDescriptionTM6List);
@@ -874,24 +838,9 @@ public class FormServiceImpl implements FormService{
             List<StructuralMemberTM4> structuralMemberTM4List =
                     requestBody.getStructuralMemberTM4List().stream()
                             .map(structuralMemberTM4RequestBody -> {
-                                StructuralMemberTM4 structuralMemberTM4 = new StructuralMemberTM4(
-                                        null, structuralMemberTM4RequestBody.getStructuralMemberTitle(),
-                                        formTM4, null
-                                );
-                                List<MeasurementTM4> measurementTM4List =
-                                        structuralMemberTM4RequestBody.getMeasurementTM4List().stream()
-                                                .map(measurementTM4RequestBody -> {
-                                                    DetailMeasurement detailMeasurement =
-                                                            mapperUtils.mapperToDetailMeasurement(
-                                                                    measurementTM4RequestBody.getDetailMeasurement());
-
-                                                    return new MeasurementTM4(null,
-                                                            measurementTM4RequestBody.getStructuralMember(),
-                                                            measurementTM4RequestBody.getItem(),
-                                                            detailMeasurement,
-                                                            structuralMemberTM4);
-                                                }).toList();
-                                structuralMemberTM4.setMeasurementTM4List(measurementTM4List);
+                                StructuralMemberTM4 structuralMemberTM4 =
+                                        createNewStructuralMemberTM4(structuralMemberTM4RequestBody);
+                                structuralMemberTM4.setFormTM4(formTM4);
                                 return structuralMemberTM4;
                             }).toList();
             formTM4.setStructuralMemberTM4List(structuralMemberTM4List);
@@ -899,5 +848,4 @@ public class FormServiceImpl implements FormService{
         }
         return null;
     }
-
 }
