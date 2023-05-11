@@ -30,6 +30,9 @@ public class FormTM2 {
 
     private String code;
 
+    @Column(name = "form_index")
+    private Integer formIndex;
+
     @OneToMany(mappedBy = "formTM2", cascade = {CascadeType.ALL})
     private List<MeasurementTM2> measurementTM2List;
 

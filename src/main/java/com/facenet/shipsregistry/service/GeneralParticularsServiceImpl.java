@@ -223,13 +223,12 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
                     .map(reportIndex -> mapperUtils.reportIndexMapper(reportIndex))
                     .toList();
             List<ReportMenu.Part> parts = reportIndexDTOS.stream()
-                    .map(reportIndex -> {
-                        return new ReportMenu.Part(
-                                reportIndex.getPartIndex(), reportIndex.getItem(),
-                                reportIndex.getFormList().stream()
-                                        .map(formDTO -> new ReportMenu.Form(1L, formDTO.getType()))
-                                        .toList());
-                    }).toList();
+                    .map(reportIndex -> new ReportMenu.Part(
+                            reportIndex.getId(),
+                            reportIndex.getPartIndex(), reportIndex.getItem(),
+                            reportIndex.getFormList().stream()
+                                    .map(formDTO -> new ReportMenu.Form(formDTO.getFormIndex(), formDTO.getType()))
+                                    .toList())).toList();
             ReportMenu reportMenu = new ReportMenu(reportNo, parts);
             return reportMenu;
         }

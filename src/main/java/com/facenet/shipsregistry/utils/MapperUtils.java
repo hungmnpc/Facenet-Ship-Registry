@@ -81,6 +81,7 @@ public class MapperUtils {
                         .map(this::measurementTM1Mapper)
                         .toList();
         formTM1DTO.setMeasurementTM1DTOList(measurementTM1DTOList);
+        formTM1DTO.setFormIndex(formTm1.getFormIndex());
         return formTM1DTO;
     }
     public FormTM5DTO formTM5Mapper(FormTM5 formTm5) {
@@ -90,6 +91,7 @@ public class MapperUtils {
                         .map(this::measurementTM5Mapper)
                         .toList();
         formTM5DTO.setMeasurementTM5List(measurementTM5DTOList);
+        formTM5DTO.setFormIndex(formTm5.getFormIndex());
         return formTM5DTO;
     }
 
@@ -104,7 +106,9 @@ public class MapperUtils {
                 formTM2.getMeasurementTM2List().stream()
                         .map(this::measurementTM2DTO)
                         .toList();
+        formTM2DTO.setType(formTM2DTO.getName().toUpperCase());
         formTM2DTO.setMeasurementTM2DTOList(measurementTM2DTOList);
+        formTM2DTO.setFormIndex(formTM2.getFormIndex());
         return formTM2DTO;
     }
 
@@ -175,6 +179,7 @@ public class MapperUtils {
                         .map(this::measurementTM3Mapper)
                         .toList();
         formTM3DTO.setMeasurementTM3DTOList(measurementTM3DTOList);
+        formTM3DTO.setFormIndex(formTm3.getFormIndex());
         return formTM3DTO;
     }
 
@@ -189,9 +194,8 @@ public class MapperUtils {
                 formTM4.getStructuralMemberTM4List().stream()
                         .map(this::structuralMemberTM4Mapper)
                         .toList();
-        structuralMemberTM4DTOList.forEach(structuralMemberTM4DTO -> System.out.println(structuralMemberTM4DTO.toString()));
         formTM4DTO.setStructuralMemberTM4List(structuralMemberTM4DTOList);
-        log.info("{}", formTM4DTO.toString());
+        formTM4DTO.setFormIndex(formTM4.getFormIndex());
         return formTM4DTO;
     }
 
@@ -260,9 +264,8 @@ public class MapperUtils {
                 formTM7.getFrameNumber().stream()
                         .map(this::frameNumberMapper)
                         .toList();
-        frameNumberDTOList.forEach(frameNumberDTO -> System.out.println(frameNumberDTO.toString()));
         formTM7DTO.setFrameNumberList(frameNumberDTOList);
-        log.info("{}", formTM7DTO.toString());
+        formTM7DTO.setFormIndex(formTM7.getFormIndex());
         return formTM7DTO;
     }
 
@@ -277,9 +280,8 @@ public class MapperUtils {
                 formTM6.getStructuralDescriptionTM6List().stream()
                         .map(this::structuralMemberTM6Mapper)
                         .toList();
-        structuralDescriptionTM6DTOList.forEach(structuralDescriptionTM6DTO -> System.out.println(structuralDescriptionTM6DTO.toString()));
         formTM6DTO.setStructuralDescriptionTM6List(structuralDescriptionTM6DTOList);
-        log.info("{}", formTM6DTO.toString());
+        formTM6DTO.setFormIndex(formTM6.getFormIndex());
         return formTM6DTO;
     }
 

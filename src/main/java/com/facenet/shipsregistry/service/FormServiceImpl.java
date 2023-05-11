@@ -8,13 +8,23 @@ import com.facenet.shipsregistry.repository.ReportIndexRepository;
 import com.facenet.shipsregistry.request.FormTM1RequestBody;
 import com.facenet.shipsregistry.utils.MapperUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.web.multipart.MultipartFile;
+import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * @author: hungdinh
@@ -89,31 +99,25 @@ public class FormServiceImpl implements FormService{
      */
     @Override
     public FormDTO saveNewFormTM1(FormTM1RequestBody requestBody, Long reportIndexID) {
-
         Optional<ReportIndex> reportIndex = reportIndexRepository.findById(reportIndexID);
-        FormTM1 formTM1 = new FormTM1(null,requestBody.getCode(), requestBody.getStrakePosition(), null, null);
+        if (reportIndex.isEmpty()) {
+            return null;
+        }
+        FormTM1 formTM1 = new FormTM1(null,requestBody.getCode(),
+                requestBody.getStrakePosition(), reportIndex.get().currentFormIndex(),null, null);
         reportIndex.ifPresent(formTM1::setReportIndex);
         List<MeasurementTM1> measurementTM1List =
                 requestBody.getMeasurementTM1List().stream()
-                        .map(measurementTM1DTO -> {
-                            DetailMeasurement detailMeasurementForward =
-                                    createNewDetailMeasurement(measurementTM1DTO.getForwardReadingMeasurementDetail());
-                            DetailMeasurement detailMeasurementAfter =
-                                    createNewDetailMeasurement(measurementTM1DTO.getAfterReadingMeasurementDetail());
-                             return new MeasurementTM1(null,  measurementTM1DTO.getPlatePosition(),
-                                    measurementTM1DTO.getNoOrLetter(), formTM1,
-                                    detailMeasurementForward, detailMeasurementAfter );
+                        .map(measurementTM1RequestBody -> {
+                            MeasurementTM1 measurementTM1 = createMeasurementTM1(measurementTM1RequestBody);
+                            measurementTM1.setFormTM1(formTM1);
+                            return measurementTM1;
                         }).toList();
         formTM1.setMeasurementTM1List(measurementTM1List);
-        try {
-            FormTM1 formTM1Saved = formTM1Repository.save(formTM1);
-            if (formTM1Saved.getId() > 0) {
-                return mapperUtils.formTM1Mapper(formTM1Saved);
-            } else  {
-                return null;
-            }
-        } catch (Exception exception) {
-            log.debug(exception.getMessage());
+        FormTM1 formTM1Saved = formTM1Repository.save(formTM1);
+        if (formTM1Saved.getId() > 0) {
+            return mapperUtils.formTM1Mapper(formTM1Saved);
+        } else  {
             return null;
         }
     }
@@ -129,45 +133,43 @@ public class FormServiceImpl implements FormService{
     }
     @Override
     public FormDTO saveNewFormTM5(FormTM5RequestBody requestBody, Long reportIndexID) {
-
         Optional<ReportIndex> reportIndex = reportIndexRepository.findById(reportIndexID);
+        if (reportIndex.isEmpty()) {
+            return null;
+        }
         FormTM5 formTM5 = new FormTM5(null, requestBody.getDescription(),
                 requestBody.getName(), requestBody.getLocationOfStructure(),
                 requestBody.getTankHolDescription(),requestBody.getFrameNo(),
-                requestBody.getCode(),null, null);;
+                requestBody.getCode(),null, null, reportIndex.get().currentFormIndex());;
         reportIndex.ifPresent(formTM5::setReportIndex);
         List<MeasurementTM5> measurementTM5List =
                 requestBody.getMeasurementTM5List().stream()
-                        .map(measurementTM5DTO -> {
-                            DetailMeasurement measurementDetail =
-                                    createNewDetailMeasurement(measurementTM5DTO.getMeasurementDetail());
-                            return new MeasurementTM5(null, measurementTM5DTO.getStructuralComponentType(),
-                                    measurementTM5DTO.getStructuralComponent(), formTM5,
-                                    measurementDetail);
+                        .map(measurementTM5RequestBody -> {
+                            MeasurementTM5 measurementTM5 = createMeasurementTM5(measurementTM5RequestBody);
+                            measurementTM5.setFormTM5(formTM5);
+                            return measurementTM5;
                         }).toList();
         formTM5.setMeasurementTM5List(measurementTM5List);
-        try {
-            FormTM5 formTM5Saved = formTM5Repository.save(formTM5);
-            if (formTM5Saved.getId() > 0) {
-                return mapperUtils.formTM5Mapper(formTM5Saved);
-            } else  {
-                return null;
-            }
-        } catch (Exception exception) {
-            log.debug(exception.getMessage());
+        FormTM5 formTM5Saved = formTM5Repository.save(formTM5);
+        if (formTM5Saved.getId() > 0) {
+            return mapperUtils.formTM5Mapper(formTM5Saved);
+        } else  {
             return null;
         }
     }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public FormTM5DTO getFormTM5ByID(Long id) {
         Optional<FormTM5> formTM5 = formTM5Repository.findById(id);
         return formTM5.map(tm5 -> mapperUtils.formTM5Mapper(tm5)).orElse(null);
     }
 
-    /**
-     * @param id
-     * @return
-     */
+
 
 
     /**
@@ -176,33 +178,26 @@ public class FormServiceImpl implements FormService{
      */
     @Override
     public FormDTO saveNewFormTM3(FormTM3RequestBody requestBody, Long reportIndexID) {
-
         Optional<ReportIndex> reportIndex = reportIndexRepository.findById(reportIndexID);
-        FormTM3 formTM3 = new FormTM3( requestBody.getCode(), requestBody.getFirstFrameNo(), requestBody.getSecondFrameNo(), requestBody.getThirdFrameNo());
+        if(reportIndex.isEmpty()) {
+            return null;
+        }
+        FormTM3 formTM3 = new FormTM3( requestBody.getCode(), requestBody.getFirstFrameNo(),
+                requestBody.getSecondFrameNo(), requestBody.getThirdFrameNo());
+        formTM3.setFormIndex(reportIndex.get().currentFormIndex());
         reportIndex.ifPresent(formTM3::setReportIndex);
         List<MeasurementTM3> measurementTM3List =
                 requestBody.getMeasurementTM3List().stream()
-                        .map(measurementTM3DTO -> {
-                            DetailMeasurement detailMeasurementFirst =
-                                    createNewDetailMeasurement(measurementTM3DTO.getFirstTransverseSectionMeasurementDetail());
-                            DetailMeasurement detailMeasurementSecond =
-                                    createNewDetailMeasurement(measurementTM3DTO.getSecondTransverseSectionMeasurementDetail());
-                            DetailMeasurement detailMeasurementThird =
-                                    createNewDetailMeasurement(measurementTM3DTO.getThirdTransverseSectionMeasurementDetail());
-                            return new MeasurementTM3(null, measurementTM3DTO.getStructuralMember(),
-                                    measurementTM3DTO.getNoOrLetter(), formTM3,
-                                    detailMeasurementFirst, detailMeasurementSecond, detailMeasurementThird );
+                        .map(measurementTM3RequestBody -> {
+                            MeasurementTM3 measurementTM3 = createMeasurementTM3(measurementTM3RequestBody);
+                            measurementTM3.setFormTM3(formTM3);
+                            return measurementTM3;
                         }).toList();
         formTM3.setMeasurementTM3List(measurementTM3List);
-        try {
             FormTM3 formTM3Saved = formTM3Repository.save(formTM3);
-            if (formTM3Saved.getId() > 0) {
-                return mapperUtils.formTM3Mapper(formTM3Saved);
-            } else  {
-                return null;
-            }
-        } catch (Exception exception) {
-            log.debug(exception.getMessage());
+        if (formTM3Saved.getId() > 0) {
+            return mapperUtils.formTM3Mapper(formTM3Saved);
+        } else  {
             return null;
         }
     }
@@ -235,8 +230,6 @@ public class FormServiceImpl implements FormService{
             ReportIndex reportIndex = new ReportIndex(
                     generalParticulars.get().getReportIndexList().size() + 1,
                     requestBody.getItem());
-
-
             reportIndex.setGeneralParticulars(generalParticulars.get());
             try {
                 ReportIndex reportIndexSaved = reportIndexRepository.save(reportIndex);
@@ -276,42 +269,59 @@ public class FormServiceImpl implements FormService{
      */
     @Override
     public FormDTO saveNewFormTM2(FormTM2RequestBody requestBody, Long reportIndexID) {
-
         Optional<ReportIndex> reportIndex = reportIndexRepository.findById(reportIndexID);
+        if (reportIndex.isEmpty()) {
+            return null;
+        }
         FormTM2 formTM2 = new FormTM2(
                 requestBody.getName(), requestBody.getFirstFrameNoTM2(),
                 requestBody.getSecondFrameNoTM2(), requestBody.getThirdFrameNoTM2(),
                 requestBody.getCode()
         );
+        formTM2.setFormIndex(reportIndex.get().currentFormIndex());
         reportIndex.ifPresent(formTM2::setReportIndex);
         List<MeasurementTM2> measurementTM2List = requestBody.getMeasurementTM2List().stream()
                 .map(measurementTM2RequestBody -> {
-                    DetailMeasurement first =
-                            mapperUtils.mapperToDetailMeasurement(
-                                    measurementTM2RequestBody.getFirstTransverseSectionMeasurementDetailTM2());
-                    DetailMeasurement second =
-                            mapperUtils.mapperToDetailMeasurement(
-                                    measurementTM2RequestBody.getSecondTransverseSectionMeasurementDetailTM2()
-                            );
-                    DetailMeasurement third =
-                            mapperUtils.mapperToDetailMeasurement(
-                                    measurementTM2RequestBody.getThirdTransverseSectionMeasurementDetailTM2()
-                            );
-                    return new MeasurementTM2(null, measurementTM2RequestBody.getStrakePosition(),
-                            measurementTM2RequestBody.getNoOrLetter(), formTM2,
-                            first, second, third);
+                    MeasurementTM2 measurementTM2 = createMeasurementTM2(measurementTM2RequestBody);
+                    measurementTM2.setFormTM2(formTM2);
+                    return measurementTM2;
                 }).toList();
         formTM2.setMeasurementTM2List(measurementTM2List);
-        try {
-            FormTM2 formTM2Saved = formTM2Repository.save(formTM2);
-            if (formTM2Saved.getId() > 0) {
-                return mapperUtils.formTM2Mapper(formTM2Saved);
-            }
-        } catch (Exception exception) {
-            log.debug(exception.getMessage());
-            return null;
+        FormTM2 formTM2Saved = formTM2Repository.save(formTM2);
+        if (formTM2Saved.getId() > 0) {
+            return mapperUtils.formTM2Mapper(formTM2Saved);
         }
         return null;
+    }
+
+    /**
+     *
+     * @param requestBody
+     * @return
+     */
+    private MeasurementTM4 createNewMeasurementTM4(MeasurementTM4RequestBody requestBody) {
+        DetailMeasurement detailMeasurement = createNewDetailMeasurement(requestBody.getDetailMeasurement());
+        return new MeasurementTM4(null, requestBody.getStructuralMember(),
+                requestBody.getItem(), detailMeasurement, null);
+    }
+
+    /**
+     *
+     * @param requestBody
+     * @return
+     */
+    private StructuralMemberTM4 createNewStructuralMemberTM4(StructuralMemberTM4RequestBody requestBody) {
+        StructuralMemberTM4 structuralMemberTM4 = new StructuralMemberTM4(null,
+                requestBody.getStructuralMemberTitle(),
+                null, null);
+        List<MeasurementTM4> measurementTM4List = requestBody.getMeasurementTM4List().stream()
+                .map(measurementTM4RequestBody -> {
+                    MeasurementTM4 measurementTM4 = createNewMeasurementTM4(measurementTM4RequestBody);
+                    measurementTM4.setStructuralMemberTM4(structuralMemberTM4);
+                    return measurementTM4;
+                }).toList();
+        structuralMemberTM4.setMeasurementTM4List(measurementTM4List);
+        return structuralMemberTM4;
     }
 
     /**
@@ -322,30 +332,19 @@ public class FormServiceImpl implements FormService{
     @Override
     public FormDTO saveNewFormTM4(FormTM4RequestBody requestBody, Long reportIndexID) {
         Optional<ReportIndex> reportIndex = reportIndexRepository.findById(reportIndexID);
+        if (reportIndex.isEmpty()) {
+            return null;
+        }
         FormTM4 formTM4 = new FormTM4(requestBody.getTankDescription(), requestBody.getLocationOfStructure(),
                 requestBody.getCode());
+        formTM4.setFormIndex(reportIndex.get().currentFormIndex());
         reportIndex.ifPresent(formTM4::setReportIndex);
         List<StructuralMemberTM4> structuralMemberTM4List =
                 requestBody.getStructuralMemberTM4List().stream()
                         .map(structuralMemberTM4RequestBody -> {
-                            StructuralMemberTM4 structuralMemberTM4 = new StructuralMemberTM4(
-                                    null, structuralMemberTM4RequestBody.getStructuralMemberTitle(),
-                                    formTM4, null
-                            );
-                            List<MeasurementTM4> measurementTM4List =
-                                    structuralMemberTM4RequestBody.getMeasurementTM4List().stream()
-                                            .map(measurementTM4RequestBody -> {
-                                                DetailMeasurement detailMeasurement =
-                                                        mapperUtils.mapperToDetailMeasurement(
-                                                                measurementTM4RequestBody.getDetailMeasurement());
-
-                                                return new MeasurementTM4(null,
-                                                        measurementTM4RequestBody.getStructuralMember(),
-                                                        measurementTM4RequestBody.getItem(),
-                                                        detailMeasurement,
-                                                        structuralMemberTM4);
-                                            }).toList();
-                            structuralMemberTM4.setMeasurementTM4List(measurementTM4List);
+                            StructuralMemberTM4 structuralMemberTM4 =
+                                    createNewStructuralMemberTM4(structuralMemberTM4RequestBody);
+                            structuralMemberTM4.setFormTM4(formTM4);
                             return structuralMemberTM4;
                         }).toList();
         formTM4.setStructuralMemberTM4List(structuralMemberTM4List);
@@ -365,55 +364,55 @@ public class FormServiceImpl implements FormService{
     /**
      *
      * @param requestBody
+     * @return
+     */
+    private FrameNumber createNewFrameNumber(FrameNumberRequestBody requestBody) {
+        FrameNumber frameNumber = new FrameNumber(null, requestBody.getName(),
+                null, null);
+        List<MeasurementTM7> measurementTM7Lists = requestBody.getMeasurementTM7List().stream()
+                .map(measurementTM7RequestBody -> {
+                    MeasurementTM7 measurementTM7 = createNewMeasurementTM7(measurementTM7RequestBody);
+                    measurementTM7.setFrameNumber(frameNumber);
+                    return measurementTM7;
+                }).toList();
+        frameNumber.setMeasurementTM7List(measurementTM7Lists);
+        return frameNumber;
+    }
+
+    private MeasurementTM7 createNewMeasurementTM7(MeasurementTM7RequestBody requestBody) {
+        DetailMeasurement upper = createNewDetailMeasurement(requestBody.getUpperPart());
+        DetailMeasurement mid = createNewDetailMeasurement(requestBody.getMidPart());
+        DetailMeasurement lower = createNewDetailMeasurement(requestBody.getLowerPart());
+        return new MeasurementTM7(null, requestBody.getItem(), null, upper, mid, lower);
+    }
+
+    /**
+     *
+     * @param requestBody
      * @param reportIndexID
      * @return
      */
     @Override
     public FormDTO saveNewFormTM7(FormTM7RequestBody requestBody, Long reportIndexID) {
         Optional<ReportIndex> reportIndex = reportIndexRepository.findById(reportIndexID);
-        FormTM7 formTM7 = new FormTM7(requestBody.getName(), requestBody.getDescription(), requestBody.getCode());
-        reportIndex.ifPresent(formTM7::setReportIndex);
         if (reportIndex.isEmpty()) {
             return null;
         }
+        FormTM7 formTM7 = new FormTM7(requestBody.getName(), requestBody.getDescription(), requestBody.getCode());
+        reportIndex.ifPresent(formTM7::setReportIndex);
+        formTM7.setFormIndex(reportIndex.get().currentFormIndex());
         List<FrameNumber> frameNumberList =
                 requestBody.getFrameNumberList().stream()
                         .map(frameNumberRequestBody -> {
-                            FrameNumber frameNumberTM7 = new FrameNumber(
-                                    null, frameNumberRequestBody.getName(),
-                                    formTM7, null
-                            );
-                            List<MeasurementTM7> measurementTM7List =
-                                    frameNumberRequestBody.getMeasurementTM7List().stream()
-                                            .map(measurementTM7RequestBody -> {
-                                        DetailMeasurement first =
-                                                mapperUtils.mapperToDetailMeasurement(
-                                                        measurementTM7RequestBody.getLowerPart());
-                                        DetailMeasurement second =
-                                                mapperUtils.mapperToDetailMeasurement(
-                                                        measurementTM7RequestBody.getMidPart()
-                                                );
-                                        DetailMeasurement third =
-                                                mapperUtils.mapperToDetailMeasurement(
-                                                        measurementTM7RequestBody.getUpperPart()
-                                                );
-                                                return new MeasurementTM7(null, measurementTM7RequestBody.getItem(),
-                                                        frameNumberTM7, second,
-                                                        third, first);
-                                            }).toList();
-                            frameNumberTM7.setMeasurementTM7List(measurementTM7List);
+                            FrameNumber frameNumberTM7 = createNewFrameNumber(frameNumberRequestBody);
+                            frameNumberTM7.setFormTM7(formTM7);
                             return frameNumberTM7;
                         }).toList();
         formTM7.setFrameNumber(frameNumberList);
-        try {
-            FormTM7 formTM7Saved = formTM7Repository.save(formTM7);
-            if (formTM7Saved.getId() > 0) {
-                return mapperUtils.formTM7Mapper(formTM7);
-            } else {
-                return null;
-            }
-        } catch (Exception exception) {
-            log.error("{}", exception.getMessage());
+        FormTM7 formTM7Saved = formTM7Repository.save(formTM7);
+        if (formTM7Saved.getId() > 0) {
+            return mapperUtils.formTM7Mapper(formTM7);
+        } else {
             return null;
         }
     }
@@ -424,6 +423,37 @@ public class FormServiceImpl implements FormService{
     }
 
     /**
+     *
+     * @param requestBody
+     * @return
+     */
+    private MeasurementTM6 createNewMeasurementTM6 (MeasurementTM6RequestBody requestBody) {
+        DetailMeasurement detailMeasurement = createNewDetailMeasurement(requestBody.getDetailMeasurement());
+        return new MeasurementTM6(null, requestBody.getDescription(),
+                requestBody.getItem(),detailMeasurement,null);
+    }
+
+    /**
+     *
+     * @param requestBody
+     * @return
+     */
+    private StructuralDescriptionTM6 createNewStructuralDesTM6(StructuralDescriptionTM6RequestBody requestBody) {
+        StructuralDescriptionTM6 structuralDescriptionTM6 =
+                new StructuralDescriptionTM6(
+                        null, requestBody.getStructuralDescriptionTitle(),
+                        null, null);
+        List<MeasurementTM6> measurementTM6List = requestBody.getMeasurementTM6List().stream()
+                .map(measurementTM6RequestBody -> {
+                    MeasurementTM6 measurementTM6 = createNewMeasurementTM6(measurementTM6RequestBody);
+                    measurementTM6.setStructuralDescriptionTM6(structuralDescriptionTM6);
+                    return measurementTM6;
+                }).toList();
+        structuralDescriptionTM6.setMeasurementTM6List(measurementTM6List);
+        return structuralDescriptionTM6;
+    }
+
+    /**
      * @param requestBody
      * @param reportIndexID
      * @return
@@ -431,42 +461,26 @@ public class FormServiceImpl implements FormService{
     @Override
     public FormDTO saveNewFormTM6(FormTM6RequestBody requestBody, Long reportIndexID) {
         Optional<ReportIndex> reportIndex = reportIndexRepository.findById(reportIndexID);
+        if (reportIndex.isEmpty()) {
+            return null;
+        }
         FormTM6 formTM6 = new FormTM6(requestBody.getStructuralMembers(),
                 requestBody.getLocationOfStructure(), requestBody.getCode());
         reportIndex.ifPresent(formTM6::setReportIndex);
+        formTM6.setFormIndex(reportIndex.get().currentFormIndex());
         List<StructuralDescriptionTM6> structuralDescriptionTM6List =
                 requestBody.getStructuralDescriptionTM6List().stream()
                         .map(structuralDescriptionTM6RequestBody -> {
-                            StructuralDescriptionTM6 structuralDescriptionTM6 = new StructuralDescriptionTM6(
-                                    null, structuralDescriptionTM6RequestBody.getStructuralDescriptionTitle(),
-                                    formTM6, null
-                            );
-                            List<MeasurementTM6> measurementTM6List =
-                                    structuralDescriptionTM6RequestBody.getMeasurementTM6List().stream()
-                                            .map(measurementTM6RequestBody -> {
-                                                DetailMeasurement detailMeasurement =
-                                                        mapperUtils.mapperToDetailMeasurement(
-                                                                measurementTM6RequestBody.getDetailMeasurement());
-
-                                                return new MeasurementTM6(null,
-                                                        measurementTM6RequestBody.getDescription(),
-                                                        measurementTM6RequestBody.getItem(),
-                                                        detailMeasurement,
-                                                        structuralDescriptionTM6);
-                                            }).toList();
-                            structuralDescriptionTM6.setMeasurementTM6List(measurementTM6List);
+                            StructuralDescriptionTM6 structuralDescriptionTM6 =
+                                    createNewStructuralDesTM6(structuralDescriptionTM6RequestBody);
+                            structuralDescriptionTM6.setFormTM6(formTM6);
                             return structuralDescriptionTM6;
                         }).toList();
         formTM6.setStructuralDescriptionTM6List(structuralDescriptionTM6List);
-        try {
-            FormTM6 formTM6Saved = formTM6Repository.save(formTM6);
-            if (formTM6Saved.getId() > 0) {
-                return mapperUtils.formTM6Mapper(formTM6);
-            } else {
-                return null;
-            }
-        } catch (Exception exception) {
-            log.error("{}", exception.getMessage());
+        FormTM6 formTM6Saved = formTM6Repository.save(formTM6);
+        if (formTM6Saved.getId() > 0) {
+            return mapperUtils.formTM6Mapper(formTM6);
+        } else {
             return null;
         }
     }
@@ -515,18 +529,8 @@ public class FormServiceImpl implements FormService{
     }
 
     private MeasurementTM1 createMeasurementTM1(MeasurementTM1RequestBody requestBody) {
-        DetailMeasurement after = new DetailMeasurement(requestBody.getAfterReadingMeasurementDetail().getOriginalThickness(),
-                requestBody.getAfterReadingMeasurementDetail().getMaxAlwbDim(),
-                requestBody.getAfterReadingMeasurementDetail().getGaugedP(),
-                requestBody.getAfterReadingMeasurementDetail().getGaugedS(),
-                requestBody.getAfterReadingMeasurementDetail().getPercent());
-
-        DetailMeasurement forward = new DetailMeasurement(requestBody.getForwardReadingMeasurementDetail().getOriginalThickness(),
-                requestBody.getForwardReadingMeasurementDetail().getMaxAlwbDim(),
-                requestBody.getForwardReadingMeasurementDetail().getGaugedP(),
-                requestBody.getForwardReadingMeasurementDetail().getGaugedS(),
-                requestBody.getForwardReadingMeasurementDetail().getPercent());
-
+        DetailMeasurement after = createNewDetailMeasurement(requestBody.getAfterReadingMeasurementDetail());
+        DetailMeasurement forward = createNewDetailMeasurement(requestBody.getForwardReadingMeasurementDetail());
         return new MeasurementTM1(null, requestBody.getPlatePosition(), requestBody.getNoOrLetter(), null, forward, after);
     }
 
@@ -601,25 +605,9 @@ public class FormServiceImpl implements FormService{
     }
 
     private MeasurementTM2 createMeasurementTM2(MeasurementTM2RequestBody requestBody) {
-        DetailMeasurement first =
-                new DetailMeasurement(requestBody.getFirstTransverseSectionMeasurementDetailTM2().getOriginalThickness(),
-                        requestBody.getFirstTransverseSectionMeasurementDetailTM2().getMaxAlwbDim(),
-                        requestBody.getFirstTransverseSectionMeasurementDetailTM2().getGaugedP(),
-                        requestBody.getFirstTransverseSectionMeasurementDetailTM2().getGaugedS(),
-                        requestBody.getFirstTransverseSectionMeasurementDetailTM2().getPercent());
-        DetailMeasurement second =
-                new DetailMeasurement(requestBody.getSecondTransverseSectionMeasurementDetailTM2().getOriginalThickness(),
-                        requestBody.getSecondTransverseSectionMeasurementDetailTM2().getMaxAlwbDim(),
-                        requestBody.getSecondTransverseSectionMeasurementDetailTM2().getGaugedP(),
-                        requestBody.getSecondTransverseSectionMeasurementDetailTM2().getGaugedS(),
-                        requestBody.getSecondTransverseSectionMeasurementDetailTM2().getPercent());
-        DetailMeasurement third =
-                new DetailMeasurement(requestBody.getFirstTransverseSectionMeasurementDetailTM2().getOriginalThickness(),
-                        requestBody.getFirstTransverseSectionMeasurementDetailTM2().getMaxAlwbDim(),
-                        requestBody.getFirstTransverseSectionMeasurementDetailTM2().getGaugedP(),
-                        requestBody.getFirstTransverseSectionMeasurementDetailTM2().getGaugedS(),
-                        requestBody.getFirstTransverseSectionMeasurementDetailTM2().getPercent());
-
+        DetailMeasurement first = createNewDetailMeasurement(requestBody.getFirstTransverseSectionMeasurementDetailTM2());
+        DetailMeasurement second = createNewDetailMeasurement(requestBody.getSecondTransverseSectionMeasurementDetailTM2());
+        DetailMeasurement third = createNewDetailMeasurement(requestBody.getThirdTransverseSectionMeasurementDetailTM2());
         return new MeasurementTM2(null, requestBody.getStrakePosition(), requestBody.getNoOrLetter(), null,
                 first, second, third);
     }
@@ -665,24 +653,11 @@ public class FormServiceImpl implements FormService{
 
     private MeasurementTM3 createMeasurementTM3(MeasurementTM3RequestBody requestBody) {
         DetailMeasurement first =
-                new DetailMeasurement(requestBody.getFirstTransverseSectionMeasurementDetail().getOriginalThickness(),
-                        requestBody.getFirstTransverseSectionMeasurementDetail().getMaxAlwbDim(),
-                        requestBody.getFirstTransverseSectionMeasurementDetail().getGaugedP(),
-                        requestBody.getFirstTransverseSectionMeasurementDetail().getGaugedS(),
-                        requestBody.getFirstTransverseSectionMeasurementDetail().getPercent());
+                createNewDetailMeasurement(requestBody.getFirstTransverseSectionMeasurementDetail());
         DetailMeasurement second =
-                new DetailMeasurement(requestBody.getSecondTransverseSectionMeasurementDetail().getOriginalThickness(),
-                        requestBody.getSecondTransverseSectionMeasurementDetail().getMaxAlwbDim(),
-                        requestBody.getSecondTransverseSectionMeasurementDetail().getGaugedP(),
-                        requestBody.getSecondTransverseSectionMeasurementDetail().getGaugedS(),
-                        requestBody.getSecondTransverseSectionMeasurementDetail().getPercent());
+                createNewDetailMeasurement(requestBody.getSecondTransverseSectionMeasurementDetail());
         DetailMeasurement third =
-                new DetailMeasurement(requestBody.getThirdTransverseSectionMeasurementDetail().getOriginalThickness(),
-                        requestBody.getThirdTransverseSectionMeasurementDetail().getMaxAlwbDim(),
-                        requestBody.getThirdTransverseSectionMeasurementDetail().getGaugedP(),
-                        requestBody.getThirdTransverseSectionMeasurementDetail().getGaugedS(),
-                        requestBody.getThirdTransverseSectionMeasurementDetail().getPercent());
-
+                createNewDetailMeasurement(requestBody.getThirdTransverseSectionMeasurementDetail());
         return new MeasurementTM3(null, requestBody.getStructuralMember(), requestBody.getNoOrLetter(), null,
                 first, second, third);
     }
@@ -718,14 +693,10 @@ public class FormServiceImpl implements FormService{
         return null;
     }
     private MeasurementTM5 createMeasurementTM5(MeasurementTM5RequestBody requestBody) {
-        DetailMeasurement first =
-                new DetailMeasurement(requestBody.getMeasurementDetail().getOriginalThickness(),
-                        requestBody.getMeasurementDetail().getMaxAlwbDim(),
-                        requestBody.getMeasurementDetail().getGaugedP(),
-                        requestBody.getMeasurementDetail().getGaugedS(),
-                        requestBody.getMeasurementDetail().getPercent());
-
-        return new MeasurementTM5(null, requestBody.getStructuralComponentType(), requestBody.getStructuralComponent(), null, first);
+        DetailMeasurement detailMeasurement =
+                createNewDetailMeasurement(requestBody.getMeasurementDetail());
+        return new MeasurementTM5(null, requestBody.getStructuralComponentType(),
+                requestBody.getStructuralComponent(), null, detailMeasurement);
     }
     @Override
     public Boolean deletedFormTM5(Long id) {
@@ -739,6 +710,82 @@ public class FormServiceImpl implements FormService{
         return formTM5Repository.existsById(id);
     }
 
+
+    /**
+     * @param excelFile
+     * @return
+     */
+    @Override
+    public FormTM1DTO uploadFormTm1FromExcel(Long id, MultipartFile excelFile) throws Exception{
+
+        ReportIndex part = reportIndexRepository.findById(id).orElse(null);
+        if (part != null) {
+            Path tempDir = Files.createTempDirectory("");
+            InputStream inputStream = excelFile.getInputStream();
+            File tempFile =tempDir.resolve(excelFile.getOriginalFilename()).toFile();
+            excelFile.transferTo(tempFile);
+            Workbook workbook = WorkbookFactory.create(tempFile);
+            Sheet sheet = workbook.getSheetAt(0);
+            log.info("{}", sheet.getRow(0).getCell(1).getStringCellValue());
+            FormTM1 formTM1 = new FormTM1(null, ""
+                    , sheet.getRow(0).getCell(1).getStringCellValue(), null
+                    , new ArrayList<>(), part);
+
+
+            Stream<Row> rowStream = StreamSupport.stream(sheet.spliterator(), false);
+            DataFormatter formatter = new DataFormatter();
+            AtomicInteger index = new AtomicInteger();
+            List<MeasurementTM1> measurementTM1List = new ArrayList<>();
+            rowStream.forEach(row -> {
+                Stream<Cell> cellStream = StreamSupport.stream(row.spliterator(), false);
+                List<String> cellVals = cellStream.map(cell -> {
+                    String cellVal = formatter.formatCellValue(cell,new HSSFFormulaEvaluator((HSSFWorkbook) workbook));
+                    return cellVal;
+                }).toList();
+                if (index.get() >= 4) {
+                    MeasurementTM1 measurementTM1 = createMeasurementTM1ByRow(cellVals);
+                    if (measurementTM1 != null) {
+                        measurementTM1List.add(measurementTM1);
+                    }
+                    formTM1.setMeasurementTM1List(measurementTM1List);
+                }
+                index.addAndGet(1);
+            });
+            return mapperUtils.formTM1Mapper(formTM1);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    public FormTM1DTO getFormTM1(Long id) {
+        return null;
+    }
+
+    private MeasurementTM1 createMeasurementTM1ByRow(List<String> row) {
+        if (!row.get(1).equals("")) {
+            MeasurementTM1 measurementTM1 =
+                    new MeasurementTM1(null, row.get(0).trim(), row.get(1).trim(), null, null, null);
+            DetailMeasurement forward = new DetailMeasurement(Double.parseDouble(row.get(2)),
+                    0.0, Double.parseDouble(row.get(3)),Double.parseDouble(row.get(4)), "");
+            DetailMeasurement after = new DetailMeasurement(Double.parseDouble(row.get(2)),
+                    0.0, Double.parseDouble(row.get(11)),Double.parseDouble(row.get(12)), "");
+            measurementTM1.setForwardReadingMeasurementDetail(forward);
+            measurementTM1.setAfterReadingMeasurementDetail(after);
+            return measurementTM1;
+        } else {
+            return null;
+        }
+
+
+
+    }
+
+  
     @Override
     public FormDTO updateFormTM7(Long id, FormTM7RequestBody requestBody) {
         FormTM7 formTM7 = formTM7Repository.findById(id).orElse(null);
@@ -780,6 +827,7 @@ public class FormServiceImpl implements FormService{
 
         return null;
     }
+  
     @Override
     public FormDTO updateFormTM6(Long id, FormTM6RequestBody requestBody) {
         FormTM6 formTM6 = formTM6Repository.findById(id).orElse(null);
@@ -815,6 +863,7 @@ public class FormServiceImpl implements FormService{
         }
         return null;
     }
+  
     @Override
     public FormDTO updateFormTM4(Long id, FormTM4RequestBody requestBody) {
         FormTM4 formTM4 = formTM4Repository.findById(id).orElse(null);

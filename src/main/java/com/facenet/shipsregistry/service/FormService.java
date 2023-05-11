@@ -3,6 +3,7 @@ package com.facenet.shipsregistry.service;
 import com.facenet.shipsregistry.entity.FormTM2;
 import com.facenet.shipsregistry.modal.*;
 import com.facenet.shipsregistry.request.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -178,6 +179,22 @@ public interface FormService {
     Boolean deletedFormTM5(Long id);
 
     Boolean isFormTM3Exist(Long id);
+
+
+
+    /**
+     *
+     * @param excelFile
+     * @return
+     */
+    public FormTM1DTO uploadFormTm1FromExcel(Long id, MultipartFile excelFile) throws Exception;
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public FormTM1DTO getFormTM1(Long id);
 
     FormDTO updateFormTM7(Long id, FormTM7RequestBody requestBody);
 

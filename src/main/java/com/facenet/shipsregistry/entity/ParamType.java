@@ -9,7 +9,8 @@ import java.util.stream.Stream;
 public enum ParamType {
 
     NONE(0), COMPANY_NAME(1), SURVEYOR(2), MEASUREMENT_EQUIPMENT(3), OPERATOR(4),
-    QUALIFICATION_OF_OPERATOR(5), TM3_VALUE(6), TM4_VALUE(7), TM5_VALUE(8), TM6_VALUE(9), TM7_VALUE(10);
+    QUALIFICATION_OF_OPERATOR(5), TM3_VALUE(6), TM4_VALUE(7), TM5_VALUE(8), TM6_VALUE(9), TM7_VALUE(10),
+    FORM_CODE(11);
 
     private Integer paramType;
 
@@ -55,6 +56,8 @@ public enum ParamType {
                 return "TM6_VALUE";
             case 10:
                 return "TM7_VALUE";
+            case 11:
+                return "FORM_CODE";
             default:
                 return "NONE";
         }

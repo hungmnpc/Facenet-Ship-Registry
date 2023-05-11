@@ -28,7 +28,9 @@ public class ReportMenu {
     @Setter
     public static class Part {
 
-        Integer index;
+        Long id;
+
+        Integer partIndex;
 
         String item;
 
@@ -42,7 +44,7 @@ public class ReportMenu {
     @ToString
     public static class Form {
 
-        Long index;
+        Integer index;
 
         String name;
     }
