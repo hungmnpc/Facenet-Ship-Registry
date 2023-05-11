@@ -127,6 +127,7 @@ public class GeneralParticularsController {
             ReportMenu reportMenu = generalParticularsService.getReportMenu(id);
             return ResponseEntity.ok(reportMenu);
         } catch (Exception exception) {
+            exception.printStackTrace();
             log.error(exception.getMessage());
             return ResponseEntity.internalServerError().build();
         }
