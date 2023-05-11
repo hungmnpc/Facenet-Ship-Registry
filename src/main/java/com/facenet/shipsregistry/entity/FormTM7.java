@@ -49,5 +49,4 @@ public class FormTM7 {
 
     @Column(name = "form_index")
     private Integer formIndex;
-
 }

@@ -20,7 +20,6 @@ public class MeasurementTM7 {
     @Column(name = "item")
     private String item;
 
-
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "id_frame _number")
     private FrameNumber frameNumber;

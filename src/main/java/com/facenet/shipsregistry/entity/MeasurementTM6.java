@@ -27,7 +27,6 @@ public class MeasurementTM6 {
     @JoinColumn(name = "measurement_detail_id")
     private DetailMeasurement detailMeasurement;
 
-
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "structural_title_id")
     private StructuralDescriptionTM6 structuralDescriptionTM6;
