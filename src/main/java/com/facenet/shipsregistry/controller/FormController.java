@@ -72,7 +72,7 @@ public class FormController {
         try {
             Boolean isDeleted = formService.deleteFormTM1(id);
             if (isDeleted) {
-                return ResponseEntity.ok("Xóa thành công form TM1");
+                return ResponseEntity.accepted().build();
             } else {
                 return ResponseEntity.badRequest().build();
             }
@@ -118,7 +118,7 @@ public class FormController {
         try {
             Boolean isDeleted = formService.deletedFormTM2(id);
             if (isDeleted) {
-                return ResponseEntity.ok("Xóa thành công.");
+                return ResponseEntity.accepted().build();
             } else {
                 return ResponseEntity.badRequest().body("Không thể xóa Form này");
 
@@ -169,7 +169,7 @@ public class FormController {
         try {
             Boolean isDeleted = formService.deletedFormTM3(id);
             if (isDeleted) {
-                return ResponseEntity.ok("Xóa thành công.");
+                return ResponseEntity.accepted().build();
             } else {
                 return ResponseEntity.badRequest().body("Không thể xóa Form này");
 
@@ -188,7 +188,7 @@ public class FormController {
         try {
             Boolean isDeleted = formService.deletedFormTM5(id);
             if (isDeleted) {
-                return ResponseEntity.ok("Xóa thành công.");
+                return ResponseEntity.accepted().build();
             } else {
                 return ResponseEntity.badRequest().body("Không thể xóa Form này");
 
@@ -208,7 +208,7 @@ public class FormController {
         try {
             Boolean isDeleted = formService.deleteFormTM4(id);
             if (isDeleted) {
-                return ResponseEntity.ok("Xóa thành công.");
+                return ResponseEntity.accepted().build();
             } else {
                 return ResponseEntity.badRequest().body("Không thể xóa Form này");
 
@@ -228,7 +228,7 @@ public class FormController {
         try {
             Boolean isDeleted = formService.deleteFormTM6(id);
             if (isDeleted) {
-                return ResponseEntity.ok("Xóa thành công.");
+                return ResponseEntity.accepted().build();
             } else {
                 return ResponseEntity.badRequest().body("Không thể xóa Form này");
 
@@ -248,7 +248,7 @@ public class FormController {
         try {
             Boolean isDeleted = formService.deleteFormTM7(id);
             if (isDeleted) {
-                return ResponseEntity.ok("Xóa thành công.");
+                return ResponseEntity.accepted().build();
             } else {
                 return ResponseEntity.badRequest().body("Không thể xóa Form này");
 

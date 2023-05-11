@@ -41,7 +41,7 @@ public class PartController {
         try {
             Boolean isDeleted = generalParticularsService.deletePart(id);
             if (isDeleted) {
-                return ResponseEntity.ok("Xóa part thành công");
+                return ResponseEntity.status(HttpStatus.ACCEPTED).build();
             } else {
                 return ResponseEntity.badRequest().body("Không thể xóa part này");
             }
@@ -283,7 +283,7 @@ public class PartController {
         try {
             Boolean isDeleted = formService.deletedFormUsingPart(id, formIndex);
             if (isDeleted) {
-                return ResponseEntity.ok("Xóa thành công form");
+                return ResponseEntity.accepted().build();
             } else {
                 return ResponseEntity.badRequest().build();
             }
