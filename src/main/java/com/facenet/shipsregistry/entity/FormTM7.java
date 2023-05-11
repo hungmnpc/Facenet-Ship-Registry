@@ -39,4 +39,7 @@ public class FormTM7 {
     }
 
     private String code;
+
+    @Column(name = "form_index")
+    private Integer formIndex;
 }
