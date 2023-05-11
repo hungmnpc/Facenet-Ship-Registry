@@ -54,8 +54,24 @@ public class ReportIndex {
     @OneToMany(mappedBy = "reportIndex", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     private List<FormTM3> formTM3List;
 
+    /**
+     *
+     * @param partIndex
+     * @param item
+     */
     public ReportIndex(Integer partIndex, String item) {
         this.partIndex = partIndex;
         this.item = item;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Integer currentFormIndex() {
+        return getFormTM1List().size() + getFormTM2List().size()
+                +getFormTM3List().size() + getFormTM4List().size()
+                + getFormTM5List().size() + getFormTM6List().size()
+                + getFormTM7List().size() + 1;
     }
 }

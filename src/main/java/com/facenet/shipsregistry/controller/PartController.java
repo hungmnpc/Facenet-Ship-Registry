@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.net.URI;
 
 /**
@@ -67,6 +69,25 @@ public class PartController {
                 return ResponseEntity.badRequest().build();
             }
         } catch (Exception exception) {
+            log.error(exception.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+
+    @PostMapping(value = "/{id}/tm1s/sheet", consumes = {
+            "multipart/form-data"
+    })
+    public ResponseEntity<?> saveNewFormTm1BySheet(@PathVariable Long id, @RequestParam MultipartFile excelFile) {
+        try {
+            FormDTO formDTO = formService.uploadFormTm1FromExcel(id, excelFile);
+            if (formDTO != null) {
+                return ResponseEntity.ok(formDTO);
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
             log.error(exception.getMessage());
             return ResponseEntity.internalServerError().build();
         }

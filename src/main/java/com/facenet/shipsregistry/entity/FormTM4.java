@@ -32,6 +32,11 @@ public class FormTM4 {
     @Column(name = "location_of_structure")
     private String locationOfStructure;
 
+
+    @Column(name = "form_index")
+    private Integer formIndex;
+
+
     @OneToMany(mappedBy = "formTM4", cascade = {CascadeType.ALL})
     private List<StructuralMemberTM4> structuralMemberTM4List;
 

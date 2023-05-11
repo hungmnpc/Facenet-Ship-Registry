@@ -36,6 +36,9 @@ public class FormTM3 {
     @Column(name = "3rd_frame_no")
     private String thirdFrameNo;
 
+    @Column(name = "form_index")
+    private Integer formIndex;
+
     @OneToMany(mappedBy = "formTM3", cascade = {CascadeType.ALL})
     private List<MeasurementTM3> measurementTM3List;
 
