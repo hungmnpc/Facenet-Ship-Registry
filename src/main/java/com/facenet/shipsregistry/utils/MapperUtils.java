@@ -8,9 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+
+import java.util.*;
 
 /**
  * @author: hungdinh
@@ -388,6 +387,7 @@ public class MapperUtils {
                     .map(this::formTM7Mapper)
                     .toList());
         }
+        formDTOList.sort(Comparator.comparingInt(FormDTO::getFormIndex));
         reportIndexDTO.setFormList(formDTOList);
         return reportIndexDTO;
     }

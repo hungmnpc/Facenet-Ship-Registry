@@ -252,4 +252,12 @@ public interface FormService {
      * @return
      */
     FormDTO updateFormTM4(Long id, FormTM4RequestBody requestBody);
+
+    /**
+     *
+     * @param partId
+     * @param formIndex
+     * @return
+     */
+    public Boolean deletedFormUsingPart(Long partId, Integer formIndex);
 }

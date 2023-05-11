@@ -22,4 +22,12 @@ public interface ReportIndexRepository extends JpaRepository<ReportIndex, Long> 
 
     @Query(value = "select r from ReportIndex r where r.generalParticulars.id = :id")
     List<ReportIndex> findAllReportIndexInGP(@Param("id") Long id);
+
+    /**
+     *
+     * @param gpId
+     * @return
+     */
+    @Query("select r from ReportIndex  r where r.generalParticulars.id = :gpId order by r.partIndex ASC ")
+    List<ReportIndex> getALlReportIndexInGPSortASC(@Param("gpId") Long gpId);
 }

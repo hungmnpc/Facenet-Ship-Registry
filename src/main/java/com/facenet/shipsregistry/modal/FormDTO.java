@@ -14,6 +14,8 @@ import lombok.*;
 @ToString
 public class FormDTO {
 
+    public Long id;
+
     private String type;
 
     private String code;

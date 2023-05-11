@@ -18,8 +18,6 @@ public class FormTM1DTO extends FormDTO {
 
     private String type = "FORM TM1";
 
-    private Long id;
-
     private String strakePosition;
 
     private List<MeasurementTM1DTO> measurementTM1DTOList;
