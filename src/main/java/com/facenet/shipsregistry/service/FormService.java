@@ -181,6 +181,7 @@ public interface FormService {
     Boolean isFormTM3Exist(Long id);
 
 
+
     /**
      *
      * @param excelFile
@@ -194,4 +195,10 @@ public interface FormService {
      * @return
      */
     public FormTM1DTO getFormTM1(Long id);
+
+    FormDTO updateFormTM7(Long id, FormTM7RequestBody requestBody);
+
+    FormDTO updateFormTM6(Long id, FormTM6RequestBody requestBody);
+
+    FormDTO updateFormTM4(Long id, FormTM4RequestBody requestBody);
 }

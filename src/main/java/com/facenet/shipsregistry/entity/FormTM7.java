@@ -1,5 +1,7 @@
 package com.facenet.shipsregistry.entity;
 
+import com.facenet.shipsregistry.request.FormTM2RequestBody;
+import com.facenet.shipsregistry.request.FormTM7RequestBody;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -19,6 +21,8 @@ public class FormTM7 {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String code;
+
     @Column(name = "description")
     private String description;
 
@@ -36,6 +40,11 @@ public class FormTM7 {
         this.name = name;
         this.description = description;
         this.code = code;
+    }
+    public void update(FormTM7RequestBody requestBody) {
+        this.setName(requestBody.getName());
+        this.setDescription(requestBody.getDescription());
+        this.setCode(requestBody.getCode());
     }
 
     private String code;

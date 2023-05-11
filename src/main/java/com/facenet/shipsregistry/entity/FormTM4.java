@@ -1,5 +1,7 @@
 package com.facenet.shipsregistry.entity;
 
+import com.facenet.shipsregistry.request.FormTM4RequestBody;
+import com.facenet.shipsregistry.request.FormTM7RequestBody;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -45,6 +47,11 @@ public class FormTM4 {
         this.locationOfStructure = locationOfStructure;
         this.code = code;
     }
-
+  
+    public void update(FormTM4RequestBody requestBody) {
+        this.setTankDescription(requestBody.getTankDescription());
+        this.setLocationOfStructure(requestBody.getLocationOfStructure());
+        this.setCode(requestBody.getCode());
+    }
 
 }

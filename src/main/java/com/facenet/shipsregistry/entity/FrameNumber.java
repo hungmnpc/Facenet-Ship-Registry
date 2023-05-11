@@ -1,5 +1,7 @@
 package com.facenet.shipsregistry.entity;
 
+import com.facenet.shipsregistry.request.FormTM7RequestBody;
+import com.facenet.shipsregistry.request.FrameNumberRequestBody;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,4 +29,11 @@ public class FrameNumber {
 
     @OneToMany(mappedBy = "frameNumber", cascade = {CascadeType.ALL})
     private List<MeasurementTM7> measurementTM7List;
+
+    public FrameNumber(String name) {
+        this.name = name;
+    }
+    public void update(FrameNumberRequestBody requestBody) {
+        this.setName(requestBody.getName());
+    }
 }

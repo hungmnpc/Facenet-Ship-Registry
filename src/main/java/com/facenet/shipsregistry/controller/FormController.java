@@ -3,11 +3,7 @@ package com.facenet.shipsregistry.controller;
 import com.facenet.shipsregistry.modal.FormDTO;
 import com.facenet.shipsregistry.modal.FormTM1DTO;
 import com.facenet.shipsregistry.modal.SketchDTO;
-import com.facenet.shipsregistry.request.FormTM1RequestBody;
-import com.facenet.shipsregistry.request.FormTM2RequestBody;
-import com.facenet.shipsregistry.request.FormTM3RequestBody;
-import com.facenet.shipsregistry.request.FormTM5RequestBody;
-import com.facenet.shipsregistry.request.SketchedRequest;
+import com.facenet.shipsregistry.request.*;
 import com.facenet.shipsregistry.service.FormService;
 import com.facenet.shipsregistry.service.SketchService;
 import lombok.extern.slf4j.Slf4j;
@@ -202,4 +198,53 @@ public class FormController {
         }
 
     }
+    @PutMapping("/tm7s/{id}")
+    public ResponseEntity<?> updateFormTM7(@PathVariable Long id,
+                                           @RequestBody FormTM7RequestBody requestBody) {
+        try {
+            FormDTO formTM7DTO = formService.updateFormTM7(id,requestBody);
+            if (formTM7DTO != null) {
+                return ResponseEntity.ok(formTM7DTO);
+            } else {
+                return ResponseEntity.badRequest().body("Form không tồn tại");
+            }
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            exception.printStackTrace();
+            return ResponseEntity.internalServerError().body(exception.getMessage());
+        }
+    }
+    @PutMapping("/tm6s/{id}")
+    public ResponseEntity<?> updateFormTM6(@PathVariable Long id,
+                                           @RequestBody FormTM6RequestBody requestBody) {
+        try {
+            FormDTO formTM6DTO = formService.updateFormTM6(id, requestBody);
+            if (formTM6DTO != null) {
+                return ResponseEntity.ok(formTM6DTO);
+            } else {
+                return ResponseEntity.badRequest().body("Form không tồn tại");
+            }
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            exception.printStackTrace();
+            return ResponseEntity.internalServerError().body(exception.getMessage());
+        }
+    }
+    @PutMapping("/tm4s/{id}")
+    public ResponseEntity<?> updateFormTM4(@PathVariable Long id,
+                                           @RequestBody FormTM4RequestBody requestBody) {
+        try {
+            FormDTO formTM4DTO = formService.updateFormTM4(id, requestBody);
+            if (formTM4DTO != null) {
+                return ResponseEntity.ok(formTM4DTO);
+            } else {
+                return ResponseEntity.badRequest().body("Form không tồn tại");
+            }
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            exception.printStackTrace();
+            return ResponseEntity.internalServerError().body(exception.getMessage());
+        }
+    }
+
 }
