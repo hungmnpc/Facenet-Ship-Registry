@@ -17,4 +17,6 @@ public class FormDTO {
     private String type;
 
     private String code;
+
+    private Integer formIndex;
 }

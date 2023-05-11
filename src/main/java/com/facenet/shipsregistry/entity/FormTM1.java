@@ -22,9 +22,14 @@ public class FormTM1 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String code;
+
     @Column(name = "strake_position")
     private String strakePosition;
+
+    @Column(name = "form_index")
+    private Integer formIndex;
 
     @OneToMany(mappedBy = "formTM1", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     private List<MeasurementTM1> measurementTM1List;
