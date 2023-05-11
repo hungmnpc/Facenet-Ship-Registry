@@ -97,7 +97,6 @@ public interface GeneralParticularsService {
     /**
      *
      * @param id
-<<<<<<< HEAD
      * @param requestBody
      * @return
      */
@@ -111,5 +110,14 @@ public interface GeneralParticularsService {
      * @return
      */
     public Boolean isPartExist(Long id);
+
+    /**
+     *
+     * @param id
+     * @param item
+     * @param partIndex
+     * @return
+     */
+    public ReportMenu.Part updateReportIndex(Long id, String item, Integer partIndex);
 
 }

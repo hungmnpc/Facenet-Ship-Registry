@@ -2,6 +2,7 @@ package com.facenet.shipsregistry.controller;
 
 import com.facenet.shipsregistry.modal.FormDTO;
 import com.facenet.shipsregistry.modal.ReportIndexDTO;
+import com.facenet.shipsregistry.modal.ReportMenu;
 import com.facenet.shipsregistry.request.*;
 import com.facenet.shipsregistry.service.FormService;
 import com.facenet.shipsregistry.service.GeneralParticularsService;
@@ -258,6 +259,37 @@ public class PartController {
         } catch (Exception exception) {
             log.debug(exception.getMessage());
             return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @PutMapping("/{id}")
+    private ResponseEntity<?> updatePart(@PathVariable Long id, @RequestBody PartUpdateRequest request) {
+        try {
+            ReportMenu.Part part =
+                    generalParticularsService.updateReportIndex(id, request.getItem(), request.getPartIndex());
+            if (part != null) {
+                return ResponseEntity.ok(part);
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @DeleteMapping("/{id}/form/{formIndex}")
+    public ResponseEntity<?> deleteForm(@PathVariable Long id, @PathVariable Integer formIndex) {
+        try {
+            Boolean isDeleted = formService.deletedFormUsingPart(id, formIndex);
+            if (isDeleted) {
+                return ResponseEntity.ok("Xóa thành công form");
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            return ResponseEntity.internalServerError().body(exception.getMessage());
         }
     }
 }

@@ -2,6 +2,7 @@ package com.facenet.shipsregistry.controller;
 
 import com.facenet.shipsregistry.modal.FormDTO;
 import com.facenet.shipsregistry.modal.FormTM1DTO;
+import com.facenet.shipsregistry.modal.ReportMenu;
 import com.facenet.shipsregistry.modal.SketchDTO;
 import com.facenet.shipsregistry.request.*;
 import com.facenet.shipsregistry.service.FormService;
@@ -198,6 +199,66 @@ public class FormController {
         }
 
     }
+
+    @DeleteMapping("/tm4s/{id}")
+    public ResponseEntity<?> deleteFormTM4(@PathVariable Long id) {
+        if (!formService.isFormTM4Exist(id)) {
+            return ResponseEntity.badRequest().body("Form không tồn tại");
+        }
+        try {
+            Boolean isDeleted = formService.deleteFormTM4(id);
+            if (isDeleted) {
+                return ResponseEntity.ok("Xóa thành công.");
+            } else {
+                return ResponseEntity.badRequest().body("Không thể xóa Form này");
+
+            }
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            return ResponseEntity.internalServerError().body(exception.getMessage());
+        }
+
+    }
+
+    @DeleteMapping("/tm6s/{id}")
+    public ResponseEntity<?> deleteFormTM6(@PathVariable Long id) {
+        if (!formService.isFormTM6Exist(id)) {
+            return ResponseEntity.badRequest().body("Form không tồn tại");
+        }
+        try {
+            Boolean isDeleted = formService.deleteFormTM6(id);
+            if (isDeleted) {
+                return ResponseEntity.ok("Xóa thành công.");
+            } else {
+                return ResponseEntity.badRequest().body("Không thể xóa Form này");
+
+            }
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            return ResponseEntity.internalServerError().body(exception.getMessage());
+        }
+
+    }
+
+    @DeleteMapping("/tm7s/{id}")
+    public ResponseEntity<?> deleteFormTM7(@PathVariable Long id) {
+        if (!formService.isFormTM7Exist(id)) {
+            return ResponseEntity.badRequest().body("Form không tồn tại");
+        }
+        try {
+            Boolean isDeleted = formService.deleteFormTM7(id);
+            if (isDeleted) {
+                return ResponseEntity.ok("Xóa thành công.");
+            } else {
+                return ResponseEntity.badRequest().body("Không thể xóa Form này");
+
+            }
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            return ResponseEntity.internalServerError().body(exception.getMessage());
+        }
+
+    }
     @PutMapping("/tm7s/{id}")
     public ResponseEntity<?> updateFormTM7(@PathVariable Long id,
                                            @RequestBody FormTM7RequestBody requestBody) {
@@ -246,5 +307,122 @@ public class FormController {
             return ResponseEntity.internalServerError().body(exception.getMessage());
         }
     }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/tm1s/{id}")
+    public ResponseEntity<?> getFormTM1(@PathVariable Long id){
+        try{
+            FormDTO formTM1DTO = formService.getFormTM1ByID(id);
+            if (formTM1DTO != null) {
+                return ResponseEntity.ok(formTM1DTO);
+            } else {
+                return ResponseEntity.badRequest().body("Form không tồn tại");
+            }
+        }catch (Exception exception) {
+            log.error(exception.getMessage());
+            exception.printStackTrace();
+            return ResponseEntity.internalServerError().body(exception.getMessage());
+        }
+    }
+    @GetMapping("/tm2s/{id}")
+    public ResponseEntity<?> getFormTM2(@PathVariable Long id) {
+        try {
+            FormDTO formTM2DTO = formService.getFormTM2ByID(id);
+            if (formTM2DTO != null) {
+                return ResponseEntity.ok(formTM2DTO);
+            } else {
+                return ResponseEntity.badRequest().body("Form không tồn tại");
+            }
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            exception.printStackTrace();
+            return ResponseEntity.internalServerError().body(exception.getMessage());
+        }
+    }
+
+    @GetMapping("/tm3s/{id}")
+    public ResponseEntity<?> getFormTM3(@PathVariable Long id) {
+        try {
+            FormDTO formTM3DTO = formService.getFormTM3ByID(id);
+            if (formTM3DTO != null) {
+                return ResponseEntity.ok(formTM3DTO);
+            } else {
+                return ResponseEntity.badRequest().body("Form không tồn tại");
+            }
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            exception.printStackTrace();
+            return ResponseEntity.internalServerError().body(exception.getMessage());
+        }
+    }
+
+    @GetMapping("/tm4s/{id}")
+    public ResponseEntity<?> getFormTM4(@PathVariable Long id){
+        try{
+            FormDTO formTM4DTO = formService.getFormTM4ByID(id);
+            if (formTM4DTO != null) {
+                return ResponseEntity.ok(formTM4DTO);
+            } else {
+                return ResponseEntity.badRequest().body("Form không tồn tại");
+            }
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            exception.printStackTrace();
+            return ResponseEntity.internalServerError().body(exception.getMessage());
+        }
+    }
+
+    @GetMapping("/tm5s/{id}")
+    public ResponseEntity<?> getFormTM5(@PathVariable Long id) {
+        try {
+            FormDTO formTM5DTO = formService.getFormTM5ByID(id);
+            if (formTM5DTO != null) {
+                return ResponseEntity.ok(formTM5DTO);
+            } else {
+                return ResponseEntity.badRequest().body("Form không tồn tại");
+            }
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            exception.printStackTrace();
+            return ResponseEntity.internalServerError().body(exception.getMessage());
+        }
+    }
+
+    @GetMapping("/tm6s/{id}")
+    public ResponseEntity<?> getFormTM6(@PathVariable Long id){
+        try{
+            FormDTO formTM6DTO = formService.getFormTM6ByID(id);
+            if (formTM6DTO != null) {
+                return ResponseEntity.ok(formTM6DTO);
+            } else {
+                return ResponseEntity.badRequest().body("Form không tồn tại");
+            }
+        }catch (Exception exception) {
+            log.error(exception.getMessage());
+            exception.printStackTrace();
+            return ResponseEntity.internalServerError().body(exception.getMessage());
+        }
+    }
+
+    @GetMapping("/tm7s/{id}")
+    public ResponseEntity<?> getFormTM7(@PathVariable Long id){
+        try{
+            FormDTO formTM7DTO = formService.getFormTM7ByID(id);
+            if (formTM7DTO != null) {
+                return ResponseEntity.ok(formTM7DTO);
+            } else {
+                return ResponseEntity.badRequest().body("Form không tồn tại");
+            }
+        }catch (Exception exception) {
+            log.error(exception.getMessage());
+            exception.printStackTrace();
+            return ResponseEntity.internalServerError().body(exception.getMessage());
+        }
+    }
+
 
 }

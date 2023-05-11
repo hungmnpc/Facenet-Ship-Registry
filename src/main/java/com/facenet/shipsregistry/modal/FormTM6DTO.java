@@ -16,8 +16,6 @@ public class FormTM6DTO extends FormDTO{
 
     private String type = "FORM TM6";
 
-    private Long id;
-
     private String structuralMembers;
 
     private String locationOfStructure;
