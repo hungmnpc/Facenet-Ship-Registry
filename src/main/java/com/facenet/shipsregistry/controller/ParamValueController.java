@@ -83,7 +83,7 @@ public class ParamValueController {
     public ResponseEntity<?> deleteParamValue(@PathVariable Long id) {
         try {
             paramValueService.deleteParamValue(id);
-            return ResponseEntity.ok("Xóa thành công.");
+            return ResponseEntity.accepted().build();
         } catch (Exception exception) {
             log.error(exception.getMessage());
             return ResponseEntity.internalServerError().build();

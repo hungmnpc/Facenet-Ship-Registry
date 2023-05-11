@@ -141,7 +141,7 @@ public class GeneralParticularsController {
     public ResponseEntity<?> deleteAllReport(@PathVariable(name = "id") Long id) {
         try {
             generalParticularsService.deleteGeneralParticulars(id);
-            return ResponseEntity.ok().body("Xóa General Particulars "+ id +" thành công");
+            return ResponseEntity.accepted().build();
 
         } catch (Exception exception) {
             log.error(exception.getMessage());
