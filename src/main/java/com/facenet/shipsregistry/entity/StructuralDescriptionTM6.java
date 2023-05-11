@@ -25,10 +25,10 @@ public class StructuralDescriptionTM6 {
     @Column(name = "structural_description_title")
     private String structuralDescriptionTitle;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "form_TM6_id")
     private FormTM6 formTM6;
 
-    @OneToMany(mappedBy = "structuralDescriptionTM6", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "structuralDescriptionTM6", cascade = {CascadeType.ALL})
     private List<MeasurementTM6> measurementTM6List;
 }

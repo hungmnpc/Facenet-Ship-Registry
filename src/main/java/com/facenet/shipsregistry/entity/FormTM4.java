@@ -1,5 +1,7 @@
 package com.facenet.shipsregistry.entity;
 
+import com.facenet.shipsregistry.request.FormTM4RequestBody;
+import com.facenet.shipsregistry.request.FormTM7RequestBody;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,10 +32,10 @@ public class FormTM4 {
     @Column(name = "location_of_structure")
     private String locationOfStructure;
 
-    @OneToMany(mappedBy = "formTM4", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "formTM4", cascade = {CascadeType.ALL})
     private List<StructuralMemberTM4> structuralMemberTM4List;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "report_id")
     private ReportIndex reportIndex;
 
@@ -42,6 +44,10 @@ public class FormTM4 {
         this.locationOfStructure = locationOfStructure;
         this.code = code;
     }
-
+    public void update(FormTM4RequestBody requestBody) {
+        this.setTankDescription(requestBody.getTankDescription());
+        this.setLocationOfStructure(requestBody.getLocationOfStructure());
+        this.setCode(requestBody.getCode());
+    }
 
 }

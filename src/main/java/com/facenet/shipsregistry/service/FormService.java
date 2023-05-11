@@ -178,4 +178,10 @@ public interface FormService {
     Boolean deletedFormTM5(Long id);
 
     Boolean isFormTM3Exist(Long id);
+
+    FormDTO updateFormTM7(Long id, FormTM7RequestBody requestBody);
+
+    FormDTO updateFormTM6(Long id, FormTM6RequestBody requestBody);
+
+    FormDTO updateFormTM4(Long id, FormTM4RequestBody requestBody);
 }

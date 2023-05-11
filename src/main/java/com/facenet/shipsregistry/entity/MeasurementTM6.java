@@ -23,11 +23,11 @@ public class MeasurementTM6 {
     @Column(name = "item")
     private String item;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "measurement_detail_id")
     private DetailMeasurement detailMeasurement;
 
-    @ManyToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "structural_title_id")
     private StructuralDescriptionTM6 structuralDescriptionTM6;
 }

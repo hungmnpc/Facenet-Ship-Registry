@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,6 +67,18 @@ public class FormServiceImpl implements FormService{
 
     @Autowired
     MeasurementTM5Repository measurementTM5Repository;
+
+    @Autowired
+    MeasurementTM7Repository measurementTM7Repository;
+
+    @Autowired
+    FrameNumberRepository frameNumberRepository;
+
+    @Autowired
+    StructuralDescriptionTM6Repository structuralDescriptionTM6Repository;
+
+    @Autowired
+    StructuralMemberDetailsTM4Repository structuralMemberDetailsTM4Repository;
 
     @Autowired
     MapperUtils mapperUtils;
@@ -724,4 +738,117 @@ public class FormServiceImpl implements FormService{
     public Boolean isFormTM5Exist(Long id) {
         return formTM5Repository.existsById(id);
     }
+
+    @Override
+    public FormDTO updateFormTM7(Long id, FormTM7RequestBody requestBody) {
+        FormTM7 formTM7 = formTM7Repository.findById(id).orElse(null);
+        if (formTM7 != null) {
+            formTM7.update(requestBody);
+            frameNumberRepository.deleteAll(formTM7.getFrameNumber());
+            formTM7.setFrameNumber(new ArrayList<>());
+            List<FrameNumber> frameNumberList =
+                    requestBody.getFrameNumberList().stream()
+                            .map(frameNumberRequestBody -> {
+                                FrameNumber frameNumberTM7 = new FrameNumber(
+                                        null, frameNumberRequestBody.getName(),
+                                        formTM7, null
+                                );
+                                List<MeasurementTM7> measurementTM7List =
+                                        frameNumberRequestBody.getMeasurementTM7List().stream()
+                                                .map(measurementTM7RequestBody -> {
+                                                    DetailMeasurement first =
+                                                            mapperUtils.mapperToDetailMeasurement(
+                                                                    measurementTM7RequestBody.getLowerPart());
+                                                    DetailMeasurement second =
+                                                            mapperUtils.mapperToDetailMeasurement(
+                                                                    measurementTM7RequestBody.getMidPart()
+                                                            );
+                                                    DetailMeasurement third =
+                                                            mapperUtils.mapperToDetailMeasurement(
+                                                                    measurementTM7RequestBody.getUpperPart()
+                                                            );
+                                                    return new MeasurementTM7(null, measurementTM7RequestBody.getItem(),
+                                                            frameNumberTM7, second,
+                                                            third, first);
+                                                }).toList();
+                                frameNumberTM7.setMeasurementTM7List(measurementTM7List);
+                                return frameNumberTM7;
+                            }).toList();
+            formTM7.setFrameNumber(frameNumberList);
+            return mapperUtils.formTM7Mapper(formTM7);
+        }
+
+        return null;
+    }
+    @Override
+    public FormDTO updateFormTM6(Long id, FormTM6RequestBody requestBody) {
+        FormTM6 formTM6 = formTM6Repository.findById(id).orElse(null);
+        if (formTM6 != null) {
+            formTM6.update(requestBody);
+            structuralDescriptionTM6Repository.deleteAll(formTM6.getStructuralDescriptionTM6List());
+            formTM6.setStructuralDescriptionTM6List(new ArrayList<>());
+            List<StructuralDescriptionTM6> structuralDescriptionTM6List =
+                    requestBody.getStructuralDescriptionTM6List().stream()
+                            .map(structuralDescriptionTM6RequestBody -> {
+                                StructuralDescriptionTM6 structuralDescriptionTM6 = new StructuralDescriptionTM6(
+                                        null, structuralDescriptionTM6RequestBody.getStructuralDescriptionTitle(),
+                                        formTM6, null
+                                );
+                                List<MeasurementTM6> measurementTM6List =
+                                        structuralDescriptionTM6RequestBody.getMeasurementTM6List().stream()
+                                                .map(measurementTM6RequestBody -> {
+                                                    DetailMeasurement detailMeasurement =
+                                                            mapperUtils.mapperToDetailMeasurement(
+                                                                    measurementTM6RequestBody.getDetailMeasurement());
+
+                                                    return new MeasurementTM6(null,
+                                                            measurementTM6RequestBody.getDescription(),
+                                                            measurementTM6RequestBody.getItem(),
+                                                            detailMeasurement,
+                                                            structuralDescriptionTM6);
+                                                }).toList();
+                                structuralDescriptionTM6.setMeasurementTM6List(measurementTM6List);
+                                return structuralDescriptionTM6;
+                            }).toList();
+            formTM6.setStructuralDescriptionTM6List(structuralDescriptionTM6List);
+            return mapperUtils.formTM6Mapper(formTM6);
+        }
+        return null;
+    }
+    @Override
+    public FormDTO updateFormTM4(Long id, FormTM4RequestBody requestBody) {
+        FormTM4 formTM4 = formTM4Repository.findById(id).orElse(null);
+        if (formTM4 != null) {
+            formTM4.update(requestBody);
+            structuralMemberDetailsTM4Repository.deleteAll(formTM4.getStructuralMemberTM4List());
+            formTM4.setStructuralMemberTM4List(new ArrayList<>());
+            List<StructuralMemberTM4> structuralMemberTM4List =
+                    requestBody.getStructuralMemberTM4List().stream()
+                            .map(structuralMemberTM4RequestBody -> {
+                                StructuralMemberTM4 structuralMemberTM4 = new StructuralMemberTM4(
+                                        null, structuralMemberTM4RequestBody.getStructuralMemberTitle(),
+                                        formTM4, null
+                                );
+                                List<MeasurementTM4> measurementTM4List =
+                                        structuralMemberTM4RequestBody.getMeasurementTM4List().stream()
+                                                .map(measurementTM4RequestBody -> {
+                                                    DetailMeasurement detailMeasurement =
+                                                            mapperUtils.mapperToDetailMeasurement(
+                                                                    measurementTM4RequestBody.getDetailMeasurement());
+
+                                                    return new MeasurementTM4(null,
+                                                            measurementTM4RequestBody.getStructuralMember(),
+                                                            measurementTM4RequestBody.getItem(),
+                                                            detailMeasurement,
+                                                            structuralMemberTM4);
+                                                }).toList();
+                                structuralMemberTM4.setMeasurementTM4List(measurementTM4List);
+                                return structuralMemberTM4;
+                            }).toList();
+            formTM4.setStructuralMemberTM4List(structuralMemberTM4List);
+            return mapperUtils.formTM4Mapper(formTM4);
+        }
+        return null;
+    }
+
 }
