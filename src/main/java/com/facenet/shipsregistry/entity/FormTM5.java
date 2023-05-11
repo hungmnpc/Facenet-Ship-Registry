@@ -60,6 +60,9 @@ public class FormTM5 {
     @JoinColumn(name = "report_id")
     private ReportIndex reportIndex;
 
+    @Column(name = "form_index")
+    private Integer formIndex;
+
     public void update(FormTM5RequestBody requestBody) {
         this.setName(requestBody.getName());
         this.setDescription(requestBody.getDescription());
