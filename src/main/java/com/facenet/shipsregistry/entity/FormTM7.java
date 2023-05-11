@@ -47,8 +47,6 @@ public class FormTM7 {
         this.setCode(requestBody.getCode());
     }
 
-    private String code;
-
     @Column(name = "form_index")
     private Integer formIndex;
 }
