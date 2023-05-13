@@ -40,4 +40,6 @@ public class GeneralParticularsDTO {
     private LocalDate lastDateOfMeasurement;
 
     private String nameOfOperator;
+
+    private Boolean locked;
 }

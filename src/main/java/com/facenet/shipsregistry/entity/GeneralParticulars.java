@@ -55,8 +55,8 @@ public class GeneralParticulars {
     @OneToMany(mappedBy = "generalParticulars", cascade = {CascadeType.ALL})
     private List<ReportIndex> reportIndexList;
 
-    @Column(name = "lock", nullable = false)
-    private Boolean lock = false;
+    @Column(name = "locked", nullable = false)
+    private Boolean locked = false;
 
     @Column(name = "measurement_equipment_info")
     @Lob

@@ -19,5 +19,7 @@ public class SketchDTO {
 
     private String path;
 
-    private String type;
+    private Long formId;
+
+    private String formType;
 }

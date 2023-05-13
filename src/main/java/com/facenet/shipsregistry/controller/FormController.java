@@ -51,18 +51,6 @@ public class FormController {
         }
     }
 
-    @PostMapping("/tm1s/{id}/sketches")
-    public ResponseEntity<?> uploadSketchesToFormTM1(@PathVariable Long id,@RequestBody List<MultipartFile> request) {
-        try {
-            List<SketchDTO> sketchDTOList = sketchService.uploadSketchesIntoFormTM1(request, id);
-            return ResponseEntity.ok(sketchDTOList);
-        } catch (Exception exception) {
-            log.error(exception.getMessage());
-            exception.printStackTrace();
-            return ResponseEntity.badRequest().body(exception.getMessage());
-        }
-    }
-
 
     @DeleteMapping("/tm1s/{id}")
     public ResponseEntity<?> deleteFormTM1(@PathVariable Long id) {
