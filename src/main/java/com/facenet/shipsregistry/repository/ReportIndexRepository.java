@@ -1,6 +1,8 @@
 package com.facenet.shipsregistry.repository;
 
 import com.facenet.shipsregistry.entity.ReportIndex;
+import jakarta.persistence.EntityManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,6 +18,7 @@ import java.util.List;
 @Repository
 public interface ReportIndexRepository extends JpaRepository<ReportIndex, Long> {
 
+
     @Query(value = "select r from ReportIndex r " +
             "join r.generalParticulars gp where gp.id = :gpID and r.item = :item")
     List<ReportIndex> findReportIndexExist(@Param("gpID") Long id, @Param("item") String item);
@@ -30,4 +33,9 @@ public interface ReportIndexRepository extends JpaRepository<ReportIndex, Long> 
      */
     @Query("select r from ReportIndex  r where r.generalParticulars.id = :gpId order by r.partIndex ASC ")
     List<ReportIndex> getALlReportIndexInGPSortASC(@Param("gpId") Long gpId);
+
+
+    @Query(value = "select p.item from report_index p inner join :FORMNAME " +
+            "on p.id = :FOMRNAME.", nativeQuery = true)
+    String getPartName();
 }
