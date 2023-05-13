@@ -16,16 +16,28 @@ public interface SketchService {
 
     public SketchDTO uploadSketch(MultipartFile file) throws IOException;
 
-    /**
-     *
-     * @param request
-     * @return
-     */
-    public List<SketchDTO> uploadSketchesIntoFormTM1(List<MultipartFile> request, Long formId) throws Exception;
 
     /**
      *
+     * @param formId
+     * @param formType
+     * @param file
      * @return
      */
-    public List<SketchDTO> getAllSketch();
+    public List<SketchDTO> uploadSketchIntoForm(Long formId, String formType, List<MultipartFile> file);
+
+    /**
+     *
+     * @param formId
+     * @param formType
+     * @return
+     */
+    public List<SketchDTO> getSketchInForm(Long formId, String formType);
+
+    /**
+     *
+     * @param sketchId
+     * @return
+     */
+    public SketchDTO getSketchById(Long sketchId);
 }

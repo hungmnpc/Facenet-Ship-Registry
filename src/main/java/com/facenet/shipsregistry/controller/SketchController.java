@@ -31,40 +31,41 @@ public class SketchController {
 
     /**
      *
-     * @param file
+     * @param formType
+     * @param formId
+     * @param multipartFiles
      * @return
      */
-    @PostMapping(value = "/upload", consumes = {
+    @PostMapping(value = "/{formType}/{formId}", consumes = {
             "multipart/form-data"
     })
-    public ResponseEntity<?> uploadSketch(@RequestParam MultipartFile file) {
+    public ResponseEntity<?> uploadSketch(@PathVariable String formType,
+                                          @PathVariable Long formId,
+                                          @RequestBody List<MultipartFile> multipartFiles) {
         try {
-            SketchDTO sketchDTO = sketchService.uploadSketch(file);
-            return ResponseEntity.ok(sketchDTO);
+            List<SketchDTO> sketchDTOList = sketchService.uploadSketchIntoForm(formId, formType, multipartFiles);
+            return ResponseEntity.ok(sketchDTOList);
         } catch (Exception exception) {
             log.error(exception.getMessage());
             exception.printStackTrace();
             return ResponseEntity.internalServerError().build();
         }
-
     }
 
-    @GetMapping("")
-    public ResponseEntity<?> getAllSketch() {
+    /**
+     *
+     * @param formType
+     * @param formId
+     * @return
+     */
+    @GetMapping("/{formType}/{formId}")
+    public ResponseEntity<?> getAllSketchInForm(@PathVariable String formType, @PathVariable Long formId) {
         try {
-            MediaType mediaType = MediaType.APPLICATION_PDF;
-            List<SketchDTO> sketchDTOList = sketchService.getAllSketch();
-            log.info("{}", sketchDTOList);
-            File file = new File(sketchDTOList.get(1).getPath());
-            UrlResource resource = new UrlResource(file.toURI());
-            String headerValue = "attachment; filename=\"" + resource.getFilename() + "\"";
-            return ResponseEntity.ok()
-                    .contentType(mediaType)
-                    .header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
-                    .body(resource);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            e.printStackTrace();
+            List<SketchDTO> sketchDTOList = sketchService.getSketchInForm(formId, formType);
+            return ResponseEntity.ok(sketchDTOList);
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            exception.printStackTrace();
             return ResponseEntity.internalServerError().build();
         }
     }
