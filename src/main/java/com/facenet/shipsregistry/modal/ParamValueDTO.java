@@ -1,9 +1,5 @@
 package com.facenet.shipsregistry.modal;
 
-import com.facenet.shipsregistry.entity.ParamType;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.*;
 
 /**

@@ -59,7 +59,7 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
                 requestBody.getAbsIdentification(), requestBody.getPostOfRegistry(),
                 requestBody.getGrossTons(), requestBody.getDeadweight(),
                 requestBody.getDateOfBuild(), requestBody.getClassificationSociety(), null);
-
+        log.info("{}", ship.toString());
         Ship shipSave = shipRepository.save(ship);
         if (shipSave.getShip_id() > 0) {
             return  mapperUtils.shipMapper(ship);

@@ -49,7 +49,6 @@ public class MapperUtils {
      * @return
      */
     public GeneralParticularsDTO generalParticularsMapper(GeneralParticulars generalParticulars) {
-
         GeneralParticularsDTO generalParticularsDTO =
                 modelMapper.map(generalParticulars, GeneralParticularsDTO.class);
         generalParticularsDTO.setShipInfo(shipMapper(generalParticulars.getShip()));
@@ -101,13 +100,17 @@ public class MapperUtils {
      */
     public FormTM2DTO formTM2Mapper(FormTM2 formTM2) {
         FormTM2DTO formTM2DTO = modelMapper.map(formTM2, FormTM2DTO.class);
-        List<MeasurementTM2DTO> measurementTM2DTOList =
-                formTM2.getMeasurementTM2List().stream()
-                        .map(this::measurementTM2DTO)
-                        .toList();
-        formTM2DTO.setType(formTM2DTO.getName().toUpperCase());
-        formTM2DTO.setMeasurementTM2DTOList(measurementTM2DTOList);
-        formTM2DTO.setFormIndex(formTM2.getFormIndex());
+        if (formTM2.getMeasurementTM2List() != null) {
+            List<MeasurementTM2DTO> measurementTM2DTOList =
+                    formTM2.getMeasurementTM2List().stream()
+                            .map(this::measurementTM2DTO)
+                            .toList();
+            formTM2DTO.setMeasurementTM2DTOList(measurementTM2DTOList);
+            formTM2DTO.setFormIndex(formTM2.getFormIndex());
+            if (formTM2DTO.getName() != null) {
+                formTM2DTO.setType(formTM2DTO.getName().toUpperCase());
+            }
+        }
         return formTM2DTO;
     }
 
@@ -205,7 +208,9 @@ public class MapperUtils {
      */
     public MeasurementTM4DTO measurementTM4Mapper(MeasurementTM4 measurementTM4) {
         MeasurementTM4DTO measurementTM4DTO = modelMapper.map(measurementTM4, MeasurementTM4DTO.class);
-        measurementTM4DTO.setDetailMeasurement(detailMeasurementMapper(measurementTM4.getDetailMeasurement()));
+        if (measurementTM4.getDetailMeasurement() != null) {
+            measurementTM4DTO.setDetailMeasurement(detailMeasurementMapper(measurementTM4.getDetailMeasurement()));
+        }
         return measurementTM4DTO;
     }
 
@@ -298,10 +303,13 @@ public class MapperUtils {
     public StructuralDescriptionTM6DTO structuralMemberTM6Mapper(StructuralDescriptionTM6 structuralDescriptionTM6) {
         StructuralDescriptionTM6DTO structuralDescriptionTM6DTO =
                 modelMapper.map(structuralDescriptionTM6, StructuralDescriptionTM6DTO.class);
-        List<MeasurementTM6DTO> measurementTM6DTOList = structuralDescriptionTM6.getMeasurementTM6List()
-                .stream().map(this::measurementTM6Mapper)
-                .toList();
-        structuralDescriptionTM6DTO.setMeasurementTM6DTOList(measurementTM6DTOList);
+        if (structuralDescriptionTM6.getMeasurementTM6List() != null) {
+            List<MeasurementTM6DTO> measurementTM6DTOList =
+                    structuralDescriptionTM6.getMeasurementTM6List()
+                    .stream().map(this::measurementTM6Mapper)
+                    .toList();
+            structuralDescriptionTM6DTO.setMeasurementTM6DTOList(measurementTM6DTOList);
+        }
         return structuralDescriptionTM6DTO;
     }
 
@@ -402,7 +410,33 @@ public class MapperUtils {
                 requestBody.getMaxAlwbDim(), requestBody.getGaugedP(), requestBody.getGaugedS(), requestBody.getPercent());
     }
 
+    /**
+     *
+     * @param sketch
+     * @return
+     */
     public SketchDTO mapperSketch(Sketch sketch) {
         return modelMapper.map(sketch, SketchDTO.class);
+    }
+
+    /**
+     *
+     * @param role
+     * @return
+     */
+    public RoleDTO roleMapper(Role role) {
+        RoleDTO roleDTO = modelMapper.map(role, RoleDTO.class);
+        return roleDTO;
+    }
+
+    /**
+     *
+     * @param user
+     * @return
+     */
+    public UserDTO userMapper(User user) {
+        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+        userDTO.setRoleDTO(roleMapper(user.getRole()));
+        return userDTO;
     }
 }

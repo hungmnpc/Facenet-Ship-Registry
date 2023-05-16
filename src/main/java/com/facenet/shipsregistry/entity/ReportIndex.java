@@ -1,8 +1,8 @@
 package com.facenet.shipsregistry.entity;
 
-import jakarta.persistence.*;
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -33,25 +33,25 @@ public class ReportIndex {
     @JoinColumn(name = "general_particulars_id")
     private GeneralParticulars generalParticulars;
 
-    @OneToMany(mappedBy = "reportIndex", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "reportIndex", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private List<FormTM1> formTM1List;
 
-    @OneToMany(mappedBy = "reportIndex", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "reportIndex", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private List<FormTM5> formTM5List;
 
-    @OneToMany(mappedBy = "reportIndex", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "reportIndex", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private List<FormTM2> formTM2List;
 
-    @OneToMany(mappedBy = "reportIndex", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "reportIndex", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private List<FormTM4> formTM4List;
 
-    @OneToMany(mappedBy = "reportIndex", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "reportIndex", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private List<FormTM7> formTM7List;
 
-    @OneToMany(mappedBy = "reportIndex", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "reportIndex", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private List<FormTM6> formTM6List;
 
-    @OneToMany(mappedBy = "reportIndex", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "reportIndex", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private List<FormTM3> formTM3List;
 
     /**

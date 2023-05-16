@@ -1,6 +1,5 @@
 package com.facenet.shipsregistry.modal;
 
-import jakarta.persistence.Column;
 import lombok.*;
 
 /**

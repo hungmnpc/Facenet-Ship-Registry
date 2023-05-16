@@ -1,7 +1,5 @@
 package com.facenet.shipsregistry.modal;
 
-import com.facenet.shipsregistry.entity.MeasurementTM1;
-import jakarta.persistence.*;
 import lombok.*;
 
 /**
