@@ -1,11 +1,5 @@
 package com.facenet.shipsregistry.request;
 
-
-import com.facenet.shipsregistry.entity.DetailMeasurement;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import lombok.*;
 
 @Getter

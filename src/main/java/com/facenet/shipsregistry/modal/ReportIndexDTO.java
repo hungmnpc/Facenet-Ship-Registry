@@ -2,7 +2,6 @@ package com.facenet.shipsregistry.modal;
 
 import com.facenet.shipsregistry.entity.FormTM1;
 import com.facenet.shipsregistry.entity.GeneralParticulars;
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;

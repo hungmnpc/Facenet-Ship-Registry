@@ -1,12 +1,8 @@
 package com.facenet.shipsregistry.request;
 
-import com.facenet.shipsregistry.entity.GeneralParticulars;
-import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDate;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author: hungdinh

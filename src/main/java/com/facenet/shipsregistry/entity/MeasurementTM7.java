@@ -1,8 +1,7 @@
 package com.facenet.shipsregistry.entity;
 
-import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.engine.internal.Cascade;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "measurement_TM7")
@@ -21,7 +20,7 @@ public class MeasurementTM7 {
     private String item;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "id_frame _number")
+    @JoinColumn(name = "id_frame_number")
     private FrameNumber frameNumber;
 
     @OneToOne(cascade = {CascadeType.ALL})

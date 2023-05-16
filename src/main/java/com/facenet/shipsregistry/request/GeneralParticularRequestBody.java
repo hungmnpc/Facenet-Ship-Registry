@@ -1,12 +1,10 @@
 package com.facenet.shipsregistry.request;
 
-import com.facenet.shipsregistry.entity.Ship;
-import jakarta.persistence.Column;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * @author: hungdinh

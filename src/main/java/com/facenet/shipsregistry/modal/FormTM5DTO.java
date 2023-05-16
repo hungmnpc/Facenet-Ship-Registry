@@ -23,10 +23,6 @@ public class FormTM5DTO extends FormDTO{
 
     private String type = "FORM TM5";
 
-    private String description;
-
-    private String name;
-
     private String locationOfStructure;
 
     private String tankHolDescription;

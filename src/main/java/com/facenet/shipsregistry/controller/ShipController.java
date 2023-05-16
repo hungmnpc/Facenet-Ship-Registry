@@ -35,6 +35,7 @@ public class ShipController {
             ShipDTO shipDTO = generalParticularsService.saveNewShip(requestBody);
             return shipDTO != null ? ResponseEntity.ok(shipDTO) : ResponseEntity.badRequest().build();
         } catch (Exception exception) {
+            exception.printStackTrace();
             log.debug(exception.getMessage());
             return ResponseEntity.badRequest().build();
         }

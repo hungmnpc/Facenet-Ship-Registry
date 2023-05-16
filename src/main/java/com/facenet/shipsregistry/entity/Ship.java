@@ -1,8 +1,7 @@
 package com.facenet.shipsregistry.entity;
 
-import jakarta.persistence.*;
 import lombok.*;
-
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +18,7 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Ship {
+public class Ship extends EntityAudit{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,7 +43,6 @@ public class Ship {
     private Integer deadweight;
 
     @Column(name = "date_of_build")
-    @Temporal(TemporalType.DATE)
     private LocalDate dateOfBuild;
 
     @Column(name = "classification_society")

@@ -1,14 +1,13 @@
 package com.facenet.shipsregistry.entity;
 
-import com.facenet.shipsregistry.request.FormTM3RequestBody;
 import com.facenet.shipsregistry.request.FormTM5RequestBody;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,12 +26,6 @@ public class FormTM5 {
 
     private String code;
 
-    @Column(name = "description")
-    private String description;
-
-    @Column(name = "name")
-    private String name;
-
     @Column(name = "location_of_structure")
     private String locationOfStructure;
 
@@ -42,9 +35,7 @@ public class FormTM5 {
     @Column(name = "frame_no")
     private String frameNo;
 
-    public FormTM5( String description, String name, String locationOfStructure, String tankHolDescription, String frameNo, String code) {
-        this.description = description;
-        this.name = name;
+    public FormTM5(String locationOfStructure, String tankHolDescription, String frameNo, String code) {
         this.locationOfStructure = locationOfStructure;
         this.tankHolDescription = tankHolDescription;
         this.frameNo = frameNo;
@@ -64,8 +55,6 @@ public class FormTM5 {
     private Integer formIndex;
 
     public void update(FormTM5RequestBody requestBody) {
-        this.setName(requestBody.getName());
-        this.setDescription(requestBody.getDescription());
         this.setFrameNo(requestBody.getFrameNo());
         this.setLocationOfStructure(requestBody.getLocationOfStructure());
         this.setTankHolDescription(requestBody.getTankHolDescription());

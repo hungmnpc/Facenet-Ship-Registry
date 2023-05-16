@@ -1,8 +1,7 @@
 package com.facenet.shipsregistry.entity;
 
-import jakarta.persistence.*;
 import lombok.*;
-
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -32,11 +31,9 @@ public class Certificate {
     private String certificateNo;
 
     @Column(name = "valid_start_date")
-    @Temporal(TemporalType.DATE)
     private LocalDate validStartDate;
 
     @Column(name = "valid_end_date")
-    @Temporal(TemporalType.DATE)
     private LocalDate validEndDate;
 
     @OneToMany(mappedBy = "certificate", cascade = {CascadeType.MERGE, CascadeType.PERSIST})

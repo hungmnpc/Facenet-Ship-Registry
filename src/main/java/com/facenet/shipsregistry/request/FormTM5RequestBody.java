@@ -14,13 +14,11 @@ public class FormTM5RequestBody {
 
     private String code;
 
-    private String description;
-
-    private String name;
-
     private String locationOfStructure;
 
     private String tankHolDescription;
+
     private String frameNo;
+
     private List<MeasurementTM5RequestBody> measurementTM5List;
 }
