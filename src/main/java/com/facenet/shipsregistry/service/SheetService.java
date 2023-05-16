@@ -40,4 +40,20 @@ public interface SheetService {
      * @throws Exception
      */
     public FormTM5DTO uploadFormTm5FromExcel(MultipartFile excelFile) throws Exception;
+
+    /**
+     *
+     * @param excelFile
+     * @return
+     * @throws Exception
+     */
+    public FormTM4DTO uploadFormTm4FromExcel(MultipartFile excelFile) throws Exception;
+
+    /**
+     *
+     * @param excelFile
+     * @return
+     * @throws Exception
+     */
+    public FormTM6DTO uploadFormTm6FromExcel(MultipartFile excelFile) throws Exception;
 }

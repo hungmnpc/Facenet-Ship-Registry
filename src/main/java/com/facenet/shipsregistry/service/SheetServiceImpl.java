@@ -243,16 +243,165 @@ public class SheetServiceImpl implements SheetService{
         FormTM5 formTM5 = new FormTM5();
         formTM5.setFrameNo(String.valueOf((int)sheet.getRow(1).getCell(11).getNumericCellValue()));
         formTM5.setTankHolDescription(sheet.getRow(0).getCell(3).getStringCellValue());
+        formTM5.setLocationOfStructure(sheet.getRow(1).getCell(3).getStringCellValue());
         List<MeasurementTM5> measurementTM5List = new ArrayList<>();
         rowStream.forEach(row -> {
             Stream<Cell> cellStream = StreamSupport.stream(row.spliterator(), false);
             List<String> cellVals = cellStream.
                     map(cell -> formatter
                             .formatCellValue(cell,new HSSFFormulaEvaluator((HSSFWorkbook) workbook))).toList();
-            log.info("{}", cellVals);
+            if (i.get() >= 4 && !cellVals.get(0).equals("")) {
+                log.info("{}", cellVals);
+                MeasurementTM5 measurementTM5 = createMeasurementTM5(cellVals);
+                measurementTM5List.add(measurementTM5);
+            }
             i.set(i.get() + 1);
         });
         formTM5.setMeasurementTM5List(measurementTM5List);
         return mapperUtils.formTM5Mapper(formTM5);
+    }
+
+    /**
+     *
+     * @param cellVals
+     * @return
+     */
+    private MeasurementTM5 createMeasurementTM5(List<String> cellVals) {
+        MeasurementTM5 measurementTM5 = new MeasurementTM5();
+        measurementTM5.setStructuralComponent(cellVals.get(0));
+        measurementTM5.setStructuralComponentType(cellVals.get(3));
+        DetailMeasurement detailMeasurement = createDetailMeasurement(cellVals, 4, 6, 7);
+        measurementTM5.setMeasurementDetail(detailMeasurement);
+        return measurementTM5;
+    }
+
+    /**
+     * @param excelFile
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public FormTM4DTO uploadFormTm4FromExcel(MultipartFile excelFile) throws Exception {
+        Workbook workbook = getWorkBookFromFile(excelFile);
+        Sheet sheet = workbook.getSheetAt(0);
+        Stream<Row> rowStream = StreamSupport.stream(sheet.spliterator(), false);
+        DataFormatter formatter = new DataFormatter();
+        AtomicInteger i = new AtomicInteger();
+        FormTM4 formTM4 = new FormTM4();
+        formTM4.setLocationOfStructure(sheet.getRow(1).getCell(3).getStringCellValue());
+        formTM4.setTankDescription(sheet.getRow(0).getCell(3).getStringCellValue());
+        List<StructuralMemberTM4> structuralMemberTM4List = new ArrayList<>();
+        StructuralMemberTM4 structuralMemberTM4 = new StructuralMemberTM4();
+        structuralMemberTM4.setMeasurementTM4List(new ArrayList<>());
+        rowStream.forEach(row -> {
+            Stream<Cell> cellStream = StreamSupport.stream(row.spliterator(), false);
+            List<String> cellVals = cellStream.
+                    map(cell -> formatter
+                            .formatCellValue(cell,new HSSFFormulaEvaluator((HSSFWorkbook) workbook))).toList();
+            if (i.get() >= 4 && !cellVals.get(0).equals("")) {
+                if (i.get() == 4) {
+                    if (cellVals.get(3).equals("") && !cellVals.get(0).equals("")) {
+                        structuralMemberTM4.setStructuralMemberTitle(cellVals.get(0));
+                    } else {
+                        structuralMemberTM4List.add(structuralMemberTM4);
+                    }
+                } else {
+                    if (cellVals.get(3).equals("")) {
+                        structuralMemberTM4List.add(copy(structuralMemberTM4));
+                        structuralMemberTM4.setMeasurementTM4List(new ArrayList<>());
+                        structuralMemberTM4.setStructuralMemberTitle(cellVals.get(0));
+                    } else {
+                        MeasurementTM4 measurementTM4 = createMeasurementTM4(cellVals);
+                        structuralMemberTM4.getMeasurementTM4List().add(measurementTM4);
+                    }
+                }
+                log.info("{}", cellVals);
+            }
+            i.set(i.get() + 1);
+        });
+        formTM4.setStructuralMemberTM4List(structuralMemberTM4List);
+        return mapperUtils.formTM4Mapper(formTM4);
+    }
+
+    private StructuralMemberTM4 copy (StructuralMemberTM4 structuralMemberTM4) {
+        return new StructuralMemberTM4(structuralMemberTM4.getId(),
+                structuralMemberTM4.getStructuralMemberTitle(),
+                structuralMemberTM4.getFormTM4(),
+                structuralMemberTM4.getMeasurementTM4List());
+    }
+
+    private MeasurementTM4 createMeasurementTM4(List<String> cellVal) {
+        MeasurementTM4 measurementTM4 = new MeasurementTM4();
+        measurementTM4.setItem(cellVal.get(3));
+        measurementTM4.setStructuralMember(cellVal.get(0));
+        DetailMeasurement detailMeasurement = createDetailMeasurement(cellVal, 4, 6 , 7);
+        measurementTM4.setDetailMeasurement(detailMeasurement);
+        return measurementTM4;
+    }
+
+    /**
+     * @param excelFile
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public FormTM6DTO uploadFormTm6FromExcel(MultipartFile excelFile) throws Exception {
+        Workbook workbook = getWorkBookFromFile(excelFile);
+        Sheet sheet = workbook.getSheetAt(0);
+        Stream<Row> rowStream = StreamSupport.stream(sheet.spliterator(), false);
+        DataFormatter formatter = new DataFormatter();
+        AtomicInteger i = new AtomicInteger();
+        FormTM6 formTM6 = new FormTM6();
+        formTM6.setLocationOfStructure(sheet.getRow(2).getCell(3).getStringCellValue());
+        formTM6.setStructuralMembers(sheet.getRow(0).getCell(3).getStringCellValue());
+        formTM6.setStructuralDescriptionTM6List(new ArrayList<>());
+        StructuralDescriptionTM6 structuralDescriptionTM6 = new StructuralDescriptionTM6();
+        List<StructuralDescriptionTM6> structuralDescriptionTM6List = new ArrayList<>();
+        rowStream.forEach(row -> {
+            Stream<Cell> cellStream = StreamSupport.stream(row.spliterator(), false);
+            List<String> cellVals = cellStream.
+                    map(cell -> formatter
+                            .formatCellValue(cell,new HSSFFormulaEvaluator((HSSFWorkbook) workbook)))
+                    .toList();
+            if (i.get() >= 6 && !cellVals.get(0).equals("")) {
+                if (i.get() == 6) {
+                    if (cellVals.get(3).equals("") && !cellVals.get(0).equals("")) {
+                        structuralDescriptionTM6.setStructuralDescriptionTitle(cellVals.get(0));
+                    } else {
+                        structuralDescriptionTM6List.add(structuralDescriptionTM6);
+                    }
+                } else {
+                    if (cellVals.get(3).equals("")) {
+                        structuralDescriptionTM6List.add( copy(structuralDescriptionTM6));
+                        structuralDescriptionTM6.setMeasurementTM6List(new ArrayList<>());
+                        structuralDescriptionTM6.setStructuralDescriptionTitle(cellVals.get(0));
+                    } else {
+//                        MeasurementTM4 measurementTM4 = createMeasurementTM4(cellVals);
+//                        structuralMemberTM4.getMeasurementTM4List().add(measurementTM4);
+                    }
+                }
+                log.info("{}", cellVals);
+            }
+            i.set(i.get() + 1);
+        });
+        formTM6.setStructuralDescriptionTM6List(structuralDescriptionTM6List);
+        return mapperUtils.formTM6Mapper(formTM6);
+    }
+
+    /**
+     *
+     * @param structuralDescriptionTM6
+     * @return
+     */
+    private StructuralDescriptionTM6 copy(StructuralDescriptionTM6 structuralDescriptionTM6) {
+        return new StructuralDescriptionTM6(structuralDescriptionTM6.getId(),
+                structuralDescriptionTM6.getStructuralDescriptionTitle(),
+                structuralDescriptionTM6.getFormTM6(),
+                structuralDescriptionTM6.getMeasurementTM6List());
+    }
+
+    private MeasurementTM6 createMeasurementTM6(List<String> cellVals) {
+        MeasurementTM6 measurementTM6 = new MeasurementTM6();
+        return measurementTM6;
     }
 }

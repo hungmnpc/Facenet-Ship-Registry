@@ -208,7 +208,9 @@ public class MapperUtils {
      */
     public MeasurementTM4DTO measurementTM4Mapper(MeasurementTM4 measurementTM4) {
         MeasurementTM4DTO measurementTM4DTO = modelMapper.map(measurementTM4, MeasurementTM4DTO.class);
-        measurementTM4DTO.setDetailMeasurement(detailMeasurementMapper(measurementTM4.getDetailMeasurement()));
+        if (measurementTM4.getDetailMeasurement() != null) {
+            measurementTM4DTO.setDetailMeasurement(detailMeasurementMapper(measurementTM4.getDetailMeasurement()));
+        }
         return measurementTM4DTO;
     }
 
@@ -301,10 +303,13 @@ public class MapperUtils {
     public StructuralDescriptionTM6DTO structuralMemberTM6Mapper(StructuralDescriptionTM6 structuralDescriptionTM6) {
         StructuralDescriptionTM6DTO structuralDescriptionTM6DTO =
                 modelMapper.map(structuralDescriptionTM6, StructuralDescriptionTM6DTO.class);
-        List<MeasurementTM6DTO> measurementTM6DTOList = structuralDescriptionTM6.getMeasurementTM6List()
-                .stream().map(this::measurementTM6Mapper)
-                .toList();
-        structuralDescriptionTM6DTO.setMeasurementTM6DTOList(measurementTM6DTOList);
+        if (structuralDescriptionTM6.getMeasurementTM6List() != null) {
+            List<MeasurementTM6DTO> measurementTM6DTOList =
+                    structuralDescriptionTM6.getMeasurementTM6List()
+                    .stream().map(this::measurementTM6Mapper)
+                    .toList();
+            structuralDescriptionTM6DTO.setMeasurementTM6DTOList(measurementTM6DTOList);
+        }
         return structuralDescriptionTM6DTO;
     }
 

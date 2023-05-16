@@ -112,4 +112,50 @@ public class SheetController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    /**
+     *
+     * @param excelFile
+     * @return
+     */
+    @PostMapping(value = "/tm4s", consumes = {
+            "multipart/form-data"
+    })
+    public ResponseEntity<?> uploadSheetTM4(@RequestParam MultipartFile excelFile) {
+        try {
+            FormDTO formDTO = sheetService.uploadFormTm4FromExcel(excelFile);
+            if (formDTO != null) {
+                return ResponseEntity.ok(formDTO);
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            log.error(exception.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    /**
+     *
+     * @param excelFile
+     * @return
+     */
+    @PostMapping(value = "/tm6s", consumes = {
+            "multipart/form-data"
+    })
+    public ResponseEntity<?> uploadSheetTM6(@RequestParam MultipartFile excelFile) {
+        try {
+            FormDTO formDTO = sheetService.uploadFormTm6FromExcel(excelFile);
+            if (formDTO != null) {
+                return ResponseEntity.ok(formDTO);
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            log.error(exception.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }
