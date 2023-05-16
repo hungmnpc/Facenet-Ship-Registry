@@ -1,11 +1,9 @@
 package com.facenet.shipsregistry.modal;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * @author: hungdinh

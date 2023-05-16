@@ -2,9 +2,9 @@ package com.facenet.shipsregistry.entity;
 
 import com.facenet.shipsregistry.request.FormTM2RequestBody;
 import com.facenet.shipsregistry.request.FormTM3RequestBody;
-import jakarta.persistence.*;
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 

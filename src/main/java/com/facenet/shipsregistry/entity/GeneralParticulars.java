@@ -1,8 +1,7 @@
 package com.facenet.shipsregistry.entity;
 
-import jakarta.persistence.*;
 import lombok.*;
-
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
-public class GeneralParticulars {
+public class GeneralParticulars extends EntityAudit{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,11 +41,9 @@ public class GeneralParticulars {
     private String placeOfMeasurement;
 
     @Column(name = "first_date_of_measurement")
-    @Temporal(TemporalType.DATE)
     private LocalDate firstDateOfMeasurement;
 
     @Column(name = "last_date_of_measurement")
-    @Temporal(TemporalType.DATE)
     private LocalDate lastDateOfMeasurement;
 
     @Column(name = "name_of_operator")

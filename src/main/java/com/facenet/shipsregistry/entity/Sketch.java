@@ -1,7 +1,9 @@
 package com.facenet.shipsregistry.entity;
 
-import jakarta.persistence.*;
+
 import lombok.*;
+
+import javax.persistence.*;
 
 /**
  * @author: hungdinh

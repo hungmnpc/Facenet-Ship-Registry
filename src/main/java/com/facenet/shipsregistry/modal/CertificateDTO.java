@@ -1,7 +1,5 @@
 package com.facenet.shipsregistry.modal;
 
-import com.facenet.shipsregistry.entity.GeneralParticulars;
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;

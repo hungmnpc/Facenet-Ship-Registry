@@ -49,7 +49,6 @@ public class MapperUtils {
      * @return
      */
     public GeneralParticularsDTO generalParticularsMapper(GeneralParticulars generalParticulars) {
-
         GeneralParticularsDTO generalParticularsDTO =
                 modelMapper.map(generalParticulars, GeneralParticularsDTO.class);
         generalParticularsDTO.setShipInfo(shipMapper(generalParticulars.getShip()));
@@ -101,13 +100,17 @@ public class MapperUtils {
      */
     public FormTM2DTO formTM2Mapper(FormTM2 formTM2) {
         FormTM2DTO formTM2DTO = modelMapper.map(formTM2, FormTM2DTO.class);
-        List<MeasurementTM2DTO> measurementTM2DTOList =
-                formTM2.getMeasurementTM2List().stream()
-                        .map(this::measurementTM2DTO)
-                        .toList();
-        formTM2DTO.setType(formTM2DTO.getName().toUpperCase());
-        formTM2DTO.setMeasurementTM2DTOList(measurementTM2DTOList);
-        formTM2DTO.setFormIndex(formTM2.getFormIndex());
+        if (formTM2.getMeasurementTM2List() != null) {
+            List<MeasurementTM2DTO> measurementTM2DTOList =
+                    formTM2.getMeasurementTM2List().stream()
+                            .map(this::measurementTM2DTO)
+                            .toList();
+            formTM2DTO.setMeasurementTM2DTOList(measurementTM2DTOList);
+            formTM2DTO.setFormIndex(formTM2.getFormIndex());
+            if (formTM2DTO.getName() != null) {
+                formTM2DTO.setType(formTM2DTO.getName().toUpperCase());
+            }
+        }
         return formTM2DTO;
     }
 
@@ -402,7 +405,33 @@ public class MapperUtils {
                 requestBody.getMaxAlwbDim(), requestBody.getGaugedP(), requestBody.getGaugedS(), requestBody.getPercent());
     }
 
+    /**
+     *
+     * @param sketch
+     * @return
+     */
     public SketchDTO mapperSketch(Sketch sketch) {
         return modelMapper.map(sketch, SketchDTO.class);
+    }
+
+    /**
+     *
+     * @param role
+     * @return
+     */
+    public RoleDTO roleMapper(Role role) {
+        RoleDTO roleDTO = modelMapper.map(role, RoleDTO.class);
+        return roleDTO;
+    }
+
+    /**
+     *
+     * @param user
+     * @return
+     */
+    public UserDTO userMapper(User user) {
+        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+        userDTO.setRoleDTO(roleMapper(user.getRole()));
+        return userDTO;
     }
 }

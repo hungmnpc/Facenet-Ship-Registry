@@ -21,4 +21,10 @@ public class FormTM2DTO extends FormDTO {
     private String name;
 
     private List<MeasurementTM2DTO> measurementTM2DTOList;
+
+    private String firstFrameNoTM2;
+
+    private String secondFrameNoTM2;
+
+    private String thirdFrameNoTM2;
 }

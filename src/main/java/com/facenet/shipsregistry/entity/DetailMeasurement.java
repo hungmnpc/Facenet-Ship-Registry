@@ -1,13 +1,12 @@
 package com.facenet.shipsregistry.entity;
 
 import com.facenet.shipsregistry.request.DetailMeasurementRequestBody;
-import jakarta.persistence.*;
-import jdk.jfr.Enabled;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.List;
 
 /**

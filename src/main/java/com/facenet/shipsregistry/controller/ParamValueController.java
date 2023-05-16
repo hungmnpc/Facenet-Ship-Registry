@@ -4,13 +4,12 @@ import com.facenet.shipsregistry.entity.ParamValue;
 import com.facenet.shipsregistry.modal.ParamValueDTO;
 import com.facenet.shipsregistry.request.ParamValueRequestBody;
 import com.facenet.shipsregistry.service.ParamValueService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;

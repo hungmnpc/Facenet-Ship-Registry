@@ -233,15 +233,6 @@ public interface FormService {
      */
     Boolean isFormTM3Exist(Long id);
 
-
-
-    /**
-     *
-     * @param excelFile
-     * @return
-     */
-    public FormTM1DTO uploadFormTm1FromExcel(Long id, MultipartFile excelFile) throws Exception;
-
     /**
      *
      * @param id

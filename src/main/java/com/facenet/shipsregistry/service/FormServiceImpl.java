@@ -199,8 +199,8 @@ public class FormServiceImpl implements FormService{
         if (reportIndex.isEmpty()) {
             return null;
         }
-        FormTM5 formTM5 = new FormTM5(null, requestBody.getDescription(),
-                requestBody.getName(), requestBody.getLocationOfStructure(),
+        FormTM5 formTM5 = new FormTM5(null,
+                requestBody.getLocationOfStructure(),
                 requestBody.getTankHolDescription(),requestBody.getFrameNo(),
                 requestBody.getCode(),null, null, reportIndex.get().currentFormIndex());;
         reportIndex.ifPresent(formTM5::setReportIndex);
@@ -780,74 +780,6 @@ public class FormServiceImpl implements FormService{
     public Boolean isFormTM5Exist(Long id) {
         return formTM5Repository.existsById(id);
     }
-
-
-    /**
-     * @param excelFile
-     * @return
-     */
-    @Override
-    public FormTM1DTO uploadFormTm1FromExcel(Long id, MultipartFile excelFile) throws Exception{
-
-        ReportIndex part = reportIndexRepository.findById(id).orElse(null);
-        if (part != null) {
-            Path tempDir = Files.createTempDirectory("");
-            InputStream inputStream = excelFile.getInputStream();
-            File tempFile =tempDir.resolve(excelFile.getOriginalFilename()).toFile();
-            excelFile.transferTo(tempFile);
-            Workbook workbook = WorkbookFactory.create(tempFile);
-            Sheet sheet = workbook.getSheetAt(0);
-            log.info("{}", sheet.getRow(0).getCell(1).getStringCellValue());
-            FormTM1 formTM1 = new FormTM1(null, ""
-                    , sheet.getRow(0).getCell(1).getStringCellValue(), null
-                    , new ArrayList<>(), part);
-
-
-            Stream<Row> rowStream = StreamSupport.stream(sheet.spliterator(), false);
-            DataFormatter formatter = new DataFormatter();
-            AtomicInteger index = new AtomicInteger();
-            List<MeasurementTM1> measurementTM1List = new ArrayList<>();
-            rowStream.forEach(row -> {
-                Stream<Cell> cellStream = StreamSupport.stream(row.spliterator(), false);
-                List<String> cellVals = cellStream.map(cell -> {
-                    String cellVal = formatter.formatCellValue(cell,new HSSFFormulaEvaluator((HSSFWorkbook) workbook));
-                    return cellVal;
-                }).toList();
-                if (index.get() >= 4) {
-                    MeasurementTM1 measurementTM1 = createMeasurementTM1ByRow(cellVals);
-                    if (measurementTM1 != null) {
-                        measurementTM1List.add(measurementTM1);
-                    }
-                    formTM1.setMeasurementTM1List(measurementTM1List);
-                }
-                index.addAndGet(1);
-            });
-            return mapperUtils.formTM1Mapper(formTM1);
-        } else {
-            return null;
-        }
-    }
-
-
-    private MeasurementTM1 createMeasurementTM1ByRow(List<String> row) {
-        if (!row.get(1).equals("")) {
-            MeasurementTM1 measurementTM1 =
-                    new MeasurementTM1(null, row.get(0).trim(), row.get(1).trim(), null, null, null);
-            DetailMeasurement forward = new DetailMeasurement(Double.parseDouble(row.get(2)),
-                    0.0, Double.parseDouble(row.get(3)),Double.parseDouble(row.get(4)), "");
-            DetailMeasurement after = new DetailMeasurement(Double.parseDouble(row.get(2)),
-                    0.0, Double.parseDouble(row.get(11)),Double.parseDouble(row.get(12)), "");
-            measurementTM1.setForwardReadingMeasurementDetail(forward);
-            measurementTM1.setAfterReadingMeasurementDetail(after);
-            return measurementTM1;
-        } else {
-            return null;
-        }
-
-
-
-    }
-
   
     @Override
     public FormDTO updateFormTM7(Long id, FormTM7RequestBody requestBody) {

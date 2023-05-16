@@ -1,11 +1,10 @@
 package com.facenet.shipsregistry.entity;
 
-import com.facenet.shipsregistry.request.FormTM2RequestBody;
+
 import com.facenet.shipsregistry.request.FormTM7RequestBody;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
