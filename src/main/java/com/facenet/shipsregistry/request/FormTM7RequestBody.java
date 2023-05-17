@@ -14,8 +14,6 @@ public class FormTM7RequestBody {
 
     private String code;
 
-    private String description;
-
     private String name;
 
     private List<FrameNumberRequestBody> frameNumberList;

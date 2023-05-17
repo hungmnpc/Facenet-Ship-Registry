@@ -250,10 +250,12 @@ public class MapperUtils {
     public FrameNumberDTO frameNumberMapper(FrameNumber frameNumber) {
         FrameNumberDTO frameNumberDTO =
                 modelMapper.map(frameNumber, FrameNumberDTO.class);
-        List<MeasurementTM7DTO> measurementTM7DTOList = frameNumber.getMeasurementTM7List()
-                .stream().map(this::measurementTM7Mapper)
-                .toList();
-        frameNumberDTO.setMeasurementTM7DTOList(measurementTM7DTOList);
+        if (frameNumber.getMeasurementTM7List() != null) {
+            List<MeasurementTM7DTO> measurementTM7DTOList = frameNumber.getMeasurementTM7List()
+                    .stream().map(this::measurementTM7Mapper)
+                    .toList();
+            frameNumberDTO.setMeasurementTM7DTOList(measurementTM7DTOList);
+        }
         return frameNumberDTO;
     }
 
@@ -264,12 +266,14 @@ public class MapperUtils {
      */
     public FormTM7DTO formTM7Mapper(FormTM7 formTM7) {
         FormTM7DTO formTM7DTO = modelMapper.map(formTM7, FormTM7DTO.class);
-        List<FrameNumberDTO> frameNumberDTOList =
-                formTM7.getFrameNumber().stream()
-                        .map(this::frameNumberMapper)
-                        .toList();
-        formTM7DTO.setFrameNumberList(frameNumberDTOList);
-        formTM7DTO.setFormIndex(formTM7.getFormIndex());
+        if (formTM7.getFrameNumber() != null) {
+            List<FrameNumberDTO> frameNumberDTOList =
+                    formTM7.getFrameNumber().stream()
+                            .map(this::frameNumberMapper)
+                            .toList();
+            formTM7DTO.setFrameNumberList(frameNumberDTOList);
+            formTM7DTO.setFormIndex(formTM7.getFormIndex());
+        }
         return formTM7DTO;
     }
 
@@ -296,7 +300,9 @@ public class MapperUtils {
      */
     public MeasurementTM6DTO measurementTM6Mapper(MeasurementTM6 measurementTM6) {
         MeasurementTM6DTO measurementTM6DTO = modelMapper.map(measurementTM6, MeasurementTM6DTO.class);
-        measurementTM6DTO.setDetailMeasurement(detailMeasurementMapper(measurementTM6.getDetailMeasurement()));
+        if (measurementTM6.getDetailMeasurement() != null) {
+            measurementTM6DTO.setDetailMeasurement(detailMeasurementMapper(measurementTM6.getDetailMeasurement()));
+        }
         return measurementTM6DTO;
     }
 

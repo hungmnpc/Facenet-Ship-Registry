@@ -158,4 +158,22 @@ public class SheetController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    @PostMapping(value = "/tm7s", consumes = {
+            "multipart/form-data"
+    })
+    public ResponseEntity<?> uploadSheetTM7(@RequestParam MultipartFile excelFile) {
+        try {
+            FormDTO formDTO = sheetService.uploadFormTm7FromExcel(excelFile);
+            if (formDTO != null) {
+                return ResponseEntity.ok(formDTO);
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            log.error(exception.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }
