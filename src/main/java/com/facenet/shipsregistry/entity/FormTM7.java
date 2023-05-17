@@ -22,9 +22,6 @@ public class FormTM7 {
 
     private String code;
 
-    @Column(name = "description")
-    private String description;
-
     @Column(name = "name")
     private String name;
 
@@ -35,14 +32,12 @@ public class FormTM7 {
     @JoinColumn(name = "report_id")
     private ReportIndex reportIndex;
 
-    public FormTM7(String name, String description, String code) {
+    public FormTM7(String name, String code) {
         this.name = name;
-        this.description = description;
         this.code = code;
     }
     public void update(FormTM7RequestBody requestBody) {
         this.setName(requestBody.getName());
-        this.setDescription(requestBody.getDescription());
         this.setCode(requestBody.getCode());
     }
 

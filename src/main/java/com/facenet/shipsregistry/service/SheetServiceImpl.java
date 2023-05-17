@@ -127,7 +127,6 @@ public class SheetServiceImpl implements SheetService{
                 formTM2.setThirdFrameNoTM2(cellVals.get(28).trim());
             }
             if (!cellVals.get(0).equals("") && i.get() >=5) {
-                log.info("{}", cellVals);
                 MeasurementTM2 measurementTM2 = createMeasurementTM2(cellVals);
                 measurementTM2List.add(measurementTM2);
             }
@@ -193,13 +192,11 @@ public class SheetServiceImpl implements SheetService{
             List<String> cellVals = cellStream.
                     map(cell -> formatter
                             .formatCellValue(cell,new HSSFFormulaEvaluator((HSSFWorkbook) workbook))).toList();
-            log.info("{}", cellVals);
             if (i.get() == 1 ) {
                 formTM3.setFirstFrameNo(cellVals.get(6).trim());
                 formTM3.setSecondFrameNo(cellVals.get(17).trim());
                 formTM3.setThirdFrameNo(cellVals.get(28).trim());
             }
-
             if (i.get() >= 4 && !cellVals.get(0).equals("")) {
                 MeasurementTM3 measurementTM3 = createMeasurementTM3(cellVals);
                 measurementTM3List.add(measurementTM3);
@@ -251,7 +248,6 @@ public class SheetServiceImpl implements SheetService{
                     map(cell -> formatter
                             .formatCellValue(cell,new HSSFFormulaEvaluator((HSSFWorkbook) workbook))).toList();
             if (i.get() >= 4 && !cellVals.get(0).equals("")) {
-                log.info("{}", cellVals);
                 MeasurementTM5 measurementTM5 = createMeasurementTM5(cellVals);
                 measurementTM5List.add(measurementTM5);
             }
@@ -315,10 +311,12 @@ public class SheetServiceImpl implements SheetService{
                         structuralMemberTM4.getMeasurementTM4List().add(measurementTM4);
                     }
                 }
-                log.info("{}", cellVals);
             }
             i.set(i.get() + 1);
         });
+        if (structuralMemberTM4.getStructuralMemberTitle() != null) {
+            structuralMemberTM4List.add(structuralMemberTM4);
+        }
         formTM4.setStructuralMemberTM4List(structuralMemberTM4List);
         return mapperUtils.formTM4Mapper(formTM4);
     }
@@ -356,6 +354,7 @@ public class SheetServiceImpl implements SheetService{
         formTM6.setStructuralMembers(sheet.getRow(0).getCell(3).getStringCellValue());
         formTM6.setStructuralDescriptionTM6List(new ArrayList<>());
         StructuralDescriptionTM6 structuralDescriptionTM6 = new StructuralDescriptionTM6();
+        structuralDescriptionTM6.setMeasurementTM6List(new ArrayList<>());
         List<StructuralDescriptionTM6> structuralDescriptionTM6List = new ArrayList<>();
         rowStream.forEach(row -> {
             Stream<Cell> cellStream = StreamSupport.stream(row.spliterator(), false);
@@ -376,14 +375,16 @@ public class SheetServiceImpl implements SheetService{
                         structuralDescriptionTM6.setMeasurementTM6List(new ArrayList<>());
                         structuralDescriptionTM6.setStructuralDescriptionTitle(cellVals.get(0));
                     } else {
-//                        MeasurementTM4 measurementTM4 = createMeasurementTM4(cellVals);
-//                        structuralMemberTM4.getMeasurementTM4List().add(measurementTM4);
+                        MeasurementTM6 measurementTM6 = createMeasurementTM6(cellVals);
+                        structuralDescriptionTM6.getMeasurementTM6List().add(measurementTM6);
                     }
                 }
-                log.info("{}", cellVals);
             }
             i.set(i.get() + 1);
         });
+        if (structuralDescriptionTM6 .getStructuralDescriptionTitle() != null) {
+            structuralDescriptionTM6List.add(structuralDescriptionTM6);
+        }
         formTM6.setStructuralDescriptionTM6List(structuralDescriptionTM6List);
         return mapperUtils.formTM6Mapper(formTM6);
     }
@@ -402,6 +403,72 @@ public class SheetServiceImpl implements SheetService{
 
     private MeasurementTM6 createMeasurementTM6(List<String> cellVals) {
         MeasurementTM6 measurementTM6 = new MeasurementTM6();
+        measurementTM6.setDescription(cellVals.get(0));
+        measurementTM6.setItem(cellVals.get(2));
+        DetailMeasurement detailMeasurement = createDetailMeasurement(cellVals, 3,5, 6);
+        measurementTM6.setDetailMeasurement(detailMeasurement);
         return measurementTM6;
+    }
+
+    /**
+     * @param excelFile
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public FormTM7DTO uploadFormTm7FromExcel(MultipartFile excelFile) throws Exception {
+        Workbook workbook = getWorkBookFromFile(excelFile);
+        Sheet sheet = workbook.getSheetAt(0);
+        Stream<Row> rowStream = StreamSupport.stream(sheet.spliterator(), false);
+        DataFormatter formatter = new DataFormatter();
+        AtomicInteger i = new AtomicInteger();
+        FormTM7 formTM7 = new FormTM7();
+        formTM7.setName(sheet.getRow(0).getCell(0).getStringCellValue());
+        List<FrameNumber> frameNumberList = new ArrayList<>();
+        FrameNumber frameNumber = new FrameNumber();
+        frameNumber.setMeasurementTM7List(new ArrayList<>());
+        rowStream.forEach(row -> {
+            Stream<Cell> cellStream = StreamSupport.stream(row.spliterator(), false);
+            List<String> cellVals = cellStream.
+                    map(cell -> formatter
+                            .formatCellValue(cell,new HSSFFormulaEvaluator((HSSFWorkbook) workbook)))
+                    .toList();
+            if (i.get() >= 4 && !cellVals.get(0).equals("")) {
+                if (frameNumber.getName() == null) {
+                    frameNumber.setName(cellVals.get(0));
+                } else {
+                    if (i.get() > 4 && cellVals.get(1).equals("") && !cellVals.get(0).equals("") ) {
+                        frameNumberList.add( copy(frameNumber));
+                        frameNumber.setName(cellVals.get(0));
+                        frameNumber.setMeasurementTM7List(new ArrayList<>());
+                    } else {
+                        MeasurementTM7 measurementTM7 = createMeasurementTM7(cellVals);
+                        frameNumber.getMeasurementTM7List().add(measurementTM7);
+                    }
+                }
+            }
+            i.set(i.get() + 1);
+        });
+        frameNumberList.add(frameNumber);
+        formTM7.setFrameNumber(frameNumberList);
+        return mapperUtils.formTM7Mapper(formTM7);
+    }
+
+    private FrameNumber copy (FrameNumber frameNumber) {
+        FrameNumber frameNumberCopy = new FrameNumber(frameNumber.getName());
+        frameNumberCopy.setMeasurementTM7List(frameNumber.getMeasurementTM7List());
+        return frameNumber;
+    }
+
+    private MeasurementTM7 createMeasurementTM7(List<String> cellVals) {
+        MeasurementTM7 measurementTM7 = new MeasurementTM7();
+        measurementTM7.setItem(cellVals.get(0));
+        DetailMeasurement upper = createDetailMeasurement(cellVals, 1, 3, 4);
+        DetailMeasurement mid = createDetailMeasurement(cellVals, 9, 11, 12);
+        DetailMeasurement lower = createDetailMeasurement(cellVals, 17, 19, 20);
+        measurementTM7.setUpperPart(upper);
+        measurementTM7.setMidPart(mid);
+        measurementTM7.setLowerPart(lower);
+        return measurementTM7;
     }
 }
