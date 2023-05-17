@@ -15,7 +15,5 @@ public class FormTM7DTO extends FormDTO{
 
     private String name;
 
-    private String description;
-
     private List<FrameNumberDTO> frameNumberList;
 }

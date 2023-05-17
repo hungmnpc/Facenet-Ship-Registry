@@ -56,4 +56,12 @@ public interface SheetService {
      * @throws Exception
      */
     public FormTM6DTO uploadFormTm6FromExcel(MultipartFile excelFile) throws Exception;
+
+    /**
+     *
+     * @param excelFile
+     * @return
+     * @throws Exception
+     */
+    public FormTM7DTO uploadFormTm7FromExcel(MultipartFile excelFile) throws Exception;
 }

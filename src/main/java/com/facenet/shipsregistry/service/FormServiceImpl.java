@@ -438,7 +438,7 @@ public class FormServiceImpl implements FormService{
         if (reportIndex.isEmpty()) {
             return null;
         }
-        FormTM7 formTM7 = new FormTM7(requestBody.getName(), requestBody.getDescription(), requestBody.getCode());
+        FormTM7 formTM7 = new FormTM7(requestBody.getName(), requestBody.getCode());
         reportIndex.ifPresent(formTM7::setReportIndex);
         formTM7.setFormIndex(reportIndex.get().currentFormIndex());
         List<FrameNumber> frameNumberList =
