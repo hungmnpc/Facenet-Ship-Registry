@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -74,9 +75,11 @@ public class AuthController {
                     .withIssuer(request.getRequestURL().toString())
                     .sign(algorithm);
             return ResponseEntity.ok(new LoginResponse(accessToken, refreshToken, user.getUsername()));
-        } catch (Exception exception) {
+        } catch (BadCredentialsException exception) {
             log.error("{}", exception.getMessage());
             exception.printStackTrace();
+            return ResponseEntity.badRequest().body("Tài khoản mật khẩu không chính xác");
+        } catch (Exception exception) {
             return ResponseEntity.internalServerError().build();
         }
     }

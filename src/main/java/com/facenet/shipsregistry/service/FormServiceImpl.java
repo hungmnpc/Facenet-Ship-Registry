@@ -91,6 +91,9 @@ public class FormServiceImpl implements FormService{
     StructuralMemberDetailsTM4Repository structuralMemberDetailsTM4Repository;
 
     @Autowired
+    StructuralTM5Repository structuralTM5Repository;
+
+    @Autowired
     MapperUtils mapperUtils;
 
     /**
@@ -204,14 +207,13 @@ public class FormServiceImpl implements FormService{
                 requestBody.getTankHolDescription(),requestBody.getFrameNo(),
                 requestBody.getCode(),null, null, reportIndex.get().currentFormIndex());;
         reportIndex.ifPresent(formTM5::setReportIndex);
-        List<MeasurementTM5> measurementTM5List =
-                requestBody.getMeasurementTM5List().stream()
-                        .map(measurementTM5RequestBody -> {
-                            MeasurementTM5 measurementTM5 = createMeasurementTM5(measurementTM5RequestBody);
-                            measurementTM5.setFormTM5(formTM5);
-                            return measurementTM5;
-                        }).toList();
-        formTM5.setMeasurementTM5List(measurementTM5List);
+        List<StructuralTM5> structuralTM5List = requestBody.getStructuralTM5List().stream()
+                .map(structuralTM5RequestBody -> {
+                    StructuralTM5 structuralTM5 = createStructuralTM5(structuralTM5RequestBody);
+                    structuralTM5.setFormTM5(formTM5);
+                    return structuralTM5;
+                }).toList();
+        formTM5.setStructuralTM5List(structuralTM5List);
         FormTM5 formTM5Saved = formTM5Repository.save(formTM5);
         if (formTM5Saved.getId() > 0) {
             return mapperUtils.formTM5Mapper(formTM5Saved);
@@ -219,6 +221,8 @@ public class FormServiceImpl implements FormService{
             return null;
         }
     }
+
+
 
     /**
      * @param requestBody
@@ -750,25 +754,42 @@ public class FormServiceImpl implements FormService{
         FormTM5 formTM5 = formTM5Repository.findById(id).orElse(null);
         if (formTM5 != null) {
             formTM5.update(requestBody);
-            measurementTM5Repository.deleteAll(formTM5.getMeasurementTM5List());
-            List<MeasurementTM5> measurementTM5List = requestBody.getMeasurementTM5List().stream()
-                    .map(requestBodyMTM5 -> {
-                        MeasurementTM5 measurementTM5 = createMeasurementTM5(requestBodyMTM5);
-                        measurementTM5.setFormTM5(formTM5);
-                        return measurementTM5;
+            structuralTM5Repository.deleteAll(formTM5.getStructuralTM5List());
+            List<StructuralTM5> structuralTM5List = requestBody.getStructuralTM5List().stream()
+                    .map(structuralTM5RequestBody -> {
+                        StructuralTM5 structuralTM5 = createStructuralTM5(structuralTM5RequestBody);
+                        structuralTM5.setFormTM5(formTM5);
+                        return structuralTM5;
                     }).toList();
-            formTM5.setMeasurementTM5List(measurementTM5List);
-
+            formTM5.setStructuralTM5List(structuralTM5List);
             return mapperUtils.formTM5Mapper(formTM5);
         }
         return null;
     }
+
     private MeasurementTM5 createMeasurementTM5(MeasurementTM5RequestBody requestBody) {
         DetailMeasurement detailMeasurement =
                 createNewDetailMeasurement(requestBody.getMeasurementDetail());
         return new MeasurementTM5(null, requestBody.getStructuralComponentType(),
-                requestBody.getStructuralComponent(), null, detailMeasurement);
+                requestBody.getItem(), null, detailMeasurement);
     }
+
+    private StructuralTM5 createStructuralTM5(StructuralTM5RequestBody structuralTM5RequestBody) {
+        StructuralTM5 structuralTM5 = new StructuralTM5(null,
+                structuralTM5RequestBody.getName(), null, null);
+        List<MeasurementTM5> measurementTM5List = structuralTM5RequestBody.getMeasurementTM5List()
+                .stream().map(
+                        measurementTM5RequestBody -> {
+                            MeasurementTM5 measurementTM5 = createMeasurementTM5(measurementTM5RequestBody);
+                            measurementTM5.setStructuralTM5(structuralTM5);
+                            return measurementTM5;
+                        }
+                )
+                .toList();
+        structuralTM5.setMeasurementTM5List(measurementTM5List);
+        return structuralTM5;
+    }
+
     @Override
     public Boolean deletedFormTM5(Long id) {
         formTM5Repository.deleteById(id);

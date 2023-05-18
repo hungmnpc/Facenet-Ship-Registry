@@ -39,13 +39,13 @@ public class FormTM5 {
         this.locationOfStructure = locationOfStructure;
         this.tankHolDescription = tankHolDescription;
         this.frameNo = frameNo;
-        this.measurementTM5List = new ArrayList<>();
+        this.structuralTM5List = new ArrayList<>();
         this.code = code;
         this.id = null;
     }
 
     @OneToMany(mappedBy = "formTM5", cascade = {CascadeType.ALL})
-    private List<MeasurementTM5> measurementTM5List;
+    private List<StructuralTM5> structuralTM5List;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "report_id")

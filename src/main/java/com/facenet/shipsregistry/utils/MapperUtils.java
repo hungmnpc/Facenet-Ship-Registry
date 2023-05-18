@@ -84,13 +84,19 @@ public class MapperUtils {
     }
     public FormTM5DTO formTM5Mapper(FormTM5 formTm5) {
         FormTM5DTO formTM5DTO = modelMapper.map(formTm5, FormTM5DTO.class);
-        List<MeasurementTM5DTO> measurementTM5DTOList =
-                formTm5.getMeasurementTM5List().stream()
-                        .map(this::measurementTM5Mapper)
-                        .toList();
-        formTM5DTO.setMeasurementTM5List(measurementTM5DTOList);
+        List<StructuralTM5DTO> structuralTM5DTOList = formTm5.getStructuralTM5List().stream()
+                        .map(this::structuralTM5Mapper).toList();
+        formTM5DTO.setStructuralTM5List(structuralTM5DTOList);
         formTM5DTO.setFormIndex(formTm5.getFormIndex());
         return formTM5DTO;
+    }
+
+    public StructuralTM5DTO structuralTM5Mapper(StructuralTM5 structuralTM5) {
+        StructuralTM5DTO structuralTM5DTO = modelMapper.map(structuralTM5, StructuralTM5DTO.class);
+        List<MeasurementTM5DTO> measurementTM5DTOList = structuralTM5.getMeasurementTM5List().stream()
+                .map(this::measurementTM5Mapper).toList();
+        structuralTM5DTO.setMeasurementTM5List(measurementTM5DTOList);
+        return structuralTM5DTO;
     }
 
     /**
