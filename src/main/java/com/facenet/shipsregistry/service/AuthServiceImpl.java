@@ -7,10 +7,13 @@ import com.facenet.shipsregistry.modal.UserDTO;
 import com.facenet.shipsregistry.principal.UserPrincipal;
 import com.facenet.shipsregistry.repository.RoleRepository;
 import com.facenet.shipsregistry.repository.UserRepository;
+import com.facenet.shipsregistry.request.ChangePasswordRequest;
 import com.facenet.shipsregistry.request.NewUserRequest;
 import com.facenet.shipsregistry.utils.MapperUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -104,6 +107,23 @@ public class AuthServiceImpl implements AuthService , UserDetailsService {
             }
         } else {
             return "Không tìm thấy userId: " + userId;
+        }
+    }
+
+    /**
+     * @param request
+     * @return
+     */
+    @Override
+    public String updatePassword(ChangePasswordRequest request) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.info(authentication.getPrincipal().toString());
+        User user = userRepository.findUserByUsername(authentication.getPrincipal().toString());
+        if (passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
+            user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+            return "Thay đổi mật khẩu thành công";
+        } else {
+            return "Mật khẩu cũ không chính xác";
         }
     }
 }

@@ -2,6 +2,7 @@ package com.facenet.shipsregistry.service;
 
 import com.facenet.shipsregistry.modal.RoleDTO;
 import com.facenet.shipsregistry.modal.UserDTO;
+import com.facenet.shipsregistry.request.ChangePasswordRequest;
 import com.facenet.shipsregistry.request.NewUserRequest;
 
 /**
@@ -24,4 +25,11 @@ public interface AuthService {
      * @return
      */
     public String deleteUser(Long userId);
+
+    /**
+     *
+     * @param newPassword
+     * @return
+     */
+    public String updatePassword(ChangePasswordRequest request);
 }

@@ -70,6 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.exceptionHandling().authenticationEntryPoint(
                 (req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authentication Failed"));
         http.authorizeHttpRequests().antMatchers("/auth/login/**").permitAll();
+        http.authorizeHttpRequests().antMatchers("/auth/password/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER");
 //        http.authorizeHttpRequests().antMatchers("/ships/**").hasAuthority("ROLE_USER");
         http.authorizeHttpRequests().antMatchers("/admin/**").hasAuthority("ROLE_ADMIN");
         http.authorizeHttpRequests().anyRequest().permitAll();

@@ -6,6 +6,7 @@ import com.facenet.shipsregistry.modal.LoginResponse;
 import com.facenet.shipsregistry.modal.RoleDTO;
 import com.facenet.shipsregistry.modal.UserDTO;
 import com.facenet.shipsregistry.principal.UserPrincipal;
+import com.facenet.shipsregistry.request.ChangePasswordRequest;
 import com.facenet.shipsregistry.request.LoginRequestBody;
 import com.facenet.shipsregistry.request.NewUserRequest;
 import com.facenet.shipsregistry.service.AuthService;
@@ -63,7 +64,7 @@ public class AuthController {
             Algorithm algorithm = Algorithm.HMAC256(secret.getBytes());
             String accessToken = JWT.create()
                     .withSubject(user.getUsername())
-                    .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
+                    .withExpiresAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))
                     .withIssuer(request.getRequestURL().toString())
                     .withClaim("roles", user.getAuthorities().stream()
                             .map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
@@ -80,6 +81,23 @@ public class AuthController {
             exception.printStackTrace();
             return ResponseEntity.badRequest().body("Tài khoản mật khẩu không chính xác");
         } catch (Exception exception) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    /**
+     *
+     * @param request
+     * @return
+     */
+    @PutMapping("/password")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request) {
+        try {
+            String message = authService.updatePassword(request);
+            return ResponseEntity.ok().body(message);
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            exception.printStackTrace();
             return ResponseEntity.internalServerError().build();
         }
     }
