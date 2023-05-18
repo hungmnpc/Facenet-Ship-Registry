@@ -18,7 +18,7 @@ public class MeasurementTM5DTO {
 
     private Long id;
 
-    private String structuralComponentType;
+    private String item;
 
     private String structuralComponent;
 

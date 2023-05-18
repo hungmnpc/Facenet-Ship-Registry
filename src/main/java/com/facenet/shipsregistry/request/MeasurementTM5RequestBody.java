@@ -12,6 +12,8 @@ import lombok.*;
 public class MeasurementTM5RequestBody {
 
     private String structuralComponentType;
-    private String structuralComponent;
+
+    private String item;
+
     private DetailMeasurementRequestBody measurementDetail;
 }

@@ -253,7 +253,6 @@ public class SheetServiceImpl implements SheetService{
             }
             i.set(i.get() + 1);
         });
-        formTM5.setMeasurementTM5List(measurementTM5List);
         return mapperUtils.formTM5Mapper(formTM5);
     }
 
@@ -264,7 +263,7 @@ public class SheetServiceImpl implements SheetService{
      */
     private MeasurementTM5 createMeasurementTM5(List<String> cellVals) {
         MeasurementTM5 measurementTM5 = new MeasurementTM5();
-        measurementTM5.setStructuralComponent(cellVals.get(0));
+        measurementTM5.setItem(cellVals.get(0));
         measurementTM5.setStructuralComponentType(cellVals.get(3));
         DetailMeasurement detailMeasurement = createDetailMeasurement(cellVals, 4, 6, 7);
         measurementTM5.setMeasurementDetail(detailMeasurement);
@@ -332,6 +331,7 @@ public class SheetServiceImpl implements SheetService{
         MeasurementTM4 measurementTM4 = new MeasurementTM4();
         measurementTM4.setItem(cellVal.get(3));
         measurementTM4.setStructuralMember(cellVal.get(0));
+
         DetailMeasurement detailMeasurement = createDetailMeasurement(cellVal, 4, 6 , 7);
         measurementTM4.setDetailMeasurement(detailMeasurement);
         return measurementTM4;

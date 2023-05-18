@@ -24,12 +24,12 @@ public class MeasurementTM5 {
     @Column(name = "structural_component_type")
     private String structuralComponentType;
 
-    @Column(name = "structural_component_no")
-    private String structuralComponent;
+    @Column(name = "item")
+    private String item;
 
     @ManyToOne
-    @JoinColumn(name = "form_TM5_id")
-    private FormTM5 formTM5;
+    @JoinColumn(name = "structuralTM5_id")
+    private StructuralTM5 structuralTM5;
 
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "measurement_detail_id")

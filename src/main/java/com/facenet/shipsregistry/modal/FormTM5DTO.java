@@ -29,7 +29,7 @@ public class FormTM5DTO extends FormDTO{
 
     private String frameNo;
 
-    private List<MeasurementTM5DTO> measurementTM5List;
+    private List<StructuralTM5DTO> structuralTM5List;
 
 
 }
