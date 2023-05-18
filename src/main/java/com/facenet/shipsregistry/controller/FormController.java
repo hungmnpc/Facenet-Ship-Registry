@@ -412,5 +412,17 @@ public class FormController {
         }
     }
 
-
+    @PutMapping("/form/{formType}/{id}")
+    public ResponseEntity<?> updateFormIndex(@PathVariable String formType,
+                                             @PathVariable Long id,
+                                             @RequestBody Integer newIndex) {
+        try {
+            formService.updateFormIndex(id, formType, newIndex);
+            return ResponseEntity.ok().build();
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
+            exception.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }

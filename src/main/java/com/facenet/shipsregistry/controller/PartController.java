@@ -270,6 +270,7 @@ public class PartController {
             }
         } catch (Exception exception) {
             log.error(exception.getMessage());
+            exception.printStackTrace();
             return ResponseEntity.internalServerError().body(exception.getMessage());
         }
     }
