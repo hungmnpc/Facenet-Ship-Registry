@@ -8,23 +8,13 @@ import com.facenet.shipsregistry.repository.ReportIndexRepository;
 import com.facenet.shipsregistry.request.FormTM1RequestBody;
 import com.facenet.shipsregistry.utils.MapperUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-import java.io.File;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 /**
  * @author: hungdinh
@@ -92,6 +82,9 @@ public class FormServiceImpl implements FormService{
 
     @Autowired
     StructuralTM5Repository structuralTM5Repository;
+
+    @Autowired
+    FormDAO formDAO;
 
     @Autowired
     MapperUtils mapperUtils;
@@ -947,43 +940,54 @@ public class FormServiceImpl implements FormService{
         if (isDeleted) {
             reportIndexDTO.getFormList().removeIf(form -> form.getFormIndex().equals(formIndex));
             log.info("{}",reportIndexDTO.getFormList().size());
-            reportIndexDTO.getFormList().forEach(part -> {
-                if (part.getFormIndex() > formIndex) {
-                    switch (part.getClass().getSimpleName()) {
-                        case "FormTM1DTO" -> {
-                            formTM1Repository.findById(part.getId())
-                                    .ifPresent(formTM1 -> formTM1.setFormIndex(formTM1.getFormIndex() - 1));
-                        }
-                        case "FormTM2DTO" -> {
-                            formTM2Repository.findById(part.getId())
-                                    .ifPresent(formTM2 -> formTM2.setFormIndex(formTM2.getFormIndex() - 1));
-                        }
-                        case "FormTM3DTO" -> {
-                            formTM3Repository.findById(part.getId())
-                                    .ifPresent(formTM3 -> formTM3.setFormIndex(formTM3.getFormIndex() - 1));
-                        }
-                        case "FormTM4DTO" -> {
-                            formTM4Repository.findById(part.getId())
-                                    .ifPresent(formTM4 -> formTM4.setFormIndex(formTM4.getFormIndex() - 1));
-                        }
-                        case "FormTM5DTO" -> {
-                            formTM5Repository.findById(part.getId())
-                                    .ifPresent(formTM5 -> formTM5.setFormIndex(formTM5.getFormIndex() - 1));
-                        }
-                        case "FormTM6DTO" -> {
-                            formTM6Repository.findById(part.getId())
-                                    .ifPresent(formTM6 -> formTM6.setFormIndex(formTM6.getFormIndex() - 1));
-                        }
-                        case "FormTM7DTO" -> {
-                            formTM7Repository.findById(part.getId())
-                                    .ifPresent(formTM7 -> formTM7.setFormIndex(formTM7.getFormIndex() - 1));
-                        }
-                        default -> {
-                        }
-                    }
-                }
-            });
+            updateAfterDeleteForm(reportIndexDTO, formIndex);
         }
         return isDeleted;
+    }
+
+    private void updateAfterDeleteForm(ReportIndexDTO reportIndexDTO, Integer formIndexDeleted) {
+        reportIndexDTO.getFormList().forEach(formDTO -> {
+            if (formDTO.getFormIndex() > formIndexDeleted) {
+                String formType = "form_tm";
+                switch (formDTO.getClass().getSimpleName()) {
+                    case "FormTM1DTO" -> {
+                        formType += "1";
+                    }
+                    case "FormTM2DTO" -> {
+                        formType += "2";
+                    }
+                    case "FormTM3DTO" -> {
+                        formType += "3";
+                    }
+                    case "FormTM4DTO" -> {
+                        formType += "4";
+                    }
+                    case "FormTM5DTO" -> {
+                        formType += "5";
+                    }
+                    case "FormTM6DTO" -> {
+                        formType += "6";
+                    }
+                    case "FormTM7DTO" -> {
+                        formType += "7";
+                    }
+                    default -> {
+                        return;
+                    }
+                }
+                log.info(formType);
+                formDAO.updateFormIndex(formType, formDTO.getId(), formDTO.getFormIndex() - 1);
+            }
+        });
+    }
+
+    /**
+     * @param formId
+     * @param formType
+     * @param newIndex
+     */
+    @Override
+    public void updateFormIndex(Long formId, String formType, Integer newIndex) {
+        formDAO.updateFormIndex(formType, formId, newIndex);
     }
 }

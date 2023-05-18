@@ -247,10 +247,7 @@ public class SheetServiceImpl implements SheetService{
             List<String> cellVals = cellStream.
                     map(cell -> formatter
                             .formatCellValue(cell,new HSSFFormulaEvaluator((HSSFWorkbook) workbook))).toList();
-            if (i.get() >= 4 && !cellVals.get(0).equals("")) {
-                MeasurementTM5 measurementTM5 = createMeasurementTM5(cellVals);
-                measurementTM5List.add(measurementTM5);
-            }
+            log.info("{}", cellVals);
             i.set(i.get() + 1);
         });
         return mapperUtils.formTM5Mapper(formTM5);

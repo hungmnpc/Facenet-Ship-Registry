@@ -1,9 +1,7 @@
 package com.facenet.shipsregistry.service;
 
-import com.facenet.shipsregistry.entity.FormTM2;
 import com.facenet.shipsregistry.modal.*;
 import com.facenet.shipsregistry.request.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -264,4 +262,12 @@ public interface FormService {
      * @return
      */
     public Boolean deletedFormUsingPart(Long partId, Integer formIndex);
+
+    /**
+     * @param formId
+     * @param formType
+     * @param newIndex
+     */
+    public void updateFormIndex(Long formId, String formType, Integer newIndex);
+
 }

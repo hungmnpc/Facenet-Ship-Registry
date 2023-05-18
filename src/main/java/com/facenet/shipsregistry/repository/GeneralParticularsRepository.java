@@ -1,12 +1,11 @@
 package com.facenet.shipsregistry.repository;
 
 import com.facenet.shipsregistry.entity.GeneralParticulars;
-import com.facenet.shipsregistry.modal.ReportNameAndPartName;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -29,4 +28,10 @@ public interface GeneralParticularsRepository extends JpaRepository<GeneralParti
     @Query(value = "CALL getReportNoAndPartNameByForm(:formType, :formId)", nativeQuery = true)
     public Object[][] getReportAndPartNameByForm(@Param("formType") String formType,
                                               @Param("formId") Long formId);
+
+    @Modifying
+    @Query(value = "UPDATE :formType as f SET form_index = :newIndex WHERE f.id = :formId", nativeQuery = true)
+    public void updateFormIndex(@Param("formType") String formType,
+                                @Param("formId") Long formId,
+                                @Param("newIndex") Integer newIndex);
 }
