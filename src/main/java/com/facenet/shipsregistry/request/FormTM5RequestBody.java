@@ -20,5 +20,5 @@ public class FormTM5RequestBody {
 
     private String frameNo;
 
-    private List<MeasurementTM5RequestBody> measurementTM5List;
+    private List<StructuralTM5RequestBody> structuralTM5List;
 }
