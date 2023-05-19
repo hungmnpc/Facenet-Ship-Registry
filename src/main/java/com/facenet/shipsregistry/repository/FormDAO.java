@@ -18,6 +18,12 @@ public class FormDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
+    /**
+     *
+     * @param tableName
+     * @param formId
+     * @param newIndex
+     */
     public void updateFormIndex(String tableName, Long formId, Integer newIndex) {
         String query = "UPDATE " + tableName + " SET form_index = :newIndex WHERE id = :formId";
         entityManager.createNativeQuery(query)
