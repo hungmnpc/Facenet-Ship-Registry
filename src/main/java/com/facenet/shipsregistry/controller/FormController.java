@@ -412,7 +412,7 @@ public class FormController {
         }
     }
 
-    @PutMapping("/form/{formType}/{id}")
+    @PutMapping("/{formType}/{id}")
     public ResponseEntity<?> updateFormIndex(@PathVariable String formType,
                                              @PathVariable Long id,
                                              @RequestBody Integer newIndex) {
