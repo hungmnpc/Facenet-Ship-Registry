@@ -20,7 +20,7 @@ public class MeasurementTM5DTO {
 
     private String item;
 
-    private String structuralComponent;
+    private String structuralComponentType;
 
     private DetailMeasurementDTO measurementDetail;
 }

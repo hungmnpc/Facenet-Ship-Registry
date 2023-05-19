@@ -250,18 +250,16 @@ public class SheetServiceImpl implements SheetService{
                     map(cell -> formatter
                             .formatCellValue(cell,new HSSFFormulaEvaluator((HSSFWorkbook) workbook))).toList();
             if (i.get() >=4 && !cellVals.get(0).equals("")) {
-
+                if (structuralTM5.getName() == null) {
+                    structuralTM5.setName("");
+                }
                 if (!cellVals.get(0).equals("") && cellVals.get(3).equals("")) {
                     if (structuralTM5.getName() != null) {
                         structuralTM5List.add(copy(structuralTM5));
                         structuralTM5.setName(cellVals.get(0));
                         structuralTM5.setMeasurementTM5List(new ArrayList<>());
-                    } else {
-                        structuralTM5.setName(cellVals.get(0));
                     }
-                } else if (structuralTM5.getName() == null) {
-                    structuralTM5.setName("");
-                } else {
+                } else  {
                     MeasurementTM5 measurementTM5 = createMeasurementTM5(cellVals);
                     structuralTM5.getMeasurementTM5List().add(measurementTM5);
                 }
@@ -290,8 +288,8 @@ public class SheetServiceImpl implements SheetService{
      */
     private MeasurementTM5 createMeasurementTM5(List<String> cellVals) {
         MeasurementTM5 measurementTM5 = new MeasurementTM5();
-        measurementTM5.setItem(cellVals.get(0));
-        measurementTM5.setStructuralComponentType(cellVals.get(3));
+        measurementTM5.setItem(cellVals.get(3));
+        measurementTM5.setStructuralComponentType(cellVals.get(0));
         DetailMeasurement detailMeasurement = createDetailMeasurement(cellVals, 4, 6, 7);
         measurementTM5.setMeasurementDetail(detailMeasurement);
         return measurementTM5;

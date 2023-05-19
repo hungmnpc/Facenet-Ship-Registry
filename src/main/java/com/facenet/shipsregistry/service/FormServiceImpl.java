@@ -547,13 +547,30 @@ public class FormServiceImpl implements FormService{
      */
     @Override
     public Boolean deleteFormTM1(Long id) {
+        FormTM1 formTM1 = formTM1Repository.findById(id).orElse(null);
+        if (formTM1 != null) {
+            ReportIndexDTO reportIndexDTO = mapperUtils.reportIndexMapper(formTM1.getReportIndex());
+            updateAfterDeleteForm(reportIndexDTO, formTM1.getFormIndex());
+            formTM1.getReportIndex().getFormTM1List().remove(formTM1);
+        }
         formTM1Repository.deleteById(id);
         boolean exist = formTM1Repository.existsById(id);
         return !exist;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public Boolean deleteFormTM4(Long id) {
+        FormTM4 formTM4 = formTM4Repository.findById(id).orElse(null);
+        if (formTM4 != null) {
+            ReportIndexDTO reportIndexDTO = mapperUtils.reportIndexMapper(formTM4.getReportIndex());
+            updateAfterDeleteForm(reportIndexDTO, formTM4.getFormIndex());
+            formTM4.getReportIndex().getFormTM4List().remove(formTM4);
+        }
         formTM4Repository.deleteById(id);
         boolean exist = formTM4Repository.existsById(id);
         return !exist;
@@ -561,6 +578,12 @@ public class FormServiceImpl implements FormService{
 
     @Override
     public Boolean deleteFormTM6(Long id) {
+        FormTM6 formTM6 = formTM6Repository.findById(id).orElse(null);
+        if (formTM6 != null) {
+            ReportIndexDTO reportIndexDTO = mapperUtils.reportIndexMapper(formTM6.getReportIndex());
+            updateAfterDeleteForm(reportIndexDTO, formTM6.getFormIndex());
+            formTM6.getReportIndex().getFormTM6List().remove(formTM6);
+        }
         formTM6Repository.deleteById(id);
         boolean exist = formTM6Repository.existsById(id);
         return !exist;
@@ -568,6 +591,12 @@ public class FormServiceImpl implements FormService{
 
     @Override
     public Boolean deleteFormTM7(Long id) {
+        FormTM7 formTM7 = formTM7Repository.findById(id).orElse(null);
+        if (formTM7 != null) {
+            ReportIndexDTO reportIndexDTO = mapperUtils.reportIndexMapper(formTM7.getReportIndex());
+            updateAfterDeleteForm(reportIndexDTO, formTM7.getFormIndex());
+            formTM7.getReportIndex().getFormTM7List().remove(formTM7);
+        }
         formTM7Repository.deleteById(id);
         boolean exist = formTM7Repository.existsById(id);
         return !exist;
@@ -686,6 +715,12 @@ public class FormServiceImpl implements FormService{
      */
     @Override
     public Boolean deletedFormTM2(Long id) {
+        FormTM2 formTM2 = formTM2Repository.findById(id).orElse(null);
+        if (formTM2 != null) {
+            ReportIndexDTO reportIndexDTO = mapperUtils.reportIndexMapper(formTM2.getReportIndex());
+            updateAfterDeleteForm(reportIndexDTO, formTM2.getFormIndex());
+            formTM2.getReportIndex().getFormTM2List().remove(formTM2);
+        }
         formTM2Repository.deleteById(id);
         boolean isSuccess = !formTM2Repository.existsById(id);
         return isSuccess;
@@ -732,6 +767,12 @@ public class FormServiceImpl implements FormService{
 
     @Override
     public Boolean deletedFormTM3(Long id) {
+        FormTM3 formTM3 = formTM3Repository.findById(id).orElse(null);
+        if (formTM3 != null) {
+            ReportIndexDTO reportIndexDTO = mapperUtils.reportIndexMapper(formTM3.getReportIndex());
+            updateAfterDeleteForm(reportIndexDTO, formTM3.getFormIndex());
+            formTM3.getReportIndex().getFormTM3List().remove(formTM3);
+        }
         formTM3Repository.deleteById(id);
         boolean isSuccess = !formTM3Repository.existsById(id);
         return isSuccess;
@@ -785,6 +826,12 @@ public class FormServiceImpl implements FormService{
 
     @Override
     public Boolean deletedFormTM5(Long id) {
+        FormTM5 formTM5 = formTM5Repository.findById(id).orElse(null);
+        if (formTM5 != null) {
+            ReportIndexDTO reportIndexDTO = mapperUtils.reportIndexMapper(formTM5.getReportIndex());
+            updateAfterDeleteForm(reportIndexDTO, formTM5.getFormIndex());
+            formTM5.getReportIndex().getFormTM5List().remove(formTM5);
+        }
         formTM5Repository.deleteById(id);
         boolean isSuccess = !formTM5Repository.existsById(id);
         return isSuccess;
