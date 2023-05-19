@@ -241,16 +241,46 @@ public class SheetServiceImpl implements SheetService{
         formTM5.setFrameNo(String.valueOf((int)sheet.getRow(1).getCell(11).getNumericCellValue()));
         formTM5.setTankHolDescription(sheet.getRow(0).getCell(3).getStringCellValue());
         formTM5.setLocationOfStructure(sheet.getRow(1).getCell(3).getStringCellValue());
-        List<MeasurementTM5> measurementTM5List = new ArrayList<>();
+        List<StructuralTM5> structuralTM5List = new ArrayList<>();
+        StructuralTM5 structuralTM5 = new StructuralTM5();
+        structuralTM5.setMeasurementTM5List(new ArrayList<>());
         rowStream.forEach(row -> {
             Stream<Cell> cellStream = StreamSupport.stream(row.spliterator(), false);
             List<String> cellVals = cellStream.
                     map(cell -> formatter
                             .formatCellValue(cell,new HSSFFormulaEvaluator((HSSFWorkbook) workbook))).toList();
-            log.info("{}", cellVals);
+            if (i.get() >=4 && !cellVals.get(0).equals("")) {
+
+                if (!cellVals.get(0).equals("") && cellVals.get(3).equals("")) {
+                    if (structuralTM5.getName() != null) {
+                        structuralTM5List.add(copy(structuralTM5));
+                        structuralTM5.setName(cellVals.get(0));
+                        structuralTM5.setMeasurementTM5List(new ArrayList<>());
+                    } else {
+                        structuralTM5.setName(cellVals.get(0));
+                    }
+                } else if (structuralTM5.getName() == null) {
+                    structuralTM5.setName("");
+                } else {
+                    MeasurementTM5 measurementTM5 = createMeasurementTM5(cellVals);
+                    structuralTM5.getMeasurementTM5List().add(measurementTM5);
+                }
+            }
             i.set(i.get() + 1);
         });
+        structuralTM5List.add(structuralTM5);
+        formTM5.setStructuralTM5List(structuralTM5List);
         return mapperUtils.formTM5Mapper(formTM5);
+    }
+
+    /**
+     *
+     * @param structuralTM5
+     * @return
+     */
+    private StructuralTM5 copy(StructuralTM5 structuralTM5) {
+        return new StructuralTM5(null, structuralTM5.getName(), structuralTM5.getFormTM5(),
+                structuralTM5.getMeasurementTM5List());
     }
 
     /**
@@ -317,6 +347,11 @@ public class SheetServiceImpl implements SheetService{
         return mapperUtils.formTM4Mapper(formTM4);
     }
 
+    /**
+     *
+     * @param structuralMemberTM4
+     * @return
+     */
     private StructuralMemberTM4 copy (StructuralMemberTM4 structuralMemberTM4) {
         return new StructuralMemberTM4(structuralMemberTM4.getId(),
                 structuralMemberTM4.getStructuralMemberTitle(),
@@ -324,6 +359,11 @@ public class SheetServiceImpl implements SheetService{
                 structuralMemberTM4.getMeasurementTM4List());
     }
 
+    /**
+     *
+     * @param cellVal
+     * @return
+     */
     private MeasurementTM4 createMeasurementTM4(List<String> cellVal) {
         MeasurementTM4 measurementTM4 = new MeasurementTM4();
         measurementTM4.setItem(cellVal.get(3));
@@ -398,6 +438,11 @@ public class SheetServiceImpl implements SheetService{
                 structuralDescriptionTM6.getMeasurementTM6List());
     }
 
+    /**
+     *
+     * @param cellVals
+     * @return
+     */
     private MeasurementTM6 createMeasurementTM6(List<String> cellVals) {
         MeasurementTM6 measurementTM6 = new MeasurementTM6();
         measurementTM6.setDescription(cellVals.get(0));
@@ -451,12 +496,22 @@ public class SheetServiceImpl implements SheetService{
         return mapperUtils.formTM7Mapper(formTM7);
     }
 
+    /**
+     *
+     * @param frameNumber
+     * @return
+     */
     private FrameNumber copy (FrameNumber frameNumber) {
         FrameNumber frameNumberCopy = new FrameNumber(frameNumber.getName());
         frameNumberCopy.setMeasurementTM7List(frameNumber.getMeasurementTM7List());
         return frameNumber;
     }
 
+    /**
+     *
+     * @param cellVals
+     * @return
+     */
     private MeasurementTM7 createMeasurementTM7(List<String> cellVals) {
         MeasurementTM7 measurementTM7 = new MeasurementTM7();
         measurementTM7.setItem(cellVals.get(0));
