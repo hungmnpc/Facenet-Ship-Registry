@@ -230,7 +230,8 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
                             reportIndex.getFormList().stream()
                                     .map(formDTO -> new ReportMenu.Form(formDTO.getId(),
                                             formDTO.getFormIndex(),
-                                            formDTO.getType() + formDTO.getCode()))
+                                            formDTO.getType() + formDTO.getCode(),
+                                            formDTO.getType()))
                                     .toList())).toList();
             ReportMenu reportMenu = new ReportMenu(reportNo, parts);
             return reportMenu;
@@ -326,7 +327,10 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
             ReportIndexDTO reportIndexDTO = mapperUtils.reportIndexMapper(reportIndex);
             return new ReportMenu.Part(reportIndex.getId(), reportIndex.getPartIndex(), reportIndex.getItem(),
                     reportIndexDTO.getFormList().stream()
-                            .map(formDTO -> new ReportMenu.Form(formDTO.getId(), formDTO.getFormIndex(), formDTO.getType()))
+                            .map(formDTO -> new ReportMenu.Form(formDTO.getId(),
+                                    formDTO.getFormIndex(),
+                                    formDTO.getType() + formDTO.getCode(),
+                                    formDTO.getType()))
                             .toList());
         } else {
             return null;

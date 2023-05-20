@@ -48,6 +48,8 @@ public class ReportMenu {
         Integer index;
 
         String name;
+
+        String type;
     }
 }
 
