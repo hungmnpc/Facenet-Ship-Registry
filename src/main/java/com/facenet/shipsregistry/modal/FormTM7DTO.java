@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 public class FormTM7DTO extends FormDTO{
 
-    private String type = "FORM TM7";
+    private String type = "TM7";
 
     private String name;
 

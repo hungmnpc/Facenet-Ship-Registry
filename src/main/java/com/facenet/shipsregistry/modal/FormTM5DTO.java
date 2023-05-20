@@ -21,7 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 public class FormTM5DTO extends FormDTO{
 
-    private String type = "FORM TM5";
+    private String type = "TM5";
 
     private String locationOfStructure;
 

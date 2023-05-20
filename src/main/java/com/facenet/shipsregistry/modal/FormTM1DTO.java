@@ -16,7 +16,7 @@ import java.util.List;
 @ToString
 public class FormTM1DTO extends FormDTO {
 
-    private String type = "FORM TM1";
+    private String type = "TM1";
 
     private String strakePosition;
 

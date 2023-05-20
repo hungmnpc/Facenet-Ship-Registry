@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class FormTM6DTO extends FormDTO{
 
-    private String type = "FORM TM6";
+    private String type = "TM6";
 
     private String structuralMembers;
 
