@@ -16,7 +16,7 @@ import java.util.List;
 @ToString
 public class FormTM3DTO extends FormDTO{
 
-    private String type = "FORM TM3";
+    private String type = "TM3";
 
     private String firstFrameNo;
 
