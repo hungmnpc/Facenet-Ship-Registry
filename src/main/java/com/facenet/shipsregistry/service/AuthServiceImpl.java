@@ -64,15 +64,13 @@ public class AuthServiceImpl implements AuthService , UserDetailsService {
 
     @Override
     public UserDTO saveNewUser(NewUserRequest request) {
-        Role role = roleRepository.findRoleByRoleName(request.getRole()).orElse(null);
-        if (role != null) {
-            String passwordEncode = passwordEncoder.encode(request.getPassword());
-            User user = new User(null, request.getUsername(), passwordEncode, request.getFirstName(),
-                    request.getLastName(), request.getPhoneNumber(), role);
-            User userSaved = userRepository.save(user);
-            if (userSaved.getId() > 0 ) {
-                return mapperUtils.userMapper(userSaved);
-            }
+        Role role = roleRepository.findRoleByRoleName("ROLE_USER").orElse(new Role(null, "CLIENT", null));
+        String passwordEncode = passwordEncoder.encode(request.getPassword());
+        User user = new User(null, request.getUsername(), passwordEncode, request.getFirstName(),
+                request.getLastName(), request.getPhoneNumber(), role);
+        User userSaved = userRepository.save(user);
+        if (userSaved.getId() > 0 ) {
+            return mapperUtils.userMapper(userSaved);
         }
         return null;
     }
