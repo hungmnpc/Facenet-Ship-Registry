@@ -70,6 +70,7 @@ public class CustomerAuthorizationFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                     filterChain.doFilter(request, response);
                 } catch (Exception ex) {
+                    ex.printStackTrace();
                     log.error("Error logging in: {}", ex.getMessage());
                     response.setHeader("error", ex.getMessage());
                     response.setStatus(FORBIDDEN.value());

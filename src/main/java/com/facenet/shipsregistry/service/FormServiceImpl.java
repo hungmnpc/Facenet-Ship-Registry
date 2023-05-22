@@ -66,6 +66,12 @@ public class FormServiceImpl implements FormService{
     MeasurementTM3Repository measurementTM3Repository;
 
     @Autowired
+    MeasurementTM4Repository measurementTM4Repository;
+
+    @Autowired
+    MeasurementTM6Repository measurementTM6Repository;
+
+    @Autowired
     MeasurementTM5Repository measurementTM5Repository;
 
     @Autowired
@@ -78,7 +84,7 @@ public class FormServiceImpl implements FormService{
     StructuralDescriptionTM6Repository structuralDescriptionTM6Repository;
 
     @Autowired
-    StructuralMemberDetailsTM4Repository structuralMemberDetailsTM4Repository;
+    StructuralMemberTM4Repository structuralMemberTM4Repository;
 
     @Autowired
     StructuralTM5Repository structuralTM5Repository;
@@ -107,6 +113,7 @@ public class FormServiceImpl implements FormService{
                         .map(measurementTM1RequestBody -> {
                             MeasurementTM1 measurementTM1 = createMeasurementTM1(measurementTM1RequestBody);
                             measurementTM1.setFormTM1(formTM1);
+                            measurementTM1Repository.save(measurementTM1);
                             return measurementTM1;
                         }).toList();
         formTM1.setMeasurementTM1List(measurementTM1List);
@@ -204,6 +211,7 @@ public class FormServiceImpl implements FormService{
                 .map(structuralTM5RequestBody -> {
                     StructuralTM5 structuralTM5 = createStructuralTM5(structuralTM5RequestBody);
                     structuralTM5.setFormTM5(formTM5);
+                    structuralTM5Repository.save(structuralTM5);
                     return structuralTM5;
                 }).toList();
         formTM5.setStructuralTM5List(structuralTM5List);
@@ -236,6 +244,7 @@ public class FormServiceImpl implements FormService{
                         .map(measurementTM3RequestBody -> {
                             MeasurementTM3 measurementTM3 = createMeasurementTM3(measurementTM3RequestBody);
                             measurementTM3.setFormTM3(formTM3);
+                            measurementTM3Repository.save(measurementTM3);
                             return measurementTM3;
                         }).toList();
         formTM3.setMeasurementTM3List(measurementTM3List);
@@ -321,6 +330,7 @@ public class FormServiceImpl implements FormService{
                 .map(measurementTM2RequestBody -> {
                     MeasurementTM2 measurementTM2 = createMeasurementTM2(measurementTM2RequestBody);
                     measurementTM2.setFormTM2(formTM2);
+                    measurementTM2Repository.save(measurementTM2);
                     return measurementTM2;
                 }).toList();
         formTM2.setMeasurementTM2List(measurementTM2List);
@@ -355,6 +365,7 @@ public class FormServiceImpl implements FormService{
                 .map(measurementTM4RequestBody -> {
                     MeasurementTM4 measurementTM4 = createNewMeasurementTM4(measurementTM4RequestBody);
                     measurementTM4.setStructuralMemberTM4(structuralMemberTM4);
+                    measurementTM4Repository.save(measurementTM4);
                     return measurementTM4;
                 }).toList();
         structuralMemberTM4.setMeasurementTM4List(measurementTM4List);
@@ -382,6 +393,7 @@ public class FormServiceImpl implements FormService{
                             StructuralMemberTM4 structuralMemberTM4 =
                                     createNewStructuralMemberTM4(structuralMemberTM4RequestBody);
                             structuralMemberTM4.setFormTM4(formTM4);
+                            structuralMemberTM4Repository.save(structuralMemberTM4);
                             return structuralMemberTM4;
                         }).toList();
         formTM4.setStructuralMemberTM4List(structuralMemberTM4List);
@@ -410,6 +422,7 @@ public class FormServiceImpl implements FormService{
                 .map(measurementTM7RequestBody -> {
                     MeasurementTM7 measurementTM7 = createNewMeasurementTM7(measurementTM7RequestBody);
                     measurementTM7.setFrameNumber(frameNumber);
+                    measurementTM7Repository.save(measurementTM7);
                     return measurementTM7;
                 }).toList();
         frameNumber.setMeasurementTM7List(measurementTM7Lists);
@@ -443,6 +456,7 @@ public class FormServiceImpl implements FormService{
                         .map(frameNumberRequestBody -> {
                             FrameNumber frameNumberTM7 = createNewFrameNumber(frameNumberRequestBody);
                             frameNumberTM7.setFormTM7(formTM7);
+                            frameNumberRepository.save(frameNumberTM7);
                             return frameNumberTM7;
                         }).toList();
         formTM7.setFrameNumber(frameNumberList);
@@ -480,6 +494,7 @@ public class FormServiceImpl implements FormService{
                 .map(measurementTM6RequestBody -> {
                     MeasurementTM6 measurementTM6 = createNewMeasurementTM6(measurementTM6RequestBody);
                     measurementTM6.setStructuralDescriptionTM6(structuralDescriptionTM6);
+                    measurementTM6Repository.save(measurementTM6);
                     return measurementTM6;
                 }).toList();
         structuralDescriptionTM6.setMeasurementTM6List(measurementTM6List);
@@ -507,6 +522,7 @@ public class FormServiceImpl implements FormService{
                             StructuralDescriptionTM6 structuralDescriptionTM6 =
                                     createNewStructuralDesTM6(structuralDescriptionTM6RequestBody);
                             structuralDescriptionTM6.setFormTM6(formTM6);
+                            structuralDescriptionTM6Repository.save(structuralDescriptionTM6);
                             return structuralDescriptionTM6;
                         }).toList();
         formTM6.setStructuralDescriptionTM6List(structuralDescriptionTM6List);
@@ -534,6 +550,7 @@ public class FormServiceImpl implements FormService{
                     .stream().map(requestBodyMTM1 -> {
                         MeasurementTM1 measurementTM1 = createMeasurementTM1(requestBodyMTM1);
                         measurementTM1.setFormTM1(formTM1);
+                        measurementTM1Repository.save(measurementTM1);
                         return measurementTM1;
                     }).toList();
             formTM1.setMeasurementTM1List(measurementTM1List);
@@ -692,6 +709,7 @@ public class FormServiceImpl implements FormService{
                     .map(requestBodyMTM2 -> {
                         MeasurementTM2 measurementTM2 = createMeasurementTM2(requestBodyMTM2);
                         measurementTM2.setFormTM2(formTM2);
+                        measurementTM2Repository.save(measurementTM2);
                         return measurementTM2;
                     }).toList();
             formTM2.setMeasurementTM2List(measurementTM2List);
@@ -745,6 +763,7 @@ public class FormServiceImpl implements FormService{
                     .map(requestBodyMTM3 -> {
                         MeasurementTM3 measurementTM3 = createMeasurementTM3(requestBodyMTM3);
                         measurementTM3.setFormTM3(formTM3);
+                        measurementTM3Repository.save(measurementTM3);
                         return measurementTM3;
                     }).toList();
             formTM3.setMeasurementTM3List(measurementTM3List);
@@ -793,6 +812,7 @@ public class FormServiceImpl implements FormService{
                     .map(structuralTM5RequestBody -> {
                         StructuralTM5 structuralTM5 = createStructuralTM5(structuralTM5RequestBody);
                         structuralTM5.setFormTM5(formTM5);
+                        structuralTM5Repository.save(structuralTM5);
                         return structuralTM5;
                     }).toList();
             formTM5.setStructuralTM5List(structuralTM5List);
@@ -816,6 +836,7 @@ public class FormServiceImpl implements FormService{
                         measurementTM5RequestBody -> {
                             MeasurementTM5 measurementTM5 = createMeasurementTM5(measurementTM5RequestBody);
                             measurementTM5.setStructuralTM5(structuralTM5);
+                            measurementTM5Repository.save(measurementTM5);
                             return measurementTM5;
                         }
                 )
@@ -854,6 +875,7 @@ public class FormServiceImpl implements FormService{
                             .map(frameNumberRequestBody -> {
                                 FrameNumber frameNumberTM7 = createNewFrameNumber(frameNumberRequestBody);
                                 frameNumberTM7.setFormTM7(formTM7);
+                                frameNumberRepository.save(frameNumberTM7);
                                 return frameNumberTM7;
                             }).toList();
             formTM7.setFrameNumber(frameNumberList);
@@ -876,6 +898,7 @@ public class FormServiceImpl implements FormService{
                                 StructuralDescriptionTM6 structuralDescriptionTM6 =
                                         createNewStructuralDesTM6(structuralDescriptionTM6RequestBody);
                                 structuralDescriptionTM6.setFormTM6(formTM6);
+                                structuralDescriptionTM6Repository.save(structuralDescriptionTM6);
                                 return structuralDescriptionTM6;
                             }).toList();
             formTM6.setStructuralDescriptionTM6List(structuralDescriptionTM6List);
@@ -889,7 +912,7 @@ public class FormServiceImpl implements FormService{
         FormTM4 formTM4 = formTM4Repository.findById(id).orElse(null);
         if (formTM4 != null) {
             formTM4.update(requestBody);
-            structuralMemberDetailsTM4Repository.deleteAll(formTM4.getStructuralMemberTM4List());
+            structuralMemberTM4Repository.deleteAll(formTM4.getStructuralMemberTM4List());
             formTM4.setStructuralMemberTM4List(new ArrayList<>());
             List<StructuralMemberTM4> structuralMemberTM4List =
                     requestBody.getStructuralMemberTM4List().stream()
@@ -897,6 +920,7 @@ public class FormServiceImpl implements FormService{
                                 StructuralMemberTM4 structuralMemberTM4 =
                                         createNewStructuralMemberTM4(structuralMemberTM4RequestBody);
                                 structuralMemberTM4.setFormTM4(formTM4);
+                                structuralMemberTM4Repository.save(structuralMemberTM4);
                                 return structuralMemberTM4;
                             }).toList();
             formTM4.setStructuralMemberTM4List(structuralMemberTM4List);
@@ -986,7 +1010,6 @@ public class FormServiceImpl implements FormService{
 
         if (isDeleted) {
             reportIndexDTO.getFormList().removeIf(form -> form.getFormIndex().equals(formIndex));
-            log.info("{}",reportIndexDTO.getFormList().size());
             updateAfterDeleteForm(reportIndexDTO, formIndex);
         }
         return isDeleted;
@@ -1022,7 +1045,6 @@ public class FormServiceImpl implements FormService{
                         return;
                     }
                 }
-                log.info(formType);
                 formDAO.updateFormIndex(formType, formDTO.getId(), formDTO.getFormIndex() - 1);
             }
         });

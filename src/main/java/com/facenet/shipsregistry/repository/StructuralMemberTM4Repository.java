@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface StructuralMemberDetailsTM4Repository extends JpaRepository<StructuralMemberTM4, Long> {
+public interface StructuralMemberTM4Repository extends JpaRepository<StructuralMemberTM4, Long> {
 }
