@@ -72,24 +72,37 @@ public class SketchController {
         }
     }
 
-    @GetMapping("/download/{id}")
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
     public ResponseEntity<?> downloadSketch(@PathVariable Long id) {
         try {
             SketchDTO sketchDTO = sketchService.getSketchById(id);
-            Resource resource = new UrlResource("file://" + sketchDTO.getPath());
-            if (resource.exists()) {
-                String contentType = sketchDTO.getType();
-                return ResponseEntity.ok()
-                        .contentType(MediaType.parseMediaType(contentType))
-                        .header(HttpHeaders.CONTENT_DISPOSITION,
-                                "attachment; filename=\"" + resource.getFilename() +"\"")
-                        .body(resource);
+            if (sketchDTO != null) {
+                return ResponseEntity.ok(sketchDTO);
             } else {
                 return ResponseEntity.badRequest().build();
             }
         } catch (Exception exception) {
             log.error(exception.getMessage());
             exception.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteSketch(@PathVariable Long id) {
+        try {
+            if (sketchService.deletedSketch(id)) {
+                return ResponseEntity.ok().build();
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (Exception exception) {
+            log.error(exception.getMessage());
             return ResponseEntity.internalServerError().build();
         }
     }
