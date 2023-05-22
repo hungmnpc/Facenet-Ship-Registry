@@ -706,6 +706,7 @@ public class FormServiceImpl implements FormService{
         if (formTM2 != null) {
             formTM2.update(requestBody);
             measurementTM2Repository.deleteAll(formTM2.getMeasurementTM2List());
+            formTM2.setMeasurementTM2List(null);
             List<MeasurementTM2> measurementTM2List = requestBody.getMeasurementTM2List().stream()
                     .map(requestBodyMTM2 -> {
                         MeasurementTM2 measurementTM2 = createMeasurementTM2(requestBodyMTM2);
@@ -760,6 +761,7 @@ public class FormServiceImpl implements FormService{
         if (formTM3 != null) {
             formTM3.update(requestBody);
             measurementTM3Repository.deleteAll(formTM3.getMeasurementTM3List());
+            formTM3.setMeasurementTM3List(null);
             List<MeasurementTM3> measurementTM3List = requestBody.getMeasurementTM3List().stream()
                     .map(requestBodyMTM3 -> {
                         MeasurementTM3 measurementTM3 = createMeasurementTM3(requestBodyMTM3);
@@ -809,6 +811,7 @@ public class FormServiceImpl implements FormService{
         if (formTM5 != null) {
             formTM5.update(requestBody);
             structuralTM5Repository.deleteAll(formTM5.getStructuralTM5List());
+            formTM5.setStructuralTM5List(null);
             List<StructuralTM5> structuralTM5List = requestBody.getStructuralTM5List().stream()
                     .map(structuralTM5RequestBody -> {
                         StructuralTM5 structuralTM5 = createStructuralTM5(structuralTM5RequestBody);
