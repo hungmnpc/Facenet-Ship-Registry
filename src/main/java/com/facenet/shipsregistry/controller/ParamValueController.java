@@ -4,6 +4,7 @@ import com.facenet.shipsregistry.entity.ParamValue;
 import com.facenet.shipsregistry.modal.ParamValueDTO;
 import com.facenet.shipsregistry.request.ParamValueRequestBody;
 import com.facenet.shipsregistry.service.ParamValueService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/param_value")
 @Slf4j
+@SecurityRequirement(name = "bearerAuth")
 public class ParamValueController {
 
     @Autowired

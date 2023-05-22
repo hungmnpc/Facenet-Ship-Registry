@@ -4,6 +4,7 @@ import com.facenet.shipsregistry.modal.RoleDTO;
 import com.facenet.shipsregistry.modal.UserDTO;
 import com.facenet.shipsregistry.request.NewUserRequest;
 import com.facenet.shipsregistry.service.AuthService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/admin")
 @Slf4j
+@SecurityRequirement(name = "bearerAuth")
 public class AdminController {
 
     @Autowired

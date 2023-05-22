@@ -3,6 +3,7 @@ package com.facenet.shipsregistry.controller;
 import com.facenet.shipsregistry.modal.DetailMeasurementDTO;
 import com.facenet.shipsregistry.request.DetailMeasurementRequestBody;
 import com.facenet.shipsregistry.service.FormService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/detail_measurements")
 @Slf4j
+@SecurityRequirement(name = "bearerAuth")
 public class DetailMeasurementController {
 
     @Autowired

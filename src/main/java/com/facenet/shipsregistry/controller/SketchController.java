@@ -3,6 +3,7 @@ package com.facenet.shipsregistry.controller;
 import com.facenet.shipsregistry.entity.Sketch;
 import com.facenet.shipsregistry.modal.SketchDTO;
 import com.facenet.shipsregistry.service.SketchService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/sketches")
 @Slf4j
+@SecurityRequirement(name = "bearerAuth")
 public class SketchController {
 
     @Autowired

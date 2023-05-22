@@ -8,6 +8,9 @@ import com.facenet.shipsregistry.request.ParamValueRequestBody;
 import com.facenet.shipsregistry.request.ShipInfoRequestBody;
 import com.facenet.shipsregistry.service.GeneralParticularsService;
 import com.facenet.shipsregistry.service.ParamValueService;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
@@ -26,6 +29,13 @@ import java.time.LocalDate;
 @SpringBootApplication
 @Slf4j
 @EnableJpaAuditing
+@SecurityScheme(
+		name = "bearerAuth",
+		scheme = "bearer",
+		bearerFormat = "JWT",
+		type = SecuritySchemeType.HTTP,
+		in = SecuritySchemeIn.HEADER
+)
 public class ShipsregistryApplication {
 
 	@Bean
