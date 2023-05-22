@@ -546,6 +546,7 @@ public class FormServiceImpl implements FormService{
             FormTM1 formTM1 = formTM1Optional.get();
             formTM1.update(requestBody);
             measurementTM1Repository.deleteAll(formTM1.getMeasurementTM1List());
+            formTM1.setMeasurementTM1List(null);
             List<MeasurementTM1> measurementTM1List = requestBody.getMeasurementTM1List()
                     .stream().map(requestBodyMTM1 -> {
                         MeasurementTM1 measurementTM1 = createMeasurementTM1(requestBodyMTM1);
