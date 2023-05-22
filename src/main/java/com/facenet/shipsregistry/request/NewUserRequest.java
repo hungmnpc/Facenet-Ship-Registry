@@ -24,6 +24,4 @@ public class NewUserRequest {
     private String lastName;
 
     private String phoneNumber;
-
-    private String role;
 }
