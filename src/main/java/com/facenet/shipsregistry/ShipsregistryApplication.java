@@ -1,11 +1,11 @@
 package com.facenet.shipsregistry;
 
 import com.facenet.shipsregistry.entity.AuditorAwareImpl;
+import com.facenet.shipsregistry.entity.User;
 import com.facenet.shipsregistry.modal.ParamValueDTO;
-import com.facenet.shipsregistry.request.CertificateRequestBody;
-import com.facenet.shipsregistry.request.GeneralParticularRequestBody;
-import com.facenet.shipsregistry.request.ParamValueRequestBody;
-import com.facenet.shipsregistry.request.ShipInfoRequestBody;
+import com.facenet.shipsregistry.modal.UserDTO;
+import com.facenet.shipsregistry.request.*;
+import com.facenet.shipsregistry.service.AuthService;
 import com.facenet.shipsregistry.service.GeneralParticularsService;
 import com.facenet.shipsregistry.service.ParamValueService;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
@@ -62,8 +62,18 @@ public class ShipsregistryApplication {
 	}
 
 	@Bean
-	CommandLineRunner run(GeneralParticularsService generalParticularsService, ParamValueService paramValueService) {
+	CommandLineRunner run(AuthService authService) {
 		return args -> {
+			if (!authService.isExists("admin")) {
+				UserDTO admin = authService.saveNewUser(new NewUserRequest(
+						"admin",
+						"admin",
+						"admin",
+						"",
+						"000000000"
+				));
+				authService.setRoleForUser("admin", "ROLE_ADMIN");
+			}
 		};
 	}
 }
