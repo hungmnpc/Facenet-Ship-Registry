@@ -101,6 +101,7 @@ public class FormServiceImpl implements FormService{
      */
     @Override
     public FormDTO saveNewFormTM1(FormTM1RequestBody requestBody, Long reportIndexID) {
+        log.info("{}", requestBody);
         Optional<ReportIndex> reportIndex = reportIndexRepository.findById(reportIndexID);
         if (reportIndex.isEmpty()) {
             return null;
@@ -118,6 +119,7 @@ public class FormServiceImpl implements FormService{
                         }).toList();
         formTM1.setMeasurementTM1List(measurementTM1List);
         FormTM1 formTM1Saved = formTM1Repository.save(formTM1);
+        log.info("{}", formTM1Saved.getId());
         if (formTM1Saved.getId() > 0) {
             return mapperUtils.formTM1Mapper(formTM1Saved);
         } else  {
@@ -125,6 +127,11 @@ public class FormServiceImpl implements FormService{
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public FormTM1DTO getFormTM1ByID(Long id) {
         FormTM1 formTM1 = formTM1Repository.getById(id);
@@ -135,6 +142,11 @@ public class FormServiceImpl implements FormService{
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public FormTM2DTO getFormTM2ByID(Long id){
        FormTM2 formTM2=formTM2Repository.findById(id).orElse(null);
@@ -144,6 +156,12 @@ public class FormServiceImpl implements FormService{
            return null;
        }
     }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public FormTM3DTO getFormTM3ByID(Long id){
         FormTM3 formTM3=formTM3Repository.findById(id).orElse(null);
@@ -154,6 +172,11 @@ public class FormServiceImpl implements FormService{
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public FormTM4DTO getFormTM4ByID(Long id){
         FormTM4 formTM4 = formTM4Repository.findById(id).orElse(null);
@@ -164,6 +187,11 @@ public class FormServiceImpl implements FormService{
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public FormTM5DTO getFormTM5ByID(Long id){
         FormTM5 formTM5 = formTM5Repository.findById(id).orElse(null);
@@ -174,6 +202,11 @@ public class FormServiceImpl implements FormService{
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public FormTM6DTO getFormTM6ByID(Long id) {
         Optional<FormTM6> formTM6 = formTM6Repository.findById(id);
@@ -184,6 +217,11 @@ public class FormServiceImpl implements FormService{
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public FormTM7DTO getFormTM7ByID(Long id) {
         FormTM7 formTM7 = formTM7Repository.findById(id).orElse(null);
@@ -194,8 +232,12 @@ public class FormServiceImpl implements FormService{
         }
     }
 
-
-
+    /**
+     *
+     * @param requestBody
+     * @param reportIndexID
+     * @return
+     */
     @Override
     public FormDTO saveNewFormTM5(FormTM5RequestBody requestBody, Long reportIndexID) {
         Optional<ReportIndex> reportIndex = reportIndexRepository.findById(reportIndexID);
@@ -690,7 +732,8 @@ public class FormServiceImpl implements FormService{
     }
 
     private DetailMeasurement createNewDetailMeasurement(DetailMeasurementRequestBody requestBody) {
-        return new DetailMeasurement(requestBody.getOriginalThickness(), requestBody.getMaxAlwbDim(),
+        log.info("{}", requestBody.getMaxAlwbDim());
+        return new DetailMeasurement(requestBody.getOriginalThickness(), requestBody.getMaxAlwbDim() == null ? 0.0 : requestBody.getMaxAlwbDim(),
                 requestBody.getGaugedP(), requestBody.getGaugedS(), requestBody.getPercent());
     }
 

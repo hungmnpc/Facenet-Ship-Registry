@@ -124,4 +124,27 @@ public class AuthServiceImpl implements AuthService , UserDetailsService {
             return "Mật khẩu cũ không chính xác";
         }
     }
+
+    /**
+     * @param username
+     * @return
+     */
+    @Override
+    public boolean isExists(String username) {
+        User user = userRepository.findUserByUsername(username);
+        return user != null && user.getId() > 0;
+    }
+
+    /**
+     * @param username
+     * @param roleName
+     */
+    @Override
+    public void setRoleForUser(String username, String roleName) {
+        User user = userRepository.findUserByUsername(username);
+        Role role = roleRepository.findRoleByRoleName(roleName).orElse(null);
+        if (user != null && role != null) {
+            user.setRole(role);
+        }
+    }
 }
