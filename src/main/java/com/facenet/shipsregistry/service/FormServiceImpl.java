@@ -101,7 +101,6 @@ public class FormServiceImpl implements FormService{
      */
     @Override
     public FormDTO saveNewFormTM1(FormTM1RequestBody requestBody, Long reportIndexID) {
-        log.info("{}", requestBody);
         Optional<ReportIndex> reportIndex = reportIndexRepository.findById(reportIndexID);
         if (reportIndex.isEmpty()) {
             return null;
@@ -109,17 +108,16 @@ public class FormServiceImpl implements FormService{
         FormTM1 formTM1 = new FormTM1(null,requestBody.getCode(),
                 requestBody.getStrakePosition(), reportIndex.get().currentFormIndex(),null, null);
         reportIndex.ifPresent(formTM1::setReportIndex);
+        formTM1.setMeasurementTM1List(new ArrayList<>());
         List<MeasurementTM1> measurementTM1List =
                 requestBody.getMeasurementTM1List().stream()
                         .map(measurementTM1RequestBody -> {
                             MeasurementTM1 measurementTM1 = createMeasurementTM1(measurementTM1RequestBody);
                             measurementTM1.setFormTM1(formTM1);
-                            measurementTM1Repository.save(measurementTM1);
                             return measurementTM1;
                         }).toList();
         formTM1.setMeasurementTM1List(measurementTM1List);
         FormTM1 formTM1Saved = formTM1Repository.save(formTM1);
-        log.info("{}", formTM1Saved.getId());
         if (formTM1Saved.getId() > 0) {
             return mapperUtils.formTM1Mapper(formTM1Saved);
         } else  {
@@ -277,8 +275,8 @@ public class FormServiceImpl implements FormService{
         if(reportIndex.isEmpty()) {
             return null;
         }
-        FormTM3 formTM3 = new FormTM3( requestBody.getCode(), requestBody.getFirstFrameNo(),
-                requestBody.getSecondFrameNo(), requestBody.getThirdFrameNo());
+        FormTM3 formTM3 = new FormTM3( requestBody.getFirstFrameNo(),
+                requestBody.getSecondFrameNo(), requestBody.getThirdFrameNo(), requestBody.getCode());
         formTM3.setFormIndex(reportIndex.get().currentFormIndex());
         reportIndex.ifPresent(formTM3::setReportIndex);
         List<MeasurementTM3> measurementTM3List =
@@ -435,9 +433,9 @@ public class FormServiceImpl implements FormService{
                             StructuralMemberTM4 structuralMemberTM4 =
                                     createNewStructuralMemberTM4(structuralMemberTM4RequestBody);
                             structuralMemberTM4.setFormTM4(formTM4);
-                            structuralMemberTM4Repository.save(structuralMemberTM4);
                             return structuralMemberTM4;
                         }).toList();
+//        structuralMemberTM4Repository.saveAll(structuralMemberTM4List);
         formTM4.setStructuralMemberTM4List(structuralMemberTM4List);
         try {
             FormTM4 formTM4Saved = formTM4Repository.save(formTM4);
@@ -685,6 +683,12 @@ public class FormServiceImpl implements FormService{
     public Boolean isFormTM7Exist(Long id) {
         return formTM7Repository.existsById(id);
     }
+
+    /**
+     *
+     * @param requestBody
+     * @return
+     */
     private MeasurementTM1 createMeasurementTM1(MeasurementTM1RequestBody requestBody) {
         DetailMeasurement after = createNewDetailMeasurement(requestBody.getAfterReadingMeasurementDetail());
         DetailMeasurement forward = createNewDetailMeasurement(requestBody.getForwardReadingMeasurementDetail());
@@ -732,8 +736,7 @@ public class FormServiceImpl implements FormService{
     }
 
     private DetailMeasurement createNewDetailMeasurement(DetailMeasurementRequestBody requestBody) {
-        log.info("{}", requestBody.getMaxAlwbDim());
-        return new DetailMeasurement(requestBody.getOriginalThickness(), requestBody.getMaxAlwbDim() == null ? 0.0 : requestBody.getMaxAlwbDim(),
+        return new DetailMeasurement(requestBody.getOriginalThickness(), requestBody.getMaxAlwbDim() == null ? 0 : requestBody.getMaxAlwbDim(),
                 requestBody.getGaugedP(), requestBody.getGaugedS(), requestBody.getPercent());
     }
 
@@ -967,7 +970,6 @@ public class FormServiceImpl implements FormService{
                                 StructuralMemberTM4 structuralMemberTM4 =
                                         createNewStructuralMemberTM4(structuralMemberTM4RequestBody);
                                 structuralMemberTM4.setFormTM4(formTM4);
-                                structuralMemberTM4Repository.save(structuralMemberTM4);
                                 return structuralMemberTM4;
                             }).toList();
             formTM4.setStructuralMemberTM4List(structuralMemberTM4List);
