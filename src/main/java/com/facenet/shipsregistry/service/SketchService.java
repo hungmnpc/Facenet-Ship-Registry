@@ -14,9 +14,6 @@ import java.util.List;
  */
 public interface SketchService {
 
-    public SketchDTO uploadSketch(MultipartFile file) throws IOException;
-
-
     /**
      *
      * @param formId
@@ -40,4 +37,11 @@ public interface SketchService {
      * @return
      */
     public SketchDTO getSketchById(Long sketchId);
+
+    /**
+     *
+     * @param sketchId
+     * @return
+     */
+    public Boolean deletedSketch(Long sketchId);
 }

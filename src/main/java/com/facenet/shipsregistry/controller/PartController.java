@@ -6,6 +6,7 @@ import com.facenet.shipsregistry.modal.ReportMenu;
 import com.facenet.shipsregistry.request.*;
 import com.facenet.shipsregistry.service.FormService;
 import com.facenet.shipsregistry.service.GeneralParticularsService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ import java.net.URI;
 @RestController
 @RequestMapping("/report-indexes")
 @Slf4j
+@SecurityRequirement(name = "bearerAuth")
 public class PartController {
 
     @Autowired
@@ -71,6 +73,7 @@ public class PartController {
             }
         } catch (Exception exception) {
             log.error(exception.getMessage());
+            exception.printStackTrace();
             return ResponseEntity.internalServerError().build();
         }
     }

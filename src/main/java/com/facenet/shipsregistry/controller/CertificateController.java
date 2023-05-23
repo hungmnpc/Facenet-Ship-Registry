@@ -3,6 +3,7 @@ package com.facenet.shipsregistry.controller;
 import com.facenet.shipsregistry.modal.CertificateDTO;
 import com.facenet.shipsregistry.request.CertificateRequestBody;
 import com.facenet.shipsregistry.service.GeneralParticularsService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/certificates")
 @Slf4j
+@SecurityRequirement(name = "bearerAuth")
 public class CertificateController {
 
     @Autowired

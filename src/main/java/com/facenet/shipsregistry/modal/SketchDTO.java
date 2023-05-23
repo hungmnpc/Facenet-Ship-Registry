@@ -16,7 +16,9 @@ public class SketchDTO {
 
     private Long id;
 
-    private String path;
+    private String value;
+
+    private String name;
 
     private String type;
 

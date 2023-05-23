@@ -25,6 +25,9 @@ public class MapperUtils {
     @Autowired
     private FormTM1Repository formTM1Repository;
 
+    @Autowired
+    private FileUtils fileUtils;
+
     /**
      *
      * @param ship
@@ -430,7 +433,12 @@ public class MapperUtils {
      * @return
      */
     public SketchDTO mapperSketch(Sketch sketch) {
-        return modelMapper.map(sketch, SketchDTO.class);
+        log.info("{}", sketch);
+        byte[] file = fileUtils.decompressFile(sketch.getValue());
+        String dataBase64 = Base64.getEncoder().encodeToString(file);
+        SketchDTO sketchDTO = modelMapper.map(sketch, SketchDTO.class);
+        sketchDTO.setValue(dataBase64);
+        return sketchDTO;
     }
 
     /**

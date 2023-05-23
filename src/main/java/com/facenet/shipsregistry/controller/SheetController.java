@@ -2,6 +2,7 @@ package com.facenet.shipsregistry.controller;
 
 import com.facenet.shipsregistry.modal.FormDTO;
 import com.facenet.shipsregistry.service.SheetService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/sheet")
 @Slf4j
+@SecurityRequirement(name = "bearerAuth")
 public class SheetController {
 
     @Autowired

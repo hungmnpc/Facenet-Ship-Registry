@@ -17,14 +17,19 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
+@Builder
 public class Sketch {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "path")
-    private String path;
+    @Column(name = "value", length = 1000)
+    @Lob
+    private byte[] value;
+
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "type")
     private String type;

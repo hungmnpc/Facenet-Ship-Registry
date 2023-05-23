@@ -10,6 +10,8 @@ import com.facenet.shipsregistry.request.ChangePasswordRequest;
 import com.facenet.shipsregistry.request.LoginRequestBody;
 import com.facenet.shipsregistry.request.NewUserRequest;
 import com.facenet.shipsregistry.service.AuthService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -33,6 +35,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/auth")
 @Slf4j
+@SecurityRequirement(name = "bearerAuth")
 public class AuthController {
 
     @Autowired
@@ -53,7 +56,7 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody LoginRequestBody loginRequestBody,
                                    HttpServletRequest request) {
         String secret = env.getProperty("secret");
-        log.info(secret);
+        log.info(loginRequestBody.toString());
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequestBody.getUsername(),

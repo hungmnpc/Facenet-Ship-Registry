@@ -9,6 +9,7 @@ import com.facenet.shipsregistry.repository.FormTM1Repository;
 import com.facenet.shipsregistry.repository.GeneralParticularsRepository;
 import com.facenet.shipsregistry.repository.SketchRepository;
 import com.facenet.shipsregistry.request.SketchedRequest;
+import com.facenet.shipsregistry.utils.FileUtils;
 import com.facenet.shipsregistry.utils.MapperUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,32 +51,17 @@ public class SketchServiceImpl implements SketchService{
     @Autowired
     private GeneralParticularsRepository generalParticularsRepository;
 
-    private Sketch upload(MultipartFile file, String path) {
-        try {
-            file.transferTo(new File(path));
-            Sketch sketch = new Sketch(null, path, file.getContentType(), null, null);
-            Sketch sketchSaved = sketchRepository.save(sketch);
-            if (sketchSaved.getId() > 0) {
-                return sketchSaved;
-            } else {
-                return null;
-            }
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return null;
-        }
-    }
+    @Autowired
+    private FileUtils fileUtils;
 
     private Sketch upload(MultipartFile file, String path, Long formId, String formType) {
         try {
-//            Files.createDirectories(Paths.get("sketches"));
-            String localDir = System.getProperty("user.dir").concat("/sketches");
-            log.info(localDir + "/" + path);
-            String finalDir = localDir + "/" + path;
-            Files.createDirectories(Paths.get(finalDir));
-            File newFile = new File(finalDir);
-            file.transferTo(newFile);
-            Sketch sketch = new Sketch(null, finalDir, file.getContentType(), formId, formType);
+            Sketch sketch = Sketch.builder()
+                    .name(file.getOriginalFilename())
+                    .type(file.getContentType())
+                    .value(fileUtils.compressFile(file.getBytes()))
+                    .formId(formId)
+                    .formType(formType).build();
             Sketch sketchSaved = sketchRepository.save(sketch);
             if (sketchSaved.getId() > 0) {
                 return sketchSaved;
@@ -86,19 +72,6 @@ public class SketchServiceImpl implements SketchService{
             log.error(e.getMessage());
             return null;
         }
-    }
-
-    @Override
-    public SketchDTO uploadSketch(MultipartFile file) {
-        String fileName = file.getOriginalFilename();
-        String path = "/home/hungdinh/Desktop/sketches/" + fileName;
-        Sketch sketch = upload(file, path);
-        if (sketch != null) {
-            return mapperUtils.mapperSketch(sketch);
-        } else {
-            return null;
-        }
-
     }
 
     /**
@@ -159,5 +132,14 @@ public class SketchServiceImpl implements SketchService{
         return null;
     }
 
-
+    /**
+     * @param sketchId
+     * @return
+     */
+    @Override
+    public Boolean deletedSketch(Long sketchId) {
+        sketchRepository.deleteById(sketchId);
+        Boolean success = !sketchRepository.existsById(sketchId);
+        return success;
+    }
 }

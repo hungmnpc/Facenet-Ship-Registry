@@ -52,6 +52,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+        auth.inMemoryAuthentication()
+                .withUser("admin1")
+                .password(passwordEncoder.encode("admin1"))
+                .roles("ADMIN");
     }
 
     @Override
@@ -77,8 +81,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeHttpRequests().antMatchers("/auth/password/**").hasAuthority("ROLE_USER");
 //        http.authorizeHttpRequests().antMatchers("/ships/**").hasAuthority("ROLE_USER");
         http.authorizeHttpRequests().antMatchers("/admin/**").hasAuthority("ROLE_ADMIN");
-//        http.authorizeHttpRequests().anyRequest().authenticated();
-        http.authorizeHttpRequests().anyRequest().permitAll();
+        http.authorizeHttpRequests().anyRequest().authenticated();
+//        http.authorizeHttpRequests().anyRequest().permitAll();
         http.addFilterBefore(customerAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 

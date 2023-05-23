@@ -28,8 +28,22 @@ public interface AuthService {
 
     /**
      *
-     * @param newPassword
+     * @param request
      * @return
      */
     public String updatePassword(ChangePasswordRequest request);
+
+    /**
+     *
+     * @param username
+     * @return
+     */
+    public boolean isExists(String username);
+
+    /**
+     *
+     * @param username
+     * @param roleName
+     */
+    public void setRoleForUser(String username, String roleName);
 }

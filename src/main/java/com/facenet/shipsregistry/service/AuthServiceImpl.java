@@ -64,15 +64,13 @@ public class AuthServiceImpl implements AuthService , UserDetailsService {
 
     @Override
     public UserDTO saveNewUser(NewUserRequest request) {
-        Role role = roleRepository.findRoleByRoleName(request.getRole()).orElse(null);
-        if (role != null) {
-            String passwordEncode = passwordEncoder.encode(request.getPassword());
-            User user = new User(null, request.getUsername(), passwordEncode, request.getFirstName(),
-                    request.getLastName(), request.getPhoneNumber(), role);
-            User userSaved = userRepository.save(user);
-            if (userSaved.getId() > 0 ) {
-                return mapperUtils.userMapper(userSaved);
-            }
+        Role role = roleRepository.findRoleByRoleName("ROLE_USER").orElse(new Role(null, "CLIENT", null));
+        String passwordEncode = passwordEncoder.encode(request.getPassword());
+        User user = new User(null, request.getUsername(), passwordEncode, request.getFirstName(),
+                request.getLastName(), request.getPhoneNumber(), role);
+        User userSaved = userRepository.save(user);
+        if (userSaved.getId() > 0 ) {
+            return mapperUtils.userMapper(userSaved);
         }
         return null;
     }
@@ -124,6 +122,29 @@ public class AuthServiceImpl implements AuthService , UserDetailsService {
             return "Thay đổi mật khẩu thành công";
         } else {
             return "Mật khẩu cũ không chính xác";
+        }
+    }
+
+    /**
+     * @param username
+     * @return
+     */
+    @Override
+    public boolean isExists(String username) {
+        User user = userRepository.findUserByUsername(username);
+        return user != null && user.getId() > 0;
+    }
+
+    /**
+     * @param username
+     * @param roleName
+     */
+    @Override
+    public void setRoleForUser(String username, String roleName) {
+        User user = userRepository.findUserByUsername(username);
+        Role role = roleRepository.findRoleByRoleName(roleName).orElse(null);
+        if (user != null && role != null) {
+            user.setRole(role);
         }
     }
 }

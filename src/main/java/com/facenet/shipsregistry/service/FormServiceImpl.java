@@ -66,6 +66,12 @@ public class FormServiceImpl implements FormService{
     MeasurementTM3Repository measurementTM3Repository;
 
     @Autowired
+    MeasurementTM4Repository measurementTM4Repository;
+
+    @Autowired
+    MeasurementTM6Repository measurementTM6Repository;
+
+    @Autowired
     MeasurementTM5Repository measurementTM5Repository;
 
     @Autowired
@@ -78,7 +84,7 @@ public class FormServiceImpl implements FormService{
     StructuralDescriptionTM6Repository structuralDescriptionTM6Repository;
 
     @Autowired
-    StructuralMemberDetailsTM4Repository structuralMemberDetailsTM4Repository;
+    StructuralMemberTM4Repository structuralMemberTM4Repository;
 
     @Autowired
     StructuralTM5Repository structuralTM5Repository;
@@ -95,6 +101,7 @@ public class FormServiceImpl implements FormService{
      */
     @Override
     public FormDTO saveNewFormTM1(FormTM1RequestBody requestBody, Long reportIndexID) {
+        log.info("{}", requestBody);
         Optional<ReportIndex> reportIndex = reportIndexRepository.findById(reportIndexID);
         if (reportIndex.isEmpty()) {
             return null;
@@ -107,10 +114,12 @@ public class FormServiceImpl implements FormService{
                         .map(measurementTM1RequestBody -> {
                             MeasurementTM1 measurementTM1 = createMeasurementTM1(measurementTM1RequestBody);
                             measurementTM1.setFormTM1(formTM1);
+                            measurementTM1Repository.save(measurementTM1);
                             return measurementTM1;
                         }).toList();
         formTM1.setMeasurementTM1List(measurementTM1List);
         FormTM1 formTM1Saved = formTM1Repository.save(formTM1);
+        log.info("{}", formTM1Saved.getId());
         if (formTM1Saved.getId() > 0) {
             return mapperUtils.formTM1Mapper(formTM1Saved);
         } else  {
@@ -118,6 +127,11 @@ public class FormServiceImpl implements FormService{
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public FormTM1DTO getFormTM1ByID(Long id) {
         FormTM1 formTM1 = formTM1Repository.getById(id);
@@ -128,6 +142,11 @@ public class FormServiceImpl implements FormService{
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public FormTM2DTO getFormTM2ByID(Long id){
        FormTM2 formTM2=formTM2Repository.findById(id).orElse(null);
@@ -137,6 +156,12 @@ public class FormServiceImpl implements FormService{
            return null;
        }
     }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public FormTM3DTO getFormTM3ByID(Long id){
         FormTM3 formTM3=formTM3Repository.findById(id).orElse(null);
@@ -147,6 +172,11 @@ public class FormServiceImpl implements FormService{
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public FormTM4DTO getFormTM4ByID(Long id){
         FormTM4 formTM4 = formTM4Repository.findById(id).orElse(null);
@@ -157,6 +187,11 @@ public class FormServiceImpl implements FormService{
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public FormTM5DTO getFormTM5ByID(Long id){
         FormTM5 formTM5 = formTM5Repository.findById(id).orElse(null);
@@ -167,6 +202,11 @@ public class FormServiceImpl implements FormService{
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public FormTM6DTO getFormTM6ByID(Long id) {
         Optional<FormTM6> formTM6 = formTM6Repository.findById(id);
@@ -177,6 +217,11 @@ public class FormServiceImpl implements FormService{
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public FormTM7DTO getFormTM7ByID(Long id) {
         FormTM7 formTM7 = formTM7Repository.findById(id).orElse(null);
@@ -187,8 +232,12 @@ public class FormServiceImpl implements FormService{
         }
     }
 
-
-
+    /**
+     *
+     * @param requestBody
+     * @param reportIndexID
+     * @return
+     */
     @Override
     public FormDTO saveNewFormTM5(FormTM5RequestBody requestBody, Long reportIndexID) {
         Optional<ReportIndex> reportIndex = reportIndexRepository.findById(reportIndexID);
@@ -204,6 +253,7 @@ public class FormServiceImpl implements FormService{
                 .map(structuralTM5RequestBody -> {
                     StructuralTM5 structuralTM5 = createStructuralTM5(structuralTM5RequestBody);
                     structuralTM5.setFormTM5(formTM5);
+                    structuralTM5Repository.save(structuralTM5);
                     return structuralTM5;
                 }).toList();
         formTM5.setStructuralTM5List(structuralTM5List);
@@ -236,6 +286,7 @@ public class FormServiceImpl implements FormService{
                         .map(measurementTM3RequestBody -> {
                             MeasurementTM3 measurementTM3 = createMeasurementTM3(measurementTM3RequestBody);
                             measurementTM3.setFormTM3(formTM3);
+                            measurementTM3Repository.save(measurementTM3);
                             return measurementTM3;
                         }).toList();
         formTM3.setMeasurementTM3List(measurementTM3List);
@@ -321,6 +372,7 @@ public class FormServiceImpl implements FormService{
                 .map(measurementTM2RequestBody -> {
                     MeasurementTM2 measurementTM2 = createMeasurementTM2(measurementTM2RequestBody);
                     measurementTM2.setFormTM2(formTM2);
+                    measurementTM2Repository.save(measurementTM2);
                     return measurementTM2;
                 }).toList();
         formTM2.setMeasurementTM2List(measurementTM2List);
@@ -355,6 +407,7 @@ public class FormServiceImpl implements FormService{
                 .map(measurementTM4RequestBody -> {
                     MeasurementTM4 measurementTM4 = createNewMeasurementTM4(measurementTM4RequestBody);
                     measurementTM4.setStructuralMemberTM4(structuralMemberTM4);
+                    measurementTM4Repository.save(measurementTM4);
                     return measurementTM4;
                 }).toList();
         structuralMemberTM4.setMeasurementTM4List(measurementTM4List);
@@ -382,6 +435,7 @@ public class FormServiceImpl implements FormService{
                             StructuralMemberTM4 structuralMemberTM4 =
                                     createNewStructuralMemberTM4(structuralMemberTM4RequestBody);
                             structuralMemberTM4.setFormTM4(formTM4);
+                            structuralMemberTM4Repository.save(structuralMemberTM4);
                             return structuralMemberTM4;
                         }).toList();
         formTM4.setStructuralMemberTM4List(structuralMemberTM4List);
@@ -410,6 +464,7 @@ public class FormServiceImpl implements FormService{
                 .map(measurementTM7RequestBody -> {
                     MeasurementTM7 measurementTM7 = createNewMeasurementTM7(measurementTM7RequestBody);
                     measurementTM7.setFrameNumber(frameNumber);
+                    measurementTM7Repository.save(measurementTM7);
                     return measurementTM7;
                 }).toList();
         frameNumber.setMeasurementTM7List(measurementTM7Lists);
@@ -443,6 +498,7 @@ public class FormServiceImpl implements FormService{
                         .map(frameNumberRequestBody -> {
                             FrameNumber frameNumberTM7 = createNewFrameNumber(frameNumberRequestBody);
                             frameNumberTM7.setFormTM7(formTM7);
+                            frameNumberRepository.save(frameNumberTM7);
                             return frameNumberTM7;
                         }).toList();
         formTM7.setFrameNumber(frameNumberList);
@@ -480,6 +536,7 @@ public class FormServiceImpl implements FormService{
                 .map(measurementTM6RequestBody -> {
                     MeasurementTM6 measurementTM6 = createNewMeasurementTM6(measurementTM6RequestBody);
                     measurementTM6.setStructuralDescriptionTM6(structuralDescriptionTM6);
+                    measurementTM6Repository.save(measurementTM6);
                     return measurementTM6;
                 }).toList();
         structuralDescriptionTM6.setMeasurementTM6List(measurementTM6List);
@@ -507,6 +564,7 @@ public class FormServiceImpl implements FormService{
                             StructuralDescriptionTM6 structuralDescriptionTM6 =
                                     createNewStructuralDesTM6(structuralDescriptionTM6RequestBody);
                             structuralDescriptionTM6.setFormTM6(formTM6);
+                            structuralDescriptionTM6Repository.save(structuralDescriptionTM6);
                             return structuralDescriptionTM6;
                         }).toList();
         formTM6.setStructuralDescriptionTM6List(structuralDescriptionTM6List);
@@ -530,10 +588,12 @@ public class FormServiceImpl implements FormService{
             FormTM1 formTM1 = formTM1Optional.get();
             formTM1.update(requestBody);
             measurementTM1Repository.deleteAll(formTM1.getMeasurementTM1List());
+            formTM1.setMeasurementTM1List(null);
             List<MeasurementTM1> measurementTM1List = requestBody.getMeasurementTM1List()
                     .stream().map(requestBodyMTM1 -> {
                         MeasurementTM1 measurementTM1 = createMeasurementTM1(requestBodyMTM1);
                         measurementTM1.setFormTM1(formTM1);
+                        measurementTM1Repository.save(measurementTM1);
                         return measurementTM1;
                     }).toList();
             formTM1.setMeasurementTM1List(measurementTM1List);
@@ -672,7 +732,8 @@ public class FormServiceImpl implements FormService{
     }
 
     private DetailMeasurement createNewDetailMeasurement(DetailMeasurementRequestBody requestBody) {
-        return new DetailMeasurement(requestBody.getOriginalThickness(), requestBody.getMaxAlwbDim(),
+        log.info("{}", requestBody.getMaxAlwbDim());
+        return new DetailMeasurement(requestBody.getOriginalThickness(), requestBody.getMaxAlwbDim() == null ? 0.0 : requestBody.getMaxAlwbDim(),
                 requestBody.getGaugedP(), requestBody.getGaugedS(), requestBody.getPercent());
     }
 
@@ -688,10 +749,12 @@ public class FormServiceImpl implements FormService{
         if (formTM2 != null) {
             formTM2.update(requestBody);
             measurementTM2Repository.deleteAll(formTM2.getMeasurementTM2List());
+            formTM2.setMeasurementTM2List(null);
             List<MeasurementTM2> measurementTM2List = requestBody.getMeasurementTM2List().stream()
                     .map(requestBodyMTM2 -> {
                         MeasurementTM2 measurementTM2 = createMeasurementTM2(requestBodyMTM2);
                         measurementTM2.setFormTM2(formTM2);
+                        measurementTM2Repository.save(measurementTM2);
                         return measurementTM2;
                     }).toList();
             formTM2.setMeasurementTM2List(measurementTM2List);
@@ -741,10 +804,12 @@ public class FormServiceImpl implements FormService{
         if (formTM3 != null) {
             formTM3.update(requestBody);
             measurementTM3Repository.deleteAll(formTM3.getMeasurementTM3List());
+            formTM3.setMeasurementTM3List(null);
             List<MeasurementTM3> measurementTM3List = requestBody.getMeasurementTM3List().stream()
                     .map(requestBodyMTM3 -> {
                         MeasurementTM3 measurementTM3 = createMeasurementTM3(requestBodyMTM3);
                         measurementTM3.setFormTM3(formTM3);
+                        measurementTM3Repository.save(measurementTM3);
                         return measurementTM3;
                     }).toList();
             formTM3.setMeasurementTM3List(measurementTM3List);
@@ -789,10 +854,12 @@ public class FormServiceImpl implements FormService{
         if (formTM5 != null) {
             formTM5.update(requestBody);
             structuralTM5Repository.deleteAll(formTM5.getStructuralTM5List());
+            formTM5.setStructuralTM5List(null);
             List<StructuralTM5> structuralTM5List = requestBody.getStructuralTM5List().stream()
                     .map(structuralTM5RequestBody -> {
                         StructuralTM5 structuralTM5 = createStructuralTM5(structuralTM5RequestBody);
                         structuralTM5.setFormTM5(formTM5);
+                        structuralTM5Repository.save(structuralTM5);
                         return structuralTM5;
                     }).toList();
             formTM5.setStructuralTM5List(structuralTM5List);
@@ -816,6 +883,7 @@ public class FormServiceImpl implements FormService{
                         measurementTM5RequestBody -> {
                             MeasurementTM5 measurementTM5 = createMeasurementTM5(measurementTM5RequestBody);
                             measurementTM5.setStructuralTM5(structuralTM5);
+                            measurementTM5Repository.save(measurementTM5);
                             return measurementTM5;
                         }
                 )
@@ -854,6 +922,7 @@ public class FormServiceImpl implements FormService{
                             .map(frameNumberRequestBody -> {
                                 FrameNumber frameNumberTM7 = createNewFrameNumber(frameNumberRequestBody);
                                 frameNumberTM7.setFormTM7(formTM7);
+                                frameNumberRepository.save(frameNumberTM7);
                                 return frameNumberTM7;
                             }).toList();
             formTM7.setFrameNumber(frameNumberList);
@@ -876,6 +945,7 @@ public class FormServiceImpl implements FormService{
                                 StructuralDescriptionTM6 structuralDescriptionTM6 =
                                         createNewStructuralDesTM6(structuralDescriptionTM6RequestBody);
                                 structuralDescriptionTM6.setFormTM6(formTM6);
+                                structuralDescriptionTM6Repository.save(structuralDescriptionTM6);
                                 return structuralDescriptionTM6;
                             }).toList();
             formTM6.setStructuralDescriptionTM6List(structuralDescriptionTM6List);
@@ -889,7 +959,7 @@ public class FormServiceImpl implements FormService{
         FormTM4 formTM4 = formTM4Repository.findById(id).orElse(null);
         if (formTM4 != null) {
             formTM4.update(requestBody);
-            structuralMemberDetailsTM4Repository.deleteAll(formTM4.getStructuralMemberTM4List());
+            structuralMemberTM4Repository.deleteAll(formTM4.getStructuralMemberTM4List());
             formTM4.setStructuralMemberTM4List(new ArrayList<>());
             List<StructuralMemberTM4> structuralMemberTM4List =
                     requestBody.getStructuralMemberTM4List().stream()
@@ -897,6 +967,7 @@ public class FormServiceImpl implements FormService{
                                 StructuralMemberTM4 structuralMemberTM4 =
                                         createNewStructuralMemberTM4(structuralMemberTM4RequestBody);
                                 structuralMemberTM4.setFormTM4(formTM4);
+                                structuralMemberTM4Repository.save(structuralMemberTM4);
                                 return structuralMemberTM4;
                             }).toList();
             formTM4.setStructuralMemberTM4List(structuralMemberTM4List);
@@ -986,7 +1057,6 @@ public class FormServiceImpl implements FormService{
 
         if (isDeleted) {
             reportIndexDTO.getFormList().removeIf(form -> form.getFormIndex().equals(formIndex));
-            log.info("{}",reportIndexDTO.getFormList().size());
             updateAfterDeleteForm(reportIndexDTO, formIndex);
         }
         return isDeleted;
@@ -1022,7 +1092,6 @@ public class FormServiceImpl implements FormService{
                         return;
                     }
                 }
-                log.info(formType);
                 formDAO.updateFormIndex(formType, formDTO.getId(), formDTO.getFormIndex() - 1);
             }
         });
