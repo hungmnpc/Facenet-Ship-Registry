@@ -10,7 +10,6 @@ import com.facenet.shipsregistry.request.ChangePasswordRequest;
 import com.facenet.shipsregistry.request.LoginRequestBody;
 import com.facenet.shipsregistry.request.NewUserRequest;
 import com.facenet.shipsregistry.service.AuthService;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
