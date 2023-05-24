@@ -251,7 +251,6 @@ public class FormServiceImpl implements FormService{
                 .map(structuralTM5RequestBody -> {
                     StructuralTM5 structuralTM5 = createStructuralTM5(structuralTM5RequestBody);
                     structuralTM5.setFormTM5(formTM5);
-                    structuralTM5Repository.save(structuralTM5);
                     return structuralTM5;
                 }).toList();
         formTM5.setStructuralTM5List(structuralTM5List);
@@ -496,7 +495,6 @@ public class FormServiceImpl implements FormService{
                         .map(frameNumberRequestBody -> {
                             FrameNumber frameNumberTM7 = createNewFrameNumber(frameNumberRequestBody);
                             frameNumberTM7.setFormTM7(formTM7);
-                            frameNumberRepository.save(frameNumberTM7);
                             return frameNumberTM7;
                         }).toList();
         formTM7.setFrameNumber(frameNumberList);
@@ -562,7 +560,6 @@ public class FormServiceImpl implements FormService{
                             StructuralDescriptionTM6 structuralDescriptionTM6 =
                                     createNewStructuralDesTM6(structuralDescriptionTM6RequestBody);
                             structuralDescriptionTM6.setFormTM6(formTM6);
-                            structuralDescriptionTM6Repository.save(structuralDescriptionTM6);
                             return structuralDescriptionTM6;
                         }).toList();
         formTM6.setStructuralDescriptionTM6List(structuralDescriptionTM6List);
@@ -857,7 +854,7 @@ public class FormServiceImpl implements FormService{
         if (formTM5 != null) {
             formTM5.update(requestBody);
             structuralTM5Repository.deleteAll(formTM5.getStructuralTM5List());
-            formTM5.setStructuralTM5List(null);
+            formTM5.setStructuralTM5List(new ArrayList<>());
             List<StructuralTM5> structuralTM5List = requestBody.getStructuralTM5List().stream()
                     .map(structuralTM5RequestBody -> {
                         StructuralTM5 structuralTM5 = createStructuralTM5(structuralTM5RequestBody);
