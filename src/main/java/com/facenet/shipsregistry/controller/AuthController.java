@@ -69,6 +69,7 @@ public class AuthController {
                     .withIssuer(request.getRequestURL().toString())
                     .withClaim("roles", user.getAuthorities().stream()
                             .map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+                    .withClaim("fullName", user.getFullName())
                     .sign(algorithm);
 
             String refreshToken = JWT.create()
