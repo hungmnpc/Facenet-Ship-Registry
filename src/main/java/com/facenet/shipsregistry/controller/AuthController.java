@@ -8,7 +8,6 @@ import com.facenet.shipsregistry.modal.UserDTO;
 import com.facenet.shipsregistry.principal.UserPrincipal;
 import com.facenet.shipsregistry.request.ChangePasswordRequest;
 import com.facenet.shipsregistry.request.LoginRequestBody;
-import com.facenet.shipsregistry.request.NewUserRequest;
 import com.facenet.shipsregistry.service.AuthService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.slf4j.Slf4j;

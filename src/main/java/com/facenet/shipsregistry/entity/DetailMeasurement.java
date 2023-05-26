@@ -1,10 +1,7 @@
 package com.facenet.shipsregistry.entity;
 
 import com.facenet.shipsregistry.request.DetailMeasurementRequestBody;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -20,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class DetailMeasurement {
 
     public DetailMeasurement(Double originalThickness, Double maxAlwbDim, Double gaugedP, Double gaugedS, String percent) {
