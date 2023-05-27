@@ -54,7 +54,7 @@ public class SketchServiceImpl implements SketchService{
     @Autowired
     private FileUtils fileUtils;
 
-    private Sketch upload(MultipartFile file, String path, Long formId, String formType) {
+    private Sketch upload(MultipartFile file, Long formId, String formType) {
         try {
             Sketch sketch = Sketch.builder()
                     .name(file.getOriginalFilename())
@@ -82,27 +82,14 @@ public class SketchServiceImpl implements SketchService{
      */
     @Override
     public List<SketchDTO> uploadSketchIntoForm(Long formId, String formType, List<MultipartFile> files) {
-        String reportNo = null;
-        ReportNameAndPartName reportNameAndPartName = new ReportNameAndPartName();
-        Object[][] rpAndPn = generalParticularsRepository.getReportAndPartNameByForm(formType, formId);
-        if (rpAndPn.length > 0) {
-            reportNameAndPartName
-                    .init( generalParticularsRepository.getReportAndPartNameByForm(formType, formId)[0]);
-            log.info("{}", reportNameAndPartName.toString());
-            String finalPrePath = reportNameAndPartName.createDir();
             List<Sketch> sketchList =  files.stream()
                     .map(multipartFile ->
-                            upload(multipartFile,
-                                    finalPrePath + multipartFile.getOriginalFilename(),
-                                    formId, formType))
+                            upload(multipartFile,formId, formType))
                     .toList();
             List<SketchDTO> sketchDTOList = sketchList.stream()
                     .map(sketch -> mapperUtils.mapperSketch(sketch))
                     .toList();
             return sketchDTOList;
-        }
-
-        return null;
     }
 
     /**

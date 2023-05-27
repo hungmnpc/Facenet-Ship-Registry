@@ -266,7 +266,6 @@ public class SheetServiceImpl implements SheetService{
             }
             i.set(i.get() + 1);
         });
-        structuralTM5List.add(structuralTM5);
         formTM5.setStructuralTM5List(structuralTM5List);
         return mapperUtils.formTM5Mapper(formTM5);
     }
