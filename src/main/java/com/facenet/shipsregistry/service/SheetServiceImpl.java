@@ -255,7 +255,9 @@ public class SheetServiceImpl implements SheetService{
                 }
                 if (!cellVals.get(0).equals("") && cellVals.get(3).equals("")) {
                     if (structuralTM5.getName() != null) {
-                        structuralTM5List.add(copy(structuralTM5));
+                        if (structuralTM5.getMeasurementTM5List().size() > 0) {
+                            structuralTM5List.add(copy(structuralTM5));
+                        }
                         structuralTM5.setName(cellVals.get(0));
                         structuralTM5.setMeasurementTM5List(new ArrayList<>());
                     }

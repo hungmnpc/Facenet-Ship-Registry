@@ -1,13 +1,28 @@
 package com.facenet.shipsregistry.controller;
 
+import com.facenet.shipsregistry.entity.Sketch;
 import com.facenet.shipsregistry.modal.FormDTO;
+import com.facenet.shipsregistry.repository.SketchRepository;
 import com.facenet.shipsregistry.service.SheetService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * @author: hungdinh
@@ -22,6 +37,9 @@ public class SheetController {
 
     @Autowired
     private SheetService sheetService;
+
+    @Autowired
+    private SketchRepository sketchRepository;
 
     /**
      *
@@ -177,5 +195,35 @@ public class SheetController {
             log.error(exception.getMessage());
             return ResponseEntity.internalServerError().build();
         }
+    }
+
+    /**
+     *
+     * @param form
+     * @return
+     */
+    @GetMapping("/{form}")
+    public ResponseEntity<?> downloadTemplate(@PathVariable String form) {
+        String localDir = System.getProperty("user.dir").concat("/template-form");
+        String finalPath = localDir + "/" + form + ".xls";
+        HttpHeaders header = new HttpHeaders();
+        File file = new File(finalPath);
+        Path path = Paths.get(file.getAbsolutePath());
+        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getName() + "\"");
+        header.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        header.add("Pragma", "no-cache");
+        header.add("Expires", "0");
+        ByteArrayResource resource = null;
+        try {
+            resource = new ByteArrayResource(Files.readAllBytes(path));
+            return ResponseEntity.ok()
+                    .headers(header)
+                    .contentLength(file.length())
+                    .contentType(MediaType.parseMediaType("application/octet-stream"))
+                    .body(resource);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
