@@ -36,6 +36,7 @@ import java.time.LocalDate;
 		type = SecuritySchemeType.HTTP,
 		in = SecuritySchemeIn.HEADER
 )
+@EnableJpaAuditing
 @SpringBootApplication(scanBasePackages = {"com.facenet.shipsregistry.**"})
 @ComponentScan(basePackages = {"com.facenet.shipsregistry.**"})
 public class ShipsregistryApplication  extends SpringBootServletInitializer {
