@@ -37,10 +37,10 @@ public class Ship extends EntityAudit{
     private String postOfRegistry;
 
     @Column(name = "gross_tons")
-    private Integer grossTons;
+    private String grossTons;
 
     @Column(name = "deadweight")
-    private Integer deadweight;
+    private String deadweight;
 
     @Column(name = "date_of_build")
     private LocalDate dateOfBuild;

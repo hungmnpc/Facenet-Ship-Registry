@@ -30,9 +30,9 @@ public class ShipDTO {
 
     private String postOfRegistry;
 
-    private Integer grossTons;
+    private String grossTons;
 
-    private Integer deadweight;
+    private String deadweight;
 
     private LocalDate dateOfBuild;
 
