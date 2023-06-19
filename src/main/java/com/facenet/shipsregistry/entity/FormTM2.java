@@ -31,7 +31,7 @@ public class FormTM2 {
     @Column(name = "form_index")
     private Integer formIndex;
 
-    @OneToMany(mappedBy = "formTM2", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "formTM2", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private List<MeasurementTM2> measurementTM2List;
 
     private String firstFrameNoTM2;

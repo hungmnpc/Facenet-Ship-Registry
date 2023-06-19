@@ -379,37 +379,65 @@ public class MapperUtils {
         List<FormDTO> formDTOList = new ArrayList<>();
         if (reportIndex.getFormTM1List() != null) {
             formDTOList.addAll(reportIndex.getFormTM1List().stream()
-                    .map(this::formTM1Mapper)
+                    .map(formTM1 -> {
+                        FormTM1DTO formTM1DTO = modelMapper.map(formTM1, FormTM1DTO.class);
+                        formTM1DTO.setFormIndex(formTM1.getFormIndex());
+                        return formTM1DTO;
+                    })
                     .toList());
         }
         if (reportIndex.getFormTM2List() != null) {
             formDTOList.addAll(reportIndex.getFormTM2List().stream()
-                    .map(this::formTM2Mapper)
+                    .map(formTM2 -> {
+                        FormTM2DTO formTM2DTO = modelMapper.map(formTM2, FormTM2DTO.class);
+                        formTM2DTO.setFormIndex(formTM2.getFormIndex());
+                        return formTM2DTO;
+                    })
                     .toList());
         }
         if (reportIndex.getFormTM3List() != null) {
             formDTOList.addAll(reportIndex.getFormTM3List().stream()
-                    .map(this::formTM3Mapper)
+                    .map(formTM3 -> {
+                        FormTM3DTO formTM3DTO = modelMapper.map(formTM3, FormTM3DTO.class);
+                        formTM3DTO.setFormIndex(formTM3.getFormIndex());
+                        return formTM3DTO;
+                    })
                     .toList());
         }
         if (reportIndex.getFormTM4List() != null) {
             formDTOList.addAll(reportIndex.getFormTM4List().stream()
-                    .map(this::formTM4Mapper)
+                    .map(formTM4 -> {
+                        FormTM4DTO formTM4DTO = modelMapper.map(formTM4, FormTM4DTO.class);
+                        formTM4DTO.setFormIndex(formTM4.getFormIndex());
+                        return formTM4DTO;
+                    })
                     .toList());
         }
         if (reportIndex.getFormTM5List() != null) {
             formDTOList.addAll(reportIndex.getFormTM5List().stream()
-                    .map(this::formTM5Mapper)
+                    .map(formTM5 -> {
+                        FormTM5DTO formTM5DTO = modelMapper.map(formTM5, FormTM5DTO.class);
+                        formTM5DTO.setFormIndex(formTM5.getFormIndex());
+                        return formTM5DTO;
+                    })
                     .toList());
         }
         if (reportIndex.getFormTM6List() != null) {
             formDTOList.addAll(reportIndex.getFormTM6List().stream()
-                    .map(this::formTM6Mapper)
+                    .map(formTM6 -> {
+                        FormTM6DTO formTM6DTO = modelMapper.map(formTM6, FormTM6DTO.class);
+                        formTM6DTO.setFormIndex(formTM6.getFormIndex());
+                        return formTM6DTO;
+                    })
                     .toList());
         }
         if (reportIndex.getFormTM7List() != null) {
             formDTOList.addAll(reportIndex.getFormTM7List().stream()
-                    .map(this::formTM7Mapper)
+                    .map(formTM7 -> {
+                        FormTM7DTO formTM7DTO = modelMapper.map(formTM7, FormTM7DTO.class);
+                        formTM7DTO.setFormIndex(formTM7.getFormIndex());
+                        return formTM7DTO;
+                    })
                     .toList());
         }
         formDTOList.sort(Comparator.comparingInt(FormDTO::getFormIndex));

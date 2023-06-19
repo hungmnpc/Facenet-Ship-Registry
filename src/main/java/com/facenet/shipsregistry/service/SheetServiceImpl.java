@@ -504,7 +504,7 @@ public class SheetServiceImpl implements SheetService{
     private FrameNumber copy (FrameNumber frameNumber) {
         FrameNumber frameNumberCopy = new FrameNumber(frameNumber.getName());
         frameNumberCopy.setMeasurementTM7List(frameNumber.getMeasurementTM7List());
-        return frameNumber;
+        return frameNumberCopy;
     }
 
     /**
