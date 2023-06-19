@@ -32,12 +32,12 @@ public class MeasurementTM1 {
     @JoinColumn(name = "form_TM1_id")
     private FormTM1 formTM1;
 
-    @OneToOne(fetch = FetchType.EAGER,cascade = {CascadeType.ALL})
+    @OneToOne(fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
     @JoinColumn(name = "forward_reading_measurement_detail_id")
     private DetailMeasurement forwardReadingMeasurementDetail;
 
 
-    @OneToOne(fetch = FetchType.EAGER,cascade = {CascadeType.ALL})
+    @OneToOne(fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
     @JoinColumn(name = "after_reading_measurement_detail_id")
     private DetailMeasurement afterReadingMeasurementDetail;
 

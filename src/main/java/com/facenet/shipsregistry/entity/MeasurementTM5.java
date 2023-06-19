@@ -31,7 +31,7 @@ public class MeasurementTM5 {
     @JoinColumn(name = "structuralTM5_id")
     private StructuralTM5 structuralTM5;
 
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinColumn(name = "measurement_detail_id")
     private DetailMeasurement measurementDetail;
 }
