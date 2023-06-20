@@ -335,7 +335,7 @@ public class FormServiceImpl implements FormService{
     @Override
     public ReportIndexDTO getReportIndexByID(Long id) {
         Optional<ReportIndex> reportIndex = reportIndexRepository.findById(id);
-        return reportIndex.map(index -> mapperUtils.reportIndexMapper(index)).orElse(null);
+        return reportIndex.map(index -> mapperUtils.reportIndexDTOMapperAllForm(index)).orElse(null);
     }
 
     /**
