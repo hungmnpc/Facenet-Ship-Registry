@@ -270,4 +270,11 @@ public interface FormService {
      */
     public void updateFormIndex(Long formId, String formType, Integer newIndex);
 
+    /**
+     *
+     * @param newName
+     * @return
+     */
+    public String changeDisplayNameForm(String formType, Long id, String newDisplayName);
+
 }

@@ -24,6 +24,8 @@ public class FormTM1 {
 
     private String code;
 
+    private String displayName;
+
     @Column(name = "strake_position")
     private String strakePosition;
 

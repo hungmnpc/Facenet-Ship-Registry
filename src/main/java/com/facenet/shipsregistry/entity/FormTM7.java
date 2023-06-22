@@ -32,6 +32,8 @@ public class FormTM7 {
     @JoinColumn(name = "report_id")
     private ReportIndex reportIndex;
 
+    private String displayName;
+
     public FormTM7(String name, String code) {
         this.name = name;
         this.code = code;
