@@ -26,6 +26,8 @@ public class FormTM5 {
 
     private String code;
 
+    private String displayName;
+
     @Column(name = "location_of_structure")
     private String locationOfStructure;
 

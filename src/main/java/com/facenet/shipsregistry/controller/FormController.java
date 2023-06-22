@@ -426,4 +426,25 @@ public class FormController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    /**
+     *
+     * @param formType
+     * @param id
+     * @param newDisplayName
+     * @return
+     */
+    @PutMapping("/displayName/{formType}/{id}")
+    public ResponseEntity<?> updateNewDisplayName(@PathVariable String formType,
+                                                  @PathVariable Long id,
+                                                  @RequestBody String newDisplayName) {
+        try {
+            formService.changeDisplayNameForm(formType, id, newDisplayName);
+            return ResponseEntity.ok().build();
+        } catch (Exception exception) {
+            log.error("{}", exception.getMessage());
+            exception.printStackTrace();
+            return ResponseEntity.internalServerError().body(exception.getMessage());
+        }
+    }
 }

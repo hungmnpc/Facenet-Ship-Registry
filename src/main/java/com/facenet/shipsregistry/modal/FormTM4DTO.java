@@ -20,6 +20,8 @@ public class FormTM4DTO extends FormDTO{
 
     private String tankDescription;
 
+    private String displayName;
+
     private String locationOfStructure;
 
     private List<StructuralMemberTM4DTO> structuralMemberTM4List;

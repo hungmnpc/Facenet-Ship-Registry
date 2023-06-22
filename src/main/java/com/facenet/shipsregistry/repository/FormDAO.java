@@ -31,4 +31,18 @@ public class FormDAO {
                 .setParameter("formId", formId)
                 .executeUpdate();
     }
+
+    /**
+     *
+     * @param formType
+     * @param id
+     * @param newDisplayName
+     */
+    public void updateDisPlayNameForm(String formType, Long id, String newDisplayName) {
+        String query = "UPDATE " + formType + " SET display_name = :newDisplayName WHERE id = :id";
+        entityManager.createNativeQuery(query)
+                .setParameter("newDisplayName", newDisplayName)
+                .setParameter("id", id)
+                .executeUpdate();
+    }
 }
