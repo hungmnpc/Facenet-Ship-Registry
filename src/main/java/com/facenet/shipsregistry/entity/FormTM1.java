@@ -24,13 +24,15 @@ public class FormTM1 {
 
     private String code;
 
+    private String displayName;
+
     @Column(name = "strake_position")
     private String strakePosition;
 
     @Column(name = "form_index")
     private Integer formIndex;
 
-    @OneToMany(mappedBy = "formTM1", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "formTM1", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private List<MeasurementTM1> measurementTM1List;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})

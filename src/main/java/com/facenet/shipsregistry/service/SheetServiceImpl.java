@@ -58,7 +58,7 @@ public class SheetServiceImpl implements SheetService{
         Workbook workbook = getWorkBookFromFile(excelFile);
         Sheet sheet = workbook.getSheetAt(0);
         FormTM1 formTM1 = new FormTM1(null, ""
-                , sheet.getRow(0).getCell(1).getStringCellValue(), null
+                , null,sheet.getRow(0).getCell(1).getStringCellValue(), null
                 , new ArrayList<>(), null);
         Stream<Row> rowStream = StreamSupport.stream(sheet.spliterator(), false);
         DataFormatter formatter = new DataFormatter();
@@ -504,7 +504,7 @@ public class SheetServiceImpl implements SheetService{
     private FrameNumber copy (FrameNumber frameNumber) {
         FrameNumber frameNumberCopy = new FrameNumber(frameNumber.getName());
         frameNumberCopy.setMeasurementTM7List(frameNumber.getMeasurementTM7List());
-        return frameNumber;
+        return frameNumberCopy;
     }
 
     /**

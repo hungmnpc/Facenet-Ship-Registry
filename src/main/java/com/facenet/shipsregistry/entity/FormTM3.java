@@ -36,10 +36,12 @@ public class FormTM3 {
     @Column(name = "3rd_frame_no")
     private String thirdFrameNo;
 
+    private String displayName;
+
     @Column(name = "form_index")
     private Integer formIndex;
 
-    @OneToMany(mappedBy = "formTM3", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "formTM3", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private List<MeasurementTM3> measurementTM3List;
 
     public FormTM3( String firstFrameNoTM3, String secondFrameNoTM3, String thirdFrameNoTM3, String code) {

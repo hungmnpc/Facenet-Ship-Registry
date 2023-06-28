@@ -283,8 +283,8 @@ public class MapperUtils {
                             .map(this::frameNumberMapper)
                             .toList();
             formTM7DTO.setFrameNumberList(frameNumberDTOList);
-            formTM7DTO.setFormIndex(formTM7.getFormIndex());
         }
+        formTM7DTO.setFormIndex(formTM7.getFormIndex());
         return formTM7DTO;
     }
 
@@ -369,11 +369,10 @@ public class MapperUtils {
 
     /**
      *
-     *
      * @param reportIndex
      * @return
      */
-    public ReportIndexDTO reportIndexMapper(ReportIndex reportIndex) {
+    public ReportIndexDTO reportIndexDTOMapperAllForm(ReportIndex reportIndex) {
         ReportIndexDTO reportIndexDTO = modelMapper.map(reportIndex, ReportIndexDTO.class);
         reportIndexDTO.setReportNo(reportIndex.getGeneralParticulars().getReportNo());
         List<FormDTO> formDTOList = new ArrayList<>();
@@ -410,6 +409,132 @@ public class MapperUtils {
         if (reportIndex.getFormTM7List() != null) {
             formDTOList.addAll(reportIndex.getFormTM7List().stream()
                     .map(this::formTM7Mapper)
+                    .toList());
+        }
+        formDTOList.sort(Comparator.comparingInt(FormDTO::getFormIndex));
+        reportIndexDTO.setFormList(formDTOList);
+        return reportIndexDTO;
+    }
+
+    /**
+     *
+     *
+     * @param reportIndex
+     * @return
+     */
+    public ReportIndexDTO reportIndexMapper(ReportIndex reportIndex) {
+        ReportIndexDTO reportIndexDTO = modelMapper.map(reportIndex, ReportIndexDTO.class);
+        reportIndexDTO.setReportNo(reportIndex.getGeneralParticulars().getReportNo());
+        List<FormDTO> formDTOList = new ArrayList<>();
+        if (reportIndex.getFormTM1List() != null) {
+            formDTOList.addAll(reportIndex.getFormTM1List().stream()
+                    .map(formTM1 -> {
+                        FormTM1DTO formTM1DTO = new FormTM1DTO("TM1", formTM1.getStrakePosition(), formTM1.getDisplayName(), null);
+                        formTM1DTO.setCode(formTM1.getCode());
+                        formTM1DTO.setId(formTM1.getId());
+                        formTM1DTO.setFormIndex(formTM1.getFormIndex());
+                        String displayName = formTM1.getDisplayName() != null &&
+                                !Objects.equals(formTM1.getDisplayName(), "") ?
+                                formTM1.getDisplayName() : "TM1" + formTM1.getCode();
+                        formTM1DTO.setDisplayname(displayName);
+                        return formTM1DTO;
+                    })
+                    .toList());
+        }
+        if (reportIndex.getFormTM2List() != null) {
+            formDTOList.addAll(reportIndex.getFormTM2List().stream()
+                    .map(formTM2 -> {
+                        FormTM2DTO formTM2DTO = new FormTM2DTO(formTM2.getName().toUpperCase(),
+                                formTM2.getName(), formTM2.getDisplayName(), null, formTM2.getFirstFrameNoTM2(),
+                                formTM2.getSecondFrameNoTM2(), formTM2.getThirdFrameNoTM2());
+                        formTM2DTO.setFormIndex(formTM2.getFormIndex());
+                        String displayName = formTM2.getDisplayName() != null &&
+                                !Objects.equals(formTM2.getDisplayName(), "") ?
+                                formTM2.getDisplayName() : formTM2.getName() + formTM2.getCode();
+                        formTM2DTO.setDisplayname(displayName);
+                        formTM2DTO.setCode(formTM2.getCode());
+                        formTM2DTO.setId(formTM2.getId());
+                        return formTM2DTO;
+                    })
+                    .toList());
+        }
+        if (reportIndex.getFormTM3List() != null) {
+            formDTOList.addAll(reportIndex.getFormTM3List().stream()
+                    .map(formTM3 -> {
+                        FormTM3DTO formTM3DTO = new FormTM3DTO("TM3", formTM3.getDisplayName(),formTM3.getFirstFrameNo(),
+                                formTM3.getSecondFrameNo(), formTM3.getThirdFrameNo(), null);
+                        formTM3DTO.setFormIndex(formTM3.getFormIndex());
+                        formTM3DTO.setId(formTM3.getId());
+                        String displayName = formTM3.getDisplayName() != null &&
+                                !Objects.equals(formTM3.getDisplayName(), "") ?
+                                formTM3.getDisplayName() : "TM3" + formTM3.getCode();
+                        formTM3DTO.setDisplayname(displayName);
+                        formTM3DTO.setCode(formTM3.getCode());
+                        return formTM3DTO;
+                    })
+                    .toList());
+        }
+        if (reportIndex.getFormTM4List() != null) {
+            formDTOList.addAll(reportIndex.getFormTM4List().stream()
+                    .map(formTM4 -> {
+                        FormTM4DTO formTM4DTO = new FormTM4DTO("TM4", formTM4.getTankDescription(),
+                                formTM4.getDisplayName(), formTM4.getLocationOfStructure(), null);
+                        formTM4DTO.setFormIndex(formTM4.getFormIndex());
+                        formTM4DTO.setCode(formTM4.getCode());
+                        formTM4DTO.setId(formTM4.getId());
+                        String displayName = formTM4.getDisplayName() != null &&
+                                !Objects.equals(formTM4.getDisplayName(), "") ?
+                                formTM4.getDisplayName() : "TM4" + formTM4.getCode();
+                        formTM4DTO.setDisplayname(displayName);
+                        return formTM4DTO;
+                    })
+                    .toList());
+        }
+        if (reportIndex.getFormTM5List() != null) {
+            formDTOList.addAll(reportIndex.getFormTM5List().stream()
+                    .map(formTM5 -> {
+                        FormTM5DTO formTM5DTO = new FormTM5DTO("TM5",formTM5.getDisplayName(), formTM5.getLocationOfStructure(),
+                                formTM5.getTankHolDescription(), formTM5.getFrameNo(), null);
+                        formTM5DTO.setFormIndex(formTM5.getFormIndex());
+                        formTM5DTO.setCode(formTM5.getCode());
+                        formTM5DTO.setId(formTM5.getId());
+                        String displayName = formTM5.getDisplayName() != null &&
+                                !Objects.equals(formTM5.getDisplayName(), "") ?
+                                formTM5.getDisplayName() : "TM5" + formTM5.getCode();
+                        formTM5DTO.setDisplayname(displayName);
+                        return formTM5DTO;
+                    })
+                    .toList());
+        }
+        if (reportIndex.getFormTM6List() != null) {
+            formDTOList.addAll(reportIndex.getFormTM6List().stream()
+                    .map(formTM6 -> {
+                        FormTM6DTO formTM6DTO = new FormTM6DTO("TM6", formTM6.getStructuralMembers(),
+                                formTM6.getDisplayName(), formTM6.getLocationOfStructure(), null);
+                        formTM6DTO.setId(formTM6.getId());
+                        formTM6DTO.setCode(formTM6.getCode());
+                        formTM6DTO.setFormIndex(formTM6.getFormIndex());
+                        String displayName = formTM6.getDisplayName() != null &&
+                                !Objects.equals(formTM6.getDisplayName(), "") ?
+                                formTM6.getDisplayName() : "TM6" + formTM6.getCode();
+                        formTM6DTO.setDisplayname(displayName);
+                        return formTM6DTO;
+                    })
+                    .toList());
+        }
+        if (reportIndex.getFormTM7List() != null) {
+            formDTOList.addAll(reportIndex.getFormTM7List().stream()
+                    .map(formTM7 -> {
+                        FormTM7DTO formTM7DTO = new FormTM7DTO("TM7", formTM7.getName(), formTM7.getDisplayName(), null);
+                        formTM7DTO.setFormIndex(formTM7.getFormIndex());
+                        formTM7DTO.setId(formTM7.getId());
+                        formTM7DTO.setCode(formTM7.getCode());
+                        String displayName = formTM7.getDisplayName() != null &&
+                                !Objects.equals(formTM7.getDisplayName(), "") ?
+                                formTM7.getDisplayName() : "TM7" + formTM7.getCode();
+                        formTM7DTO.setDisplayname(displayName);
+                        return formTM7DTO;
+                    })
                     .toList());
         }
         formDTOList.sort(Comparator.comparingInt(FormDTO::getFormIndex));

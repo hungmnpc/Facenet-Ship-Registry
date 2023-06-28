@@ -23,15 +23,15 @@ public class MeasurementTM7 {
     @JoinColumn(name = "id_frame_number")
     private FrameNumber frameNumber;
 
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinColumn(name = "upper_part_id")
     private DetailMeasurement upperPart;
 
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinColumn(name = "mid_part_id")
     private DetailMeasurement midPart;
 
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinColumn(name = "lower_part_id")
     private DetailMeasurement lowerPart;
 }

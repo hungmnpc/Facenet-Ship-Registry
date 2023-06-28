@@ -29,7 +29,7 @@ public class MeasurementTM4 {
     @Column(name = "item")
     private String item;
 
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinColumn(name = "measurement_detail_id")
     private DetailMeasurement detailMeasurement;
 

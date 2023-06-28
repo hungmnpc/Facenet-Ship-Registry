@@ -25,12 +25,14 @@ public class FormTM7 {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "formTM7", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "formTM7", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private List<FrameNumber> frameNumber;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "report_id")
     private ReportIndex reportIndex;
+
+    private String displayName;
 
     public FormTM7(String name, String code) {
         this.name = name;

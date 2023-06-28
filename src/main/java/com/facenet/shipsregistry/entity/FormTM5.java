@@ -26,6 +26,8 @@ public class FormTM5 {
 
     private String code;
 
+    private String displayName;
+
     @Column(name = "location_of_structure")
     private String locationOfStructure;
 
@@ -44,7 +46,7 @@ public class FormTM5 {
         this.id = null;
     }
 
-    @OneToMany(mappedBy = "formTM5", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "formTM5", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private List<StructuralTM5> structuralTM5List;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
