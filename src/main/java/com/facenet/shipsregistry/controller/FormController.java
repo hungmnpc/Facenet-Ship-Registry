@@ -439,7 +439,7 @@ public class FormController {
                                                   @PathVariable Long id,
                                                   @RequestBody String newDisplayName) {
         try {
-            formService.changeDisplayNameForm(formType, id, newDisplayName);
+            formService.changeDisplayNameForm(formType.toLowerCase(), id, newDisplayName);
             return ResponseEntity.ok().build();
         } catch (Exception exception) {
             log.error("{}", exception.getMessage());
