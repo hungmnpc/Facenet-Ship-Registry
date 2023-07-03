@@ -13,10 +13,12 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URLConnection;
@@ -204,10 +206,13 @@ public class SheetController {
      */
     @GetMapping("/{form}")
     public ResponseEntity<?> downloadTemplate(@PathVariable String form) {
-        String localDir = System.getProperty("user.dir").concat("/template-form");
-        String finalPath = localDir + "/" + form + ".xls";
         HttpHeaders header = new HttpHeaders();
-        File file = new File(finalPath);
+        File file = null;
+        try {
+            file = ResourceUtils.getFile("classpath:template-form/" + form + ".xls");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         Path path = Paths.get(file.getAbsolutePath());
         header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getName() + "\"");
         header.add("Cache-Control", "no-cache, no-store, must-revalidate");

@@ -363,7 +363,6 @@ public class MapperUtils {
     public DetailMeasurementDTO detailMeasurementMapper(DetailMeasurement detailMeasurement) {
         DetailMeasurementDTO detailMeasurementDTO =
                 modelMapper.map(detailMeasurement, DetailMeasurementDTO.class);
-
         return detailMeasurementDTO;
     }
 
