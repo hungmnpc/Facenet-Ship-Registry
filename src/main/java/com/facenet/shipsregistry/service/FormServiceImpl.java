@@ -934,7 +934,7 @@ public class FormServiceImpl implements FormService{
                             .map(frameNumberRequestBody -> {
                                 FrameNumber frameNumberTM7 = createNewFrameNumber(frameNumberRequestBody);
                                 frameNumberTM7.setFormTM7(formTM7);
-                                frameNumberRepository.save(frameNumberTM7);
+//                                frameNumberRepository.save(frameNumberTM7);
                                 return frameNumberTM7;
                             }).toList();
             formTM7.setFrameNumber(frameNumberList);
@@ -957,7 +957,7 @@ public class FormServiceImpl implements FormService{
                                 StructuralDescriptionTM6 structuralDescriptionTM6 =
                                         createNewStructuralDesTM6(structuralDescriptionTM6RequestBody);
                                 structuralDescriptionTM6.setFormTM6(formTM6);
-                                structuralDescriptionTM6Repository.save(structuralDescriptionTM6);
+//                                structuralDescriptionTM6Repository.save(structuralDescriptionTM6);
                                 return structuralDescriptionTM6;
                             }).toList();
             formTM6.setStructuralDescriptionTM6List(structuralDescriptionTM6List);
