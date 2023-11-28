@@ -399,12 +399,14 @@ public class SheetServiceImpl implements SheetService{
                     map(cell -> formatter
                             .formatCellValue(cell,new HSSFFormulaEvaluator((HSSFWorkbook) workbook)))
                     .toList();
-            if (i.get() >= 6 && !cellVals.get(0).equals("")) {
+            if (i.get() >= 6 && !cellVals.get(0).isEmpty()) {
                 if (i.get() == 6) {
                     if (cellVals.get(3).equals("") && !cellVals.get(0).equals("")) {
                         structuralDescriptionTM6.setStructuralDescriptionTitle(cellVals.get(0));
                     } else {
                         structuralDescriptionTM6List.add(structuralDescriptionTM6);
+                        MeasurementTM6 measurementTM6 = createMeasurementTM6(cellVals);
+                        structuralDescriptionTM6.getMeasurementTM6List().add(measurementTM6);
                     }
                 } else {
                     if (cellVals.get(3).equals("")) {
@@ -419,7 +421,7 @@ public class SheetServiceImpl implements SheetService{
             }
             i.set(i.get() + 1);
         });
-        if (structuralDescriptionTM6 .getStructuralDescriptionTitle() != null) {
+        if (structuralDescriptionTM6.getStructuralDescriptionTitle() != null) {
             structuralDescriptionTM6List.add(structuralDescriptionTM6);
         }
         formTM6.setStructuralDescriptionTM6List(structuralDescriptionTM6List);

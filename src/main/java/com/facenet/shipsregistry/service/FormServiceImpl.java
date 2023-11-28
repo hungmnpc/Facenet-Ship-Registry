@@ -532,7 +532,7 @@ public class FormServiceImpl implements FormService{
                 .map(measurementTM6RequestBody -> {
                     MeasurementTM6 measurementTM6 = createNewMeasurementTM6(measurementTM6RequestBody);
                     measurementTM6.setStructuralDescriptionTM6(structuralDescriptionTM6);
-                    measurementTM6Repository.save(measurementTM6);
+//                    measurementTM6Repository.save(measurementTM6);
                     return measurementTM6;
                 }).toList();
         structuralDescriptionTM6.setMeasurementTM6List(measurementTM6List);
@@ -951,7 +951,7 @@ public class FormServiceImpl implements FormService{
                                 StructuralDescriptionTM6 structuralDescriptionTM6 =
                                         createNewStructuralDesTM6(structuralDescriptionTM6RequestBody);
                                 structuralDescriptionTM6.setFormTM6(formTM6);
-                                structuralDescriptionTM6Repository.save(structuralDescriptionTM6);
+//                                structuralDescriptionTM6Repository.save(structuralDescriptionTM6);
                                 return structuralDescriptionTM6;
                             }).toList();
             formTM6.setStructuralDescriptionTM6List(structuralDescriptionTM6List);

@@ -1,6 +1,7 @@
 package com.facenet.shipsregistry.modal;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 /**
  * @author: hungdinh
@@ -12,6 +13,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@SuperBuilder
 public class FormDTO {
 
     public Long id;

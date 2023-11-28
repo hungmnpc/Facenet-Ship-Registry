@@ -221,7 +221,7 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
         if (reportNo != null) {
             List<ReportIndex> reportIndices = reportIndexRepository.findAllReportIndexInGP(id);
             List<ReportIndexDTO> reportIndexDTOS = reportIndices.stream()
-                    .map(reportIndex -> mapperUtils.reportIndexMapper(reportIndex))
+                    .map(reportIndex -> mapperUtils.menuMapper(reportIndex))
                     .toList();
             List<ReportMenu.Part> parts = reportIndexDTOS.stream()
                     .map(reportIndex -> new ReportMenu.Part(

@@ -29,7 +29,7 @@ public class ReportIndex {
     @Column(name = "item")
     private String item;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "general_particulars_id")
     private GeneralParticulars generalParticulars;
 
