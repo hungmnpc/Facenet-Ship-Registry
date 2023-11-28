@@ -7,9 +7,11 @@ import com.facenet.shipsregistry.request.DetailMeasurementRequestBody;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author: hungdinh
@@ -294,7 +296,13 @@ public class MapperUtils {
      * @return
      */
     public FormTM6DTO formTM6Mapper(FormTM6 formTM6) {
-        FormTM6DTO formTM6DTO = modelMapper.map(formTM6, FormTM6DTO.class);
+        FormTM6DTO formTM6DTO = FormTM6DTO.builder()
+                .id(formTM6.getId())
+                .displayName(formTM6.getDisplayName())
+                .code(formTM6.getCode())
+                .locationOfStructure(formTM6.getLocationOfStructure())
+                .structuralMembers(formTM6.getStructuralMembers())
+                .build();
         List<StructuralDescriptionTM6DTO> structuralDescriptionTM6DTOList =
                 formTM6.getStructuralDescriptionTM6List().stream()
                         .map(this::structuralMemberTM6Mapper)
@@ -310,21 +318,28 @@ public class MapperUtils {
      * @return
      */
     public MeasurementTM6DTO measurementTM6Mapper(MeasurementTM6 measurementTM6) {
-        MeasurementTM6DTO measurementTM6DTO = modelMapper.map(measurementTM6, MeasurementTM6DTO.class);
+        MeasurementTM6DTO measurementTM6DTO = MeasurementTM6DTO.builder()
+                .id(measurementTM6.getId())
+                .description(measurementTM6.getDescription())
+                .item(measurementTM6.getItem())
+                .build();
         if (measurementTM6.getDetailMeasurement() != null) {
             measurementTM6DTO.setDetailMeasurement(detailMeasurementMapper(measurementTM6.getDetailMeasurement()));
         }
+        log.info("{}", measurementTM6.getId());
         return measurementTM6DTO;
     }
 
     public StructuralDescriptionTM6DTO structuralMemberTM6Mapper(StructuralDescriptionTM6 structuralDescriptionTM6) {
-        StructuralDescriptionTM6DTO structuralDescriptionTM6DTO =
-                modelMapper.map(structuralDescriptionTM6, StructuralDescriptionTM6DTO.class);
+        StructuralDescriptionTM6DTO structuralDescriptionTM6DTO = StructuralDescriptionTM6DTO.builder()
+                .id(structuralDescriptionTM6.getId())
+                .structuralDescriptionTitle(structuralDescriptionTM6.getStructuralDescriptionTitle())
+                .build();
         if (structuralDescriptionTM6.getMeasurementTM6List() != null) {
             List<MeasurementTM6DTO> measurementTM6DTOList =
                     structuralDescriptionTM6.getMeasurementTM6List()
                     .stream().map(this::measurementTM6Mapper)
-                    .toList();
+                    .collect(Collectors.toList());
             structuralDescriptionTM6DTO.setMeasurementTM6DTOList(measurementTM6DTOList);
         }
         return structuralDescriptionTM6DTO;
@@ -361,8 +376,13 @@ public class MapperUtils {
      * @return
      */
     public DetailMeasurementDTO detailMeasurementMapper(DetailMeasurement detailMeasurement) {
-        DetailMeasurementDTO detailMeasurementDTO =
-                modelMapper.map(detailMeasurement, DetailMeasurementDTO.class);
+        DetailMeasurementDTO detailMeasurementDTO = DetailMeasurementDTO.builder()
+                .originalThickness(detailMeasurement.getOriginalThickness())
+                .maxAlwbDim(detailMeasurement.getMaxAlwbDim())
+                .gaugedP(detailMeasurement.getGaugedP())
+                .gaugedS(detailMeasurement.getGaugedS())
+                .percent(detailMeasurement.getPercent())
+                .build();
         return detailMeasurementDTO;
     }
 

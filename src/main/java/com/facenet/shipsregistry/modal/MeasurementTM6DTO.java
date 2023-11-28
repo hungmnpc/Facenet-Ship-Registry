@@ -2,15 +2,13 @@ package com.facenet.shipsregistry.modal;
 
 
 import com.facenet.shipsregistry.entity.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class MeasurementTM6DTO {
 
     private Long id;
