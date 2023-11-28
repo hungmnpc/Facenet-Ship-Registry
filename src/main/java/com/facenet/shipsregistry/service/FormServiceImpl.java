@@ -537,7 +537,7 @@ public class FormServiceImpl implements FormService{
                 .map(measurementTM6RequestBody -> {
                     MeasurementTM6 measurementTM6 = createNewMeasurementTM6(measurementTM6RequestBody);
                     measurementTM6.setStructuralDescriptionTM6(structuralDescriptionTM6);
-                    measurementTM6Repository.save(measurementTM6);
+//                    measurementTM6Repository.save(measurementTM6);
                     return measurementTM6;
                 }).toList();
         structuralDescriptionTM6.setMeasurementTM6List(measurementTM6List);

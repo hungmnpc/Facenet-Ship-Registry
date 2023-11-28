@@ -1,6 +1,7 @@
 package com.facenet.shipsregistry.modal;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@SuperBuilder
 public class FormTM1DTO extends FormDTO {
 
     private String type = "TM1";

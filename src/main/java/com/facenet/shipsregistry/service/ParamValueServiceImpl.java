@@ -52,11 +52,20 @@ public class ParamValueServiceImpl implements ParamValueService{
      */
     @Override
     public ParamValueDTO saveNewParamValue(ParamValueRequestBody requestBody) {
-        ParamValue paramValueSaved = paramValueRepository.save(
-                new ParamValue(null, requestBody.getParam(), requestBody.getValue(),
-                        ParamType.of(requestBody.getType())));
-        if (paramValueSaved.getId() > 0) {
-            return mapperUtils.paramValueMapper(paramValueSaved);
+        ParamValue existed = paramValueRepository.findByTypeAndParamAndValue(
+                ParamType.of(requestBody.getType()),
+                requestBody.getParam(),
+                requestBody.getValue()
+        ).orElse(null);
+        if (existed == null) {
+            ParamValue paramValueSaved = paramValueRepository.save(
+                    new ParamValue(null, requestBody.getParam(), requestBody.getValue(),
+                            ParamType.of(requestBody.getType())));
+            if (paramValueSaved.getId() > 0) {
+                return mapperUtils.paramValueMapper(paramValueSaved);
+            } else {
+                return null;
+            }
         } else {
             return null;
         }

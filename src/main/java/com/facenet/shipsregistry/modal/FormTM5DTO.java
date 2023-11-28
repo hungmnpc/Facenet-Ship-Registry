@@ -2,10 +2,8 @@ package com.facenet.shipsregistry.modal;
 
 
 import com.facenet.shipsregistry.entity.MeasurementTM5;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 import java.util.List;
@@ -19,6 +17,8 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
+@SuperBuilder
 public class FormTM5DTO extends FormDTO{
 
     private String type = "TM5";
