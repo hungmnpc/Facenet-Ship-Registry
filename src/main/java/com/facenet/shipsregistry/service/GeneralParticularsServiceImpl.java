@@ -324,7 +324,7 @@ public class GeneralParticularsServiceImpl implements GeneralParticularsService{
         if (reportIndex != null) {
             reportIndex.setPartIndex(partIndex);
             reportIndex.setItem(item);
-            ReportIndexDTO reportIndexDTO = mapperUtils.reportIndexMapper(reportIndex);
+            ReportIndexDTO reportIndexDTO = mapperUtils.menuMapper(reportIndex);
             return new ReportMenu.Part(reportIndex.getId(), reportIndex.getPartIndex(), reportIndex.getItem(),
                     reportIndexDTO.getFormList().stream()
                             .map(formDTO -> new ReportMenu.Form(formDTO.getId(),
