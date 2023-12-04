@@ -1,26 +1,25 @@
-#!/usr/bin/env groovy
-
-def buildNumber = env.BUILD_NUMBER as int
-if (buildNumber > 1) milestone(buildNumber - 1)
-milestone(buildNumber)
-
-node {
-    stage('checkout') {
-        checkout scm
-    }
-    stage('check java') {
-        bat "java -version"
-    }
-
-    stage('clean') {
-        bat "./mvnw -ntp clean -P-webapp"
-    }
-
-     //stage('packaging') {
-    //     bat "./mvnw -ntp verify -P-webapp -Pdev -DskipTests -Dcheckstyle.skip"
-    //     archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
-    // }
-    stage('run') {
-        bat "./mvnw spring-boot:run"
-    }
-}
+pipeline {
+	agent {
+		docker {
+			image 'maven'
+			args '-v $HOME/.m2:/root/.m2'
+		}
+	}
+	stages {
+	  stage("build & SonarQube analysis") {            
+		steps {
+		
+		  withSonarQubeEnv('sonarqube') {
+			sh 'mvn clean package sonar:sonar'
+		  }
+		}
+	  }
+	  stage("Quality Gate") {
+		steps {
+		  timeout(time: 1, unit: 'HOURS') {
+			waitForQualityGate abortPipeline: true
+		  }
+		}
+	  }
+	}
+  }
