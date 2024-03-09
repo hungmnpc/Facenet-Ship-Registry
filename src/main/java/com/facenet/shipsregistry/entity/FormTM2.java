@@ -28,6 +28,8 @@ public class FormTM2 {
 
     private String code;
 
+    private String displayName;
+
     @Column(name = "form_index")
     private Integer formIndex;
 

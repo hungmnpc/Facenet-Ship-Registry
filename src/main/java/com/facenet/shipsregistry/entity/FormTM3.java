@@ -36,6 +36,8 @@ public class FormTM3 {
     @Column(name = "3rd_frame_no")
     private String thirdFrameNo;
 
+    private String displayName;
+
     @Column(name = "form_index")
     private Integer formIndex;
 

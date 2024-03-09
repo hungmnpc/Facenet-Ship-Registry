@@ -22,5 +22,7 @@ public class FormTM1DTO extends FormDTO {
 
     private String strakePosition;
 
+    private String displayName;
+
     private List<MeasurementTM1DTO> measurementTM1DTOList;
 }

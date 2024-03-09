@@ -27,6 +27,8 @@ public class FormTM6 {
     @Column(name = "location_of_structure")
     private String locationOfStructure;
 
+    private String displayName;
+
     @OneToMany(mappedBy = "formTM6", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private List<StructuralDescriptionTM6> structuralDescriptionTM6List;
 

@@ -10,7 +10,7 @@ import java.util.List;
 @Table(name = "FRAME_NUMBER")
 @Setter
 @Getter
-@ToString
+@ToString()
 @AllArgsConstructor
 @NoArgsConstructor
 public class FrameNumber {
