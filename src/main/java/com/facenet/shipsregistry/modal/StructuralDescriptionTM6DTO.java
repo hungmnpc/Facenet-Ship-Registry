@@ -5,10 +5,7 @@ import com.facenet.shipsregistry.entity.DetailMeasurement;
 import com.facenet.shipsregistry.entity.FormTM6;
 import com.facenet.shipsregistry.entity.FormTM7;
 import com.facenet.shipsregistry.entity.MeasurementTM6;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -21,6 +18,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class StructuralDescriptionTM6DTO {
 
     private Long id;

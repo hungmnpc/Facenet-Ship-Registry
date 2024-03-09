@@ -3,6 +3,7 @@ package com.facenet.shipsregistry.security;
 import com.facenet.shipsregistry.filter.CustomerAuthenticationFilter;
 import com.facenet.shipsregistry.filter.CustomerAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebApplicationContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -37,6 +38,8 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Value("${vimisco.allow.config}")
+    String allowip;
     @Autowired
     PasswordEncoder passwordEncoder;
 
@@ -64,7 +67,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().configurationSource(request -> {
             var cors = new CorsConfiguration();
-            cors.setAllowedOrigins(List.of("http://localhost:4200", "https://vimisco.facenet.vn/"));
+            String[] ip = allowip.split(",");
+            cors.setAllowedOrigins(List.of(ip));
             cors.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
             cors.setAllowedHeaders(List.of("*"));
             cors.setAllowCredentials(true);

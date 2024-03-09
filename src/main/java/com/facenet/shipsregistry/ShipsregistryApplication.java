@@ -18,7 +18,10 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,9 +29,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.text.ParseException;
 import java.time.LocalDate;
 
-@SpringBootApplication
-@Slf4j
-@EnableJpaAuditing
 @SecurityScheme(
 		name = "bearerAuth",
 		scheme = "bearer",
@@ -36,7 +36,17 @@ import java.time.LocalDate;
 		type = SecuritySchemeType.HTTP,
 		in = SecuritySchemeIn.HEADER
 )
-public class ShipsregistryApplication {
+@EnableJpaAuditing
+@SpringBootApplication(scanBasePackages = {"com.facenet.shipsregistry.**"})
+@ComponentScan(basePackages = {"com.facenet.shipsregistry.**"})
+public class ShipsregistryApplication  extends SpringBootServletInitializer {
+
+	public static void main(String[] args) {
+		System.setProperty("javax.xml.bind.JAXBContextFactory", "org.eclipse.persistence.jaxb.JAXBContextFactory");
+		System.setProperty("file.encoding","UTF-8");
+		ApplicationContext context = SpringApplication.run(ShipsregistryApplication.class, args);
+
+	}
 
 	@Bean
 	public AuditorAware<String> auditorAware() {
@@ -57,9 +67,6 @@ public class ShipsregistryApplication {
 		return new BCryptPasswordEncoder();
 	}
 
-	public static void main(String[] args) throws ParseException {
-		SpringApplication.run(ShipsregistryApplication.class, args);
-	}
 
 	@Bean
 	CommandLineRunner run(AuthService authService) {

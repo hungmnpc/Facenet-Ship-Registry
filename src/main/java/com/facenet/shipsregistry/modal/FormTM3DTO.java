@@ -20,6 +20,8 @@ public class FormTM3DTO extends FormDTO{
 
     private String type = "TM3";
 
+    private String displayName;
+
     private String firstFrameNo;
 
     private String secondFrameNo;

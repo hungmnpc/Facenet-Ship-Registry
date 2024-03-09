@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
@@ -12,11 +13,14 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 public class FormTM6DTO extends FormDTO{
 
     private String type = "TM6";
 
     private String structuralMembers;
+
+    private String displayName;
 
     private String locationOfStructure;
 

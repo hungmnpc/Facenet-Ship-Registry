@@ -105,7 +105,7 @@ public class FormServiceImpl implements FormService{
         if (reportIndex.isEmpty()) {
             return null;
         }
-        FormTM1 formTM1 = new FormTM1(null,requestBody.getCode(),
+        FormTM1 formTM1 = new FormTM1(null,requestBody.getCode(), "TM1" + requestBody.getCode(),
                 requestBody.getStrakePosition(), reportIndex.get().currentFormIndex(),null, null);
         reportIndex.ifPresent(formTM1::setReportIndex);
         formTM1.setMeasurementTM1List(new ArrayList<>());
@@ -243,9 +243,10 @@ public class FormServiceImpl implements FormService{
             return null;
         }
         FormTM5 formTM5 = new FormTM5(null,
+                requestBody.getCode(), "TM5" + requestBody.getCode(),
                 requestBody.getLocationOfStructure(),
-                requestBody.getTankHolDescription(),requestBody.getFrameNo(),
-                requestBody.getCode(),null, null, reportIndex.get().currentFormIndex());;
+                requestBody.getTankHolDescription(),requestBody.getFrameNo()
+                ,null, null, reportIndex.get().currentFormIndex());;
         reportIndex.ifPresent(formTM5::setReportIndex);
         List<StructuralTM5> structuralTM5List = requestBody.getStructuralTM5List().stream()
                 .map(structuralTM5RequestBody -> {
@@ -276,6 +277,7 @@ public class FormServiceImpl implements FormService{
         }
         FormTM3 formTM3 = new FormTM3( requestBody.getFirstFrameNo(),
                 requestBody.getSecondFrameNo(), requestBody.getThirdFrameNo(), requestBody.getCode());
+        formTM3.setDisplayName("TM3" + requestBody.getCode());
         formTM3.setFormIndex(reportIndex.get().currentFormIndex());
         reportIndex.ifPresent(formTM3::setReportIndex);
         List<MeasurementTM3> measurementTM3List =
@@ -335,7 +337,7 @@ public class FormServiceImpl implements FormService{
     @Override
     public ReportIndexDTO getReportIndexByID(Long id) {
         Optional<ReportIndex> reportIndex = reportIndexRepository.findById(id);
-        return reportIndex.map(index -> mapperUtils.reportIndexMapper(index)).orElse(null);
+        return reportIndex.map(index -> mapperUtils.reportIndexDTOMapperAllForm(index)).orElse(null);
     }
 
     /**
@@ -363,6 +365,7 @@ public class FormServiceImpl implements FormService{
                 requestBody.getSecondFrameNoTM2(), requestBody.getThirdFrameNoTM2(),
                 requestBody.getCode()
         );
+        formTM2.setDisplayName(requestBody.getName() + requestBody.getCode());
         formTM2.setFormIndex(reportIndex.get().currentFormIndex());
         reportIndex.ifPresent(formTM2::setReportIndex);
         List<MeasurementTM2> measurementTM2List = requestBody.getMeasurementTM2List().stream()
@@ -425,6 +428,7 @@ public class FormServiceImpl implements FormService{
         FormTM4 formTM4 = new FormTM4(requestBody.getTankDescription(), requestBody.getLocationOfStructure(),
                 requestBody.getCode());
         formTM4.setFormIndex(reportIndex.get().currentFormIndex());
+        formTM4.setDisplayName("TM4" + requestBody.getCode());
         reportIndex.ifPresent(formTM4::setReportIndex);
         List<StructuralMemberTM4> structuralMemberTM4List =
                 requestBody.getStructuralMemberTM4List().stream()
@@ -488,6 +492,7 @@ public class FormServiceImpl implements FormService{
             return null;
         }
         FormTM7 formTM7 = new FormTM7(requestBody.getName(), requestBody.getCode());
+        formTM7.setDisplayName("TM7" + requestBody.getCode());
         reportIndex.ifPresent(formTM7::setReportIndex);
         formTM7.setFormIndex(reportIndex.get().currentFormIndex());
         List<FrameNumber> frameNumberList =
@@ -552,6 +557,7 @@ public class FormServiceImpl implements FormService{
         }
         FormTM6 formTM6 = new FormTM6(requestBody.getStructuralMembers(),
                 requestBody.getLocationOfStructure(), requestBody.getCode());
+        formTM6.setDisplayName("TM6" + requestBody.getCode());
         reportIndex.ifPresent(formTM6::setReportIndex);
         formTM6.setFormIndex(reportIndex.get().currentFormIndex());
         List<StructuralDescriptionTM6> structuralDescriptionTM6List =
@@ -928,7 +934,7 @@ public class FormServiceImpl implements FormService{
                             .map(frameNumberRequestBody -> {
                                 FrameNumber frameNumberTM7 = createNewFrameNumber(frameNumberRequestBody);
                                 frameNumberTM7.setFormTM7(formTM7);
-                                frameNumberRepository.save(frameNumberTM7);
+//                                frameNumberRepository.save(frameNumberTM7);
                                 return frameNumberTM7;
                             }).toList();
             formTM7.setFrameNumber(frameNumberList);
@@ -1110,5 +1116,18 @@ public class FormServiceImpl implements FormService{
     @Override
     public void updateFormIndex(Long formId, String formType, Integer newIndex) {
         formDAO.updateFormIndex(formType, formId, newIndex);
+    }
+
+    /**
+     * @param formType
+     * @param id
+     * @param newDisplayName
+     * @return
+     */
+    @Override
+    public String changeDisplayNameForm(String formType, Long id, String newDisplayName) {
+        String formName = "form_" + formType;
+        formDAO.updateDisPlayNameForm(formName, id, newDisplayName);
+        return newDisplayName;
     }
 }
