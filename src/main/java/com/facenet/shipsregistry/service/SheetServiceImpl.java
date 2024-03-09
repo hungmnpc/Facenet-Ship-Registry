@@ -143,8 +143,8 @@ public class SheetServiceImpl implements SheetService{
      */
     private MeasurementTM2 createMeasurementTM2(List<String> cellVals) {
         MeasurementTM2 measurementTM2 = new MeasurementTM2();
-        measurementTM2.setStrakePosition(cellVals.get(0));
-        measurementTM2.setNoOrLetter(cellVals.get(1));
+        measurementTM2.setStrakePosition(cellVals.get(0).trim());
+        measurementTM2.setNoOrLetter(cellVals.get(1).trim());
         DetailMeasurement first = createDetailMeasurement(cellVals, 2, 4, 5);
         DetailMeasurement second = createDetailMeasurement(cellVals, 13, 15, 16);
         DetailMeasurement third = createDetailMeasurement(cellVals, 24, 26, 27);
@@ -214,8 +214,8 @@ public class SheetServiceImpl implements SheetService{
      */
     private MeasurementTM3 createMeasurementTM3 (List<String> cellVals) {
         MeasurementTM3 measurementTM3 = new MeasurementTM3();
-        measurementTM3.setStructuralMember(cellVals.get(0));
-        measurementTM3.setNoOrLetter(cellVals.get(1));
+        measurementTM3.setStructuralMember(cellVals.get(0).trim());
+        measurementTM3.setNoOrLetter(cellVals.get(1).trim());
         DetailMeasurement first = createDetailMeasurement(cellVals, 2, 4, 5);
         DetailMeasurement second = createDetailMeasurement(cellVals, 13, 15, 16);
         DetailMeasurement third= createDetailMeasurement(cellVals, 24, 26, 27);
@@ -290,8 +290,8 @@ public class SheetServiceImpl implements SheetService{
      */
     private MeasurementTM5 createMeasurementTM5(List<String> cellVals) {
         MeasurementTM5 measurementTM5 = new MeasurementTM5();
-        measurementTM5.setItem(cellVals.get(3));
-        measurementTM5.setStructuralComponentType(cellVals.get(0));
+        measurementTM5.setItem(cellVals.get(3).trim());
+        measurementTM5.setStructuralComponentType(cellVals.get(0).trim());
         DetailMeasurement detailMeasurement = createDetailMeasurement(cellVals, 4, 6, 7);
         measurementTM5.setMeasurementDetail(detailMeasurement);
         return measurementTM5;
@@ -323,7 +323,7 @@ public class SheetServiceImpl implements SheetService{
             if (i.get() >= 4 && !cellVals.get(0).equals("")) {
                 if (i.get() == 4) {
                     if (cellVals.get(3).equals("") && !cellVals.get(0).equals("")) {
-                        structuralMemberTM4.setStructuralMemberTitle(cellVals.get(0));
+                        structuralMemberTM4.setStructuralMemberTitle(cellVals.get(0).trim());
                     } else {
                         structuralMemberTM4List.add(structuralMemberTM4);
                     }
@@ -366,8 +366,8 @@ public class SheetServiceImpl implements SheetService{
      */
     private MeasurementTM4 createMeasurementTM4(List<String> cellVal) {
         MeasurementTM4 measurementTM4 = new MeasurementTM4();
-        measurementTM4.setItem(cellVal.get(3));
-        measurementTM4.setStructuralMember(cellVal.get(0));
+        measurementTM4.setItem(cellVal.get(3).trim());
+        measurementTM4.setStructuralMember(cellVal.get(0).trim());
 
         DetailMeasurement detailMeasurement = createDetailMeasurement(cellVal, 4, 6 , 7);
         measurementTM4.setDetailMeasurement(detailMeasurement);
@@ -402,7 +402,7 @@ public class SheetServiceImpl implements SheetService{
             if (i.get() >= 6 && !cellVals.get(0).isEmpty()) {
                 if (i.get() == 6) {
                     if (cellVals.get(3).equals("") && !cellVals.get(0).equals("")) {
-                        structuralDescriptionTM6.setStructuralDescriptionTitle(cellVals.get(0));
+                        structuralDescriptionTM6.setStructuralDescriptionTitle(cellVals.get(0).trim());
                     } else {
                         structuralDescriptionTM6List.add(structuralDescriptionTM6);
                         MeasurementTM6 measurementTM6 = createMeasurementTM6(cellVals);
@@ -412,7 +412,7 @@ public class SheetServiceImpl implements SheetService{
                     if (cellVals.get(3).equals("")) {
                         structuralDescriptionTM6List.add( copy(structuralDescriptionTM6));
                         structuralDescriptionTM6.setMeasurementTM6List(new ArrayList<>());
-                        structuralDescriptionTM6.setStructuralDescriptionTitle(cellVals.get(0));
+                        structuralDescriptionTM6.setStructuralDescriptionTitle(cellVals.get(0).trim());
                     } else {
                         MeasurementTM6 measurementTM6 = createMeasurementTM6(cellVals);
                         structuralDescriptionTM6.getMeasurementTM6List().add(measurementTM6);
@@ -447,8 +447,8 @@ public class SheetServiceImpl implements SheetService{
      */
     private MeasurementTM6 createMeasurementTM6(List<String> cellVals) {
         MeasurementTM6 measurementTM6 = new MeasurementTM6();
-        measurementTM6.setDescription(cellVals.get(0));
-        measurementTM6.setItem(cellVals.get(2));
+        measurementTM6.setDescription(cellVals.get(0).trim());
+        measurementTM6.setItem(cellVals.get(2).trim());
         DetailMeasurement detailMeasurement = createDetailMeasurement(cellVals, 3,5, 6);
         measurementTM6.setDetailMeasurement(detailMeasurement);
         return measurementTM6;
@@ -479,11 +479,11 @@ public class SheetServiceImpl implements SheetService{
                     .toList();
             if (i.get() >= 4 && !cellVals.get(0).equals("")) {
                 if (frameNumber.getName() == null) {
-                    frameNumber.setName(cellVals.get(0));
+                    frameNumber.setName(cellVals.get(0).trim());
                 } else {
                     if (i.get() > 4 && cellVals.get(1).equals("") && !cellVals.get(0).equals("") ) {
                         frameNumberList.add( copy(frameNumber));
-                        frameNumber.setName(cellVals.get(0));
+                        frameNumber.setName(cellVals.get(0).trim());
                         frameNumber.setMeasurementTM7List(new ArrayList<>());
                     } else {
                         MeasurementTM7 measurementTM7 = createMeasurementTM7(cellVals);
@@ -516,7 +516,7 @@ public class SheetServiceImpl implements SheetService{
      */
     private MeasurementTM7 createMeasurementTM7(List<String> cellVals) {
         MeasurementTM7 measurementTM7 = new MeasurementTM7();
-        measurementTM7.setItem(cellVals.get(0));
+        measurementTM7.setItem(cellVals.get(0).trim());
         DetailMeasurement upper = createDetailMeasurement(cellVals, 1, 3, 4);
         DetailMeasurement mid = createDetailMeasurement(cellVals, 9, 11, 12);
         DetailMeasurement lower = createDetailMeasurement(cellVals, 17, 19, 20);
